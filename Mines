@@ -1,0 +1,72 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36 Edg/141.0.0.0" version="28.2.8">
+  <diagram name="Seite-1" id="63my4u-euDXDLA_fsrxT">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Kv2OhgVkOBvTiduuyFJQ-41" value="Modell" style="swimlane;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="6" y="-1160" width="530" height="520" as="geometry" />
+        </mxCell>
+        <mxCell id="Kv2OhgVkOBvTiduuyFJQ-42" value="Spiel (Juego)&#xa;------------------&#xa;- brett: Brett&#xa;- timer: Timer&#xa;- status: SpielStatus&#xa;- verbleibendeMinen: int&#xa;------------------&#xa;+ starten()&#xa;+ aufdecken(x,y)&#xa;+ markierungUmschalten(x,y)&#xa;+ siegÜberprüfen()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="Kv2OhgVkOBvTiduuyFJQ-41">
+          <mxGeometry x="20" y="30" width="220" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="Kv2OhgVkOBvTiduuyFJQ-43" value="Brett (Tablero)&#xa;------------------&#xa;- zellen: Zelle[][]&#xa;- zeilen: int&#xa;- spalten: int&#xa;- minen: int&#xa;------------------&#xa;+ initialisieren()&#xa;+ minenPlatzieren()&#xa;+ angrenzendeMinenBerechnen()&#xa;+ zelleHolen(x,y)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;" vertex="1" parent="Kv2OhgVkOBvTiduuyFJQ-41">
+          <mxGeometry x="280" y="30" width="230" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="Kv2OhgVkOBvTiduuyFJQ-44" value="Zelle (Celda)&#xa;------------------&#xa;- istMine: boolean&#xa;- istAufgedeckt: boolean&#xa;- istMarkiert: boolean&#xa;- angrenzendeMinen: int&#xa;- position: Position&#xa;------------------&#xa;+ aufdecken()&#xa;+ markierungUmschalten()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;" vertex="1" parent="Kv2OhgVkOBvTiduuyFJQ-41">
+          <mxGeometry x="284" y="240" width="230" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="Kv2OhgVkOBvTiduuyFJQ-45" value="Position&#xa;------------------&#xa;- zeile: int&#xa;- spalte: int" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" vertex="1" parent="Kv2OhgVkOBvTiduuyFJQ-41">
+          <mxGeometry x="20" y="410" width="150" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="Kv2OhgVkOBvTiduuyFJQ-46" value="Timer (Temporizador)&#xa;------------------&#xa;- startZeit: long&#xa;- vergangeneZeit: long&#xa;- läuft: boolean&#xa;------------------&#xa;+ starten()&#xa;+ stoppen()&#xa;+ zurücksetzen()&#xa;+ getVerstricheneZeit()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="Kv2OhgVkOBvTiduuyFJQ-41">
+          <mxGeometry x="20" y="250" width="220" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="Kv2OhgVkOBvTiduuyFJQ-47" value="kontroller" style="swimlane;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="542" y="-1160" width="280" height="220" as="geometry">
+            <mxRectangle x="542" y="-1160" width="90" height="30" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Kv2OhgVkOBvTiduuyFJQ-48" value="SpielSteuerung (Controlador)&lt;br&gt;------------------&lt;br&gt;- spiel: Spiel&lt;br&gt;- fenster: SpielFenster&lt;br&gt;------------------&lt;br&gt;+ clicLink(x,y)&lt;br&gt;+ clicRecht(x,y)&lt;br&gt;+ neuesSpiel(schwierigkeitsgrad)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;" vertex="1" parent="Kv2OhgVkOBvTiduuyFJQ-47">
+          <mxGeometry x="20" y="40" width="240" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="Kv2OhgVkOBvTiduuyFJQ-49" value="Aussehen" style="swimlane;fillColor=#cfe2f3;strokeColor=#6d9eeb;fontStyle=1;startSize=23;" vertex="1" parent="1">
+          <mxGeometry x="542" y="-930" width="278" height="610" as="geometry" />
+        </mxCell>
+        <mxCell id="Kv2OhgVkOBvTiduuyFJQ-50" value="SpielFenster (Ventana)&#xa;------------------&#xa;- brettPanel: BrettPanel&#xa;- infoPanel: InfoPanel&#xa;------------------&#xa;+ uiInitialisieren()&#xa;+ nachrichtAnzeigen()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#cfe2f3;strokeColor=#6d9eeb;fontSize=12;" vertex="1" parent="Kv2OhgVkOBvTiduuyFJQ-49">
+          <mxGeometry x="20" y="32" width="230" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="Kv2OhgVkOBvTiduuyFJQ-51" value="BrettPanel (Panel Tablero)&#xa;------------------&#xa;- zellenButtons: ZellenButton[][]&#xa;------------------&#xa;+ aktualisieren()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e2efda;strokeColor=#6aa84f;fontSize=12;" vertex="1" parent="Kv2OhgVkOBvTiduuyFJQ-49">
+          <mxGeometry x="35" y="300" width="200" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="Kv2OhgVkOBvTiduuyFJQ-52" value="ZellenButton (Botón Celda)&#xa;------------------&#xa;- zelle: Zelle" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f4cccc;strokeColor=#cc0000;fontSize=12;" vertex="1" parent="Kv2OhgVkOBvTiduuyFJQ-49">
+          <mxGeometry x="60" y="430" width="150" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Kv2OhgVkOBvTiduuyFJQ-53" value="InfoPanel (Panel Info)&#xa;------------------&#xa;- minasLabel&#xa;- tiempoLabel&#xa;------------------&#xa;+ actualizarInfo()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d9d2e9;strokeColor=#8e7cc3;fontSize=12;" vertex="1" parent="Kv2OhgVkOBvTiduuyFJQ-49">
+          <mxGeometry x="35" y="190" width="200" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="Kv2OhgVkOBvTiduuyFJQ-57" value="Beobachter" style="swimlane;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="306" y="-630" width="230" height="310" as="geometry" />
+        </mxCell>
+        <mxCell id="Kv2OhgVkOBvTiduuyFJQ-58" value="&lt;&lt;Interface&gt;&gt; Beobachter&#xa;+ aktualisieren()" style="shape=rectangle;dashed=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#999999;fontSize=12;" vertex="1" parent="Kv2OhgVkOBvTiduuyFJQ-57">
+          <mxGeometry x="35" y="40" width="160" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="Kv2OhgVkOBvTiduuyFJQ-59" value="&lt;&lt;Interface&gt;&gt; Beobachtbar&#xa;+ hinzufügen(Beobachter)&#xa;+ entfernen(Beobachter)&#xa;+ benachrichtigen()" style="shape=rectangle;dashed=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#999999;fontSize=12;" vertex="1" parent="Kv2OhgVkOBvTiduuyFJQ-57">
+          <mxGeometry x="8" y="130" width="200" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="Kv2OhgVkOBvTiduuyFJQ-60" value="&lt;&lt;Interface&gt;&gt; Darstellungbar&#xa;+ render()" style="shape=rectangle;dashed=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#999999;fontSize=12;" vertex="1" parent="Kv2OhgVkOBvTiduuyFJQ-57">
+          <mxGeometry x="35" y="240" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Kv2OhgVkOBvTiduuyFJQ-54" value="Niveau - Spielkontroller" style="swimlane;fillColor=#fce5cd;strokeColor=#e69138;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="6" y="-630" width="280" height="310" as="geometry" />
+        </mxCell>
+        <mxCell id="Kv2OhgVkOBvTiduuyFJQ-55" value="enum Schwierigkeitsgrad&#xa;EASY, MEDIUM, HARD" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fce5cd;strokeColor=#e69138;fontSize=12;" vertex="1" parent="Kv2OhgVkOBvTiduuyFJQ-54">
+          <mxGeometry x="20" y="40" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Kv2OhgVkOBvTiduuyFJQ-56" value="enum SpielStatus&#xa;SPIELEND, GEWONNEN, VERLOREN" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f4cccc;strokeColor=#cc0000;fontSize=12;" vertex="1" parent="Kv2OhgVkOBvTiduuyFJQ-54">
+          <mxGeometry x="20" y="120" width="200" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
