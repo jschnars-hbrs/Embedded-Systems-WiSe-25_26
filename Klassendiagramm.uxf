@@ -1,4 +1,4 @@
-<diagram program="umletino" version="15.1"><zoom_level>9</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>108</x><y>234</y><w>198</w><h>171</h></coordinates><panel_attributes>MinesweeperSpiellogik
+<diagram program="umletino" version="15.1"><zoom_level>8</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>413</x><y>289</y><w>176</w><h>152</h></coordinates><panel_attributes>MinesweeperSpiellogik
 --
 - Minenfeld: minenfeld
 -Timer: timer
@@ -12,7 +12,7 @@ SpaltenNummer)
 + gebeFeld()
 + gebeScore()
 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>99</x><y>396</y><w>90</w><h>63</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>80;10;10;50</additional_attributes></element><element><id>UMLClass</id><coordinates><x>9</x><y>441</y><w>198</w><h>216</h></coordinates><panel_attributes>Minenfeld
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>405</x><y>433</y><w>80</w><h>56</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>80;10;10;50</additional_attributes></element><element><id>UMLClass</id><coordinates><x>325</x><y>473</y><w>176</w><h>192</h></coordinates><panel_attributes>Minenfeld
 --
 -Zelle: Spielfeld[][]
 -zeilenAnzahl: int
@@ -28,7 +28,7 @@ SpaltenNummer)
 + wechselMarkierung(ZeilenNummer,
 SpaltenNummer)
 + gebeFeld()
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>234</x><y>441</y><w>117</w><h>171</h></coordinates><panel_attributes>Timer
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>549</x><y>473</y><w>104</w><h>152</h></coordinates><panel_attributes>Timer
 --
 - startZeit: float
 - LaufZeit: float
@@ -38,13 +38,13 @@ SpaltenNummer)
 + stoppen()
 + zurücksetzen()
 + status()
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>216</x><y>396</y><w>126</w><h>63</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;120;50</additional_attributes></element><element><id>UMLClass</id><coordinates><x>387</x><y>0</y><w>189</w><h>171</h></coordinates><panel_attributes>MinesweeperTerminal
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>509</x><y>433</y><w>136</w><h>56</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;150;50</additional_attributes></element><element><id>UMLClass</id><coordinates><x>661</x><y>81</y><w>168</w><h>152</h></coordinates><panel_attributes>MinesweeperTerminal
 --
 Schwierigkeitsstufe = "leicht"
 --
 + bekommeEingabe()
 + gebeAus()
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>90</x><y>648</y><w>36</w><h>81</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>20;10;10;70</additional_attributes></element><element><id>UMLClass</id><coordinates><x>9</x><y>711</y><w>189</w><h>171</h></coordinates><panel_attributes>Zelle
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>397</x><y>657</y><w>32</w><h>72</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>20;10;10;70</additional_attributes></element><element><id>UMLClass</id><coordinates><x>325</x><y>713</y><w>168</w><h>152</h></coordinates><panel_attributes>Zelle
 
 --
 -isMine: boolean
@@ -57,30 +57,37 @@ Schwierigkeitsstufe = "leicht"
 +initalisieren()
 +aufdecken()
 +wechselMarkierung()
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>54</x><y>18</y><w>252</w><h>171</h></coordinates><panel_attributes> abstract: MinesweeperUI
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>365</x><y>97</y><w>224</w><h>152</h></coordinates><panel_attributes> abstract: MinesweeperUI
 --
-MinesweeperSpiellogik: minesweeperSpiellogik
-Schwierigkeitsstufe: int
+#MinesweeperSpiellogik: minesweeperSpiellogik
+#Schwierigkeitsstufe: Schwierigkeit
 --
 /+bekommeEingabe()/
 /+gebeAus()/
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>387</x><y>180</y><w>189</w><h>99</h></coordinates><panel_attributes>MinesweeperGUI
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>661</x><y>241</y><w>168</w><h>88</h></coordinates><panel_attributes>MinesweeperGUI
 --
 --
 + bekommeEingabe()
 + gebeAus()
 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>189</x><y>180</y><w>36</w><h>72</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>20;10;10;60</additional_attributes></element><element><id>Relation</id><coordinates><x>297</x><y>72</y><w>108</w><h>27</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;100;10</additional_attributes></element><element><id>Relation</id><coordinates><x>297</x><y>135</y><w>108</w><h>126</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;100;120</additional_attributes></element><element><id>UMLClass</id><coordinates><x>666</x><y>342</y><w>189</w><h>171</h></coordinates><panel_attributes>HighScore
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>485</x><y>241</y><w>32</w><h>64</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>20;10;10;60</additional_attributes></element><element><id>Relation</id><coordinates><x>581</x><y>145</y><w>96</w><h>24</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;100;10</additional_attributes></element><element><id>Relation</id><coordinates><x>581</x><y>201</y><w>96</w><h>112</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;100;120</additional_attributes></element><element><id>UMLClass</id><coordinates><x>725</x><y>569</y><w>168</w><h>152</h></coordinates><panel_attributes>HighScore
 --
 -HighScoreList[5][2]
 --
 + ladeScore()
 + updateScore(Spielename: string, 
-Score: float)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>666</x><y>135</y><w>189</w><h>171</h></coordinates><panel_attributes>HighScoreManager
+Score: float)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>693</x><y>377</y><w>200</w><h>152</h></coordinates><panel_attributes>HighScoreManager
 --
 - HighScore: highScoreLow
 - HighScore: highScoreMid
 - HighScore: highScoreHigh
 --
-+ ladeScore(Schwierigkeit:int)
-+ updateScore(Schwierigkeit:int)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>747</x><y>297</y><w>27</w><h>63</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;50</additional_attributes></element><element><id>Relation</id><coordinates><x>567</x><y>207</y><w>117</w><h>45</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;30;110;10</additional_attributes></element></diagram>
++ ladeScore(Schwierigkeit:Schwierigkeit)
++ updateScore(Schwierigkeit:Schwierigkeit, Spielename: string, 
+Score: float)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>797</x><y>521</y><w>24</w><h>64</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;60</additional_attributes></element><element><id>Relation</id><coordinates><x>741</x><y>321</y><w>72</w><h>72</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;70;70</additional_attributes></element><element><id>UMLClass</id><coordinates><x>205</x><y>137</y><w>88</w><h>80</h></coordinates><panel_attributes>&lt;&lt;enumeration&gt;&gt;
+Schwierigkeit
+--
+Leicht
+Mittel
+Schwer
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>285</x><y>161</y><w>96</w><h>32</h></coordinates><panel_attributes></panel_attributes><additional_attributes>100;20;10;20</additional_attributes></element></diagram>
