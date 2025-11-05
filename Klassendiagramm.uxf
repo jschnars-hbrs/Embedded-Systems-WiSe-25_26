@@ -1,99 +1,96 @@
-<diagram program="umletino" version="15.1"><zoom_level>8</zoom_level><help_text>http://www.oracle.com/technetwork/java/javase/documentation/codeconventions-137265.html#177</help_text><element><id>UMLClass</id><coordinates><x>464</x><y>392</y><w>176</w><h>168</h></coordinates><panel_attributes>MinesweeperSpiellogik
+<diagram program="umletino" version="15.1"><zoom_level>7</zoom_level><help_text>http://www.oracle.com/technetwork/java/javase/documentation/codeconventions-137265.html#177</help_text><element><id>UMLClass</id><coordinates><x>0</x><y>158</y><w>273</w><h>112</h></coordinates><panel_attributes>MinesweeperSpiellogik
 --
-- Minenfeld: minenfeld
--Timer: timer
+- minenfeld: Minenfeld
+- timer: Timer
 --
-+ starten() : void
-+ stoppen() .void
-+aufdecken(ZeilenNummer,
-SpaltenNummer) : void
-+wechselMarkierung(ZeilenNummer,
-SpaltenNummer) : void
-+ gebeFeld(ZeilenNummer,
-SpaltenNummer) : Zelle
-+ gebeScore() : int
++ starten(): void
++ stoppen(): void
++ aufdecken(zeilenNummer: int, spaltenNummer: int): void
++wechselMarkierung(zeilenNummer: int, spaltenNummer: int): void
++ gebeFeld(zeilenNummer, spaltenNummer): Zelle
++ gebeScore(): int
 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>456</x><y>552</y><w>80</w><h>56</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>80;10;10;50</additional_attributes></element><element><id>UMLClass</id><coordinates><x>376</x><y>592</y><w>184</w><h>192</h></coordinates><panel_attributes>Minenfeld
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>70</x><y>263</y><w>42</w><h>63</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>40;10;10;70</additional_attributes></element><element><id>UMLClass</id><coordinates><x>0</x><y>312</y><w>287</w><h>133</h></coordinates><panel_attributes>Minenfeld
 --
--Zelle: Spielfeld[][]
--zeilenAnzahl: int
--spaltenAnzahl: int
--minenAnzahl: int
--flaggenUebrigAnzahl: signed int
--minenGefundenAnzahl: int
+- spielfeld: Zelle[ ][ ]
+- zeilenAnzahl: int
+- spaltenAnzahl: int
+- minenAnzahl: int
+- flaggenUebrigAnzahl: int
+- minenGefundenAnzahl: int
 --
-+ generieren(zeilenAnzahl,
-spaltenAnzahl, minenAnzahl)
-+ aufdecken(ZeilenNummer,
-SpaltenNummer)
-+ wechselMarkierung(ZeilenNummer,
-SpaltenNummer)
-+ gebeFeld(ZeilenNummer,
-SpaltenNummer): Zelle
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>600</x><y>592</y><w>104</w><h>152</h></coordinates><panel_attributes>Timer
++ generieren(zeilenAnzahl: int, spaltenAnzahl: int, minenAnzahl: int)
++ aufdecken(zeilenNummer: int, spaltenNummer: int): Zelle.istMine
++ wechselMarkierung(zeilenNummer: int, spaltenNummer: int)
++ gebeFeld(zeilenNummer, spaltenNummer): Zelle
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>315</x><y>312</y><w>119</w><h>112</h></coordinates><panel_attributes>Timer
 --
 - startZeit: float
 - LaufZeit: float
 - läuft: boolean
 --
-+ starten()  
-+ stoppen()
-+ zurücksetzen()
-+ status() : int s
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>560</x><y>552</y><w>136</w><h>56</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;150;50</additional_attributes></element><element><id>UMLClass</id><coordinates><x>712</x><y>200</y><w>168</w><h>152</h></coordinates><panel_attributes>MinesweeperTerminal
++ starten(): void
++ stoppen(): void
++ zurücksetzen(): void
++ gebeZeit(): long
++ gebeStatus(): TimerStatus</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>168</x><y>263</y><w>217</w><h>63</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;290;70</additional_attributes></element><element><id>UMLClass</id><coordinates><x>371</x><y>11</y><w>147</w><h>56</h></coordinates><panel_attributes>MinesweeperTerminal
 --
-Schwierigkeitsstufe = "leicht"
---
-+ bekommeEingabe()
-+ gebeAus()
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>448</x><y>776</y><w>32</w><h>72</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>20;10;10;70</additional_attributes></element><element><id>UMLClass</id><coordinates><x>376</x><y>832</y><w>168</w><h>152</h></coordinates><panel_attributes>Zelle
 
 --
-+isMine: boolean
-+istAufgedeckt:boolean
-+istMarkiert: boolean
-+angrenzendeMinen: int
-+positionX: int
-+positionY: int
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>416</x><y>216</y><w>224</w><h>152</h></coordinates><panel_attributes> abstract: MinesweeperUI
---
-#MinesweeperSpiellogik: minesweeperSpiellogik
-#Schwierigkeitsstufe: Schwierigkeit
---
-/+bekommeEingabe() : void/
-/+gebeAus() : void/
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>720</x><y>368</y><w>168</w><h>88</h></coordinates><panel_attributes>MinesweeperGUI
---
---
-+ bekommeEingabe()
-+ gebeAus()
++ bekommeEingabe(): void
++ gebeAus(): void
 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>536</x><y>360</y><w>32</w><h>48</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>20;10;10;40</additional_attributes></element><element><id>Relation</id><coordinates><x>632</x><y>264</y><w>96</w><h>24</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;100;10</additional_attributes></element><element><id>Relation</id><coordinates><x>632</x><y>320</y><w>104</w><h>120</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;110;130</additional_attributes></element><element><id>UMLClass</id><coordinates><x>776</x><y>688</y><w>168</w><h>152</h></coordinates><panel_attributes>HighScore
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>70</x><y>438</y><w>21</w><h>56</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;60</additional_attributes></element><element><id>UMLClass</id><coordinates><x>7</x><y>480</y><w>147</w><h>63</h></coordinates><panel_attributes>Zelle
 --
--HighScoreList[5] : Score
++ istMine: boolean
++ istAufgedeckt: boolean
++ istMarkiert: boolean
++ angrenzendeMinen: int
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>112</x><y>11</y><w>210</w><h>91</h></coordinates><panel_attributes>&lt;&lt;abstract&gt;&gt;
+MinesweeperUI
 --
-+ ladeScore():Score[5]
-+ updateScore(Spielename: string, 
-Score: float)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>736</x><y>496</y><w>200</w><h>152</h></coordinates><panel_attributes>HighScoreManager
+# minesweeperSpiellogik: MinesweeperSpiellogik
+# schwierigkeit: Schwierigkeit
 --
-- HighScore: highScoreLow
-- HighScore: highScoreMid
-- HighScore: highScoreHigh
+/+ bekommeEingabe(): void/
+/+ gebeAus(): void/
+- waehleSchwierigkeit(): Schwierigkeit
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>371</x><y>81</y><w>147</w><h>56</h></coordinates><panel_attributes>MinesweeperGUI
 --
-+ ladeScore(Schwierigkeit:Schwierigkeit)
-: Score[5]
-+ updateScore(Schwierigkeit:Schwierigkeit, 
-Spielename: string, Score: float) : void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>840</x><y>640</y><w>32</w><h>64</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;20;60</additional_attributes></element><element><id>Relation</id><coordinates><x>800</x><y>448</y><w>56</w><h>64</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;50;60</additional_attributes></element><element><id>UMLClass</id><coordinates><x>256</x><y>256</y><w>88</w><h>80</h></coordinates><panel_attributes>&lt;&lt;enumeration&gt;&gt;
+
+--
++ bekommeEingabe(): void
++ gebeAus(): void
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>147</x><y>95</y><w>42</w><h>77</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>40;10;10;90</additional_attributes></element><element><id>Relation</id><coordinates><x>315</x><y>39</y><w>70</w><h>21</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;80;10</additional_attributes></element><element><id>Relation</id><coordinates><x>315</x><y>74</y><w>70</w><h>49</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;80;50</additional_attributes></element><element><id>UMLClass</id><coordinates><x>448</x><y>312</y><w>196</w><h>63</h></coordinates><panel_attributes>HighScore
+--
+- highScoreListe: Score[5]
+--
++ ladeScore(): Score[5]
++ updateScore(Spielename: string,  Score: float)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>287</x><y>186</y><w>336</w><h>84</h></coordinates><panel_attributes>HighScoreManager
+--
+- highScoreLeicht: HighScore
+- highScoreMittel: HighScore
+- highScoreSchwer: HighScore
+--
++ ladeScore(Schwierigkeit:Schwierigkeit): Score[5]
++ updateScore(Schwierigkeit: Schwierigkeit, Spielename: string, Score: float) : void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>476</x><y>263</y><w>56</w><h>63</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;60;70</additional_attributes></element><element><id>Relation</id><coordinates><x>238</x><y>95</y><w>112</w><h>105</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;140;130</additional_attributes></element><element><id>UMLClass</id><coordinates><x>0</x><y>18</y><w>77</w><h>70</h></coordinates><panel_attributes>&lt;&lt;enumeration&gt;&gt;
 Schwierigkeit
 --
-Leicht
-Mittel
-Schwer
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>336</x><y>280</y><w>96</w><h>32</h></coordinates><panel_attributes></panel_attributes><additional_attributes>100;20;10;20</additional_attributes></element><element><id>UMLNote</id><coordinates><x>968</x><y>240</y><w>512</w><h>56</h></coordinates><panel_attributes>http://www.oracle.com/technetwork/java/javase/documentation/codeconventions-137265.html#177
+leicht
+mittel
+schwer
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>70</x><y>39</y><w>56</w><h>28</h></coordinates><panel_attributes></panel_attributes><additional_attributes>60;20;10;20</additional_attributes></element><element><id>UMLNote</id><coordinates><x>168</x><y>529</y><w>448</w><h>28</h></coordinates><panel_attributes>http://www.oracle.com/technetwork/java/javase/documentation/codeconventions-137265.html#177
 bg=blue
 One example of appropriate public instance variables is the case where the class is essentially a data structure,
  with no behavior. In other words, if you would have used a struct instead of a class (if Java supported struct),
- then it's appropriate to make the class's instance variables public.</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1048</x><y>824</y><w>120</w><h>48</h></coordinates><panel_attributes>Score
+ then it's appropriate to make the class's instance variables public.</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>490</x><y>410</y><w>98</w><h>42</h></coordinates><panel_attributes>Score
 --
-Name:String
-Score:Int</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>936</x><y>704</y><w>192</w><h>136</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;220;10;220;150</additional_attributes></element></diagram>
+Name: string
+Score: float</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>532</x><y>368</y><w>21</w><h>56</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;60</additional_attributes></element><element><id>UMLClass</id><coordinates><x>329</x><y>445</y><w>77</w><h>63</h></coordinates><panel_attributes>&lt;&lt;enumeration&gt;&gt;
+TimerStatus
+--
+genullt
+laeuft
+gestoppt
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>357</x><y>417</y><w>28</w><h>42</h></coordinates><panel_attributes></panel_attributes><additional_attributes>20;10;10;40</additional_attributes></element></diagram>
