@@ -1,9 +1,5 @@
 //Autorin: Tabea Barteldrees
 public class Zelle {
-    /*
-     TODO: Alle Variabeln auf private setzen und get set Methoden hinzugügen.
-     Zugriff auf Zellen auch in Minenfeld ändern.
-     */
 
     private boolean istMine = false;
     private boolean istAufgedeckt = false;
