@@ -12,7 +12,7 @@ public class Minenfeld {
     private void printSpielfeld(){
          for (int zeilenIndex = 0; zeilenIndex < this.zeilenAnzahl; zeilenIndex++) {
             for (int spaltenIndex = 0; spaltenIndex < this.spaltenAnzahl; spaltenIndex++) {
-                System.out.print(this.spielfeld[zeilenIndex][spaltenIndex].istMine);
+                System.out.print(this.spielfeld[zeilenIndex][spaltenIndex].gebeIstMineZustand());
                 System.out.print(" ");
             }
             System.out.println("");
@@ -20,11 +20,11 @@ public class Minenfeld {
     }
 
     private void platziereMinen(int zuVerteilendeMinen, Random Zufallsgenerator){
-        int zufaelligeZeile = Zufallsgenerator.nextInt(zeilenAnzahl+1);
-        int zufaelligeSpalte = Zufallsgenerator.nextInt(spaltenAnzahl+1);
+        int zufaelligeZeile = Zufallsgenerator.nextInt(zeilenAnzahl);
+        int zufaelligeSpalte = Zufallsgenerator.nextInt(spaltenAnzahl);
         if (zuVerteilendeMinen > 0){
-            if (this.spielfeld[zufaelligeZeile][zufaelligeSpalte].istMine == false){
-                this.spielfeld[zufaelligeZeile][zufaelligeSpalte].istMine = true;
+            if (this.spielfeld[zufaelligeZeile][zufaelligeSpalte].gebeIstMineZustand() == false){
+                this.spielfeld[zufaelligeZeile][zufaelligeSpalte].setzeMine();
                 platziereMinen((zuVerteilendeMinen - 1),Zufallsgenerator);
             }else{
                 platziereMinen(zuVerteilendeMinen,Zufallsgenerator);
@@ -35,22 +35,25 @@ public class Minenfeld {
     public Minenfeld(int zeilenAnzahl, int spaltenAnzahl, int minenAnzahl){
 
         //Leeres Spifelfeld der Breite "spaltenAnzahl" & der Höhe "zeilenAnzahl" erstellt
+        //this.spielfeld = new Zelle[zeilenAnzahl][spaltenAnzahl];
+
         Zelle[][] spielfeld = new Zelle[zeilenAnzahl][spaltenAnzahl];
 
         for (int zeilenIndex = 0; zeilenIndex < zeilenAnzahl; zeilenIndex++) {
             for (int spaltenIndex = 0; spaltenIndex < spaltenAnzahl; spaltenIndex++) {
                 spielfeld[zeilenIndex][spaltenIndex] = new Zelle();
-                System.out.print(spielfeld[zeilenIndex][spaltenIndex].angrenzendeMinen); //DEBUG Print
+                System.out.print(spielfeld[zeilenIndex][spaltenIndex].gebeAnzahlAngrenzenderMinen()); //DEBUG Print
             }
             System.out.println(""); //DEBUG Print
         }
+
         this.zeilenAnzahl = zeilenAnzahl;
         this.spaltenAnzahl = spaltenAnzahl;
         this.spielfeld = spielfeld;
         this.minenAnzahl = minenAnzahl;
 
         //Platziere zufällig Minen
-        Random Zufallsgenerator= new Random();
+        Random Zufallsgenerator = new Random();
         platziereMinen(this.minenAnzahl, Zufallsgenerator);
         printSpielfeld();
 
