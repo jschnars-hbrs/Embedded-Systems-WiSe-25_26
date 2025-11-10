@@ -11,6 +11,9 @@ public class Zelle {
     }
 
     public void setzeMine(){
+        if (this.istMine == true){
+            throw new ArithmeticException("Auf dem Feld befindet sich bereits eine Mine.");
+        }
         this.istMine = true;
     }
 
@@ -41,7 +44,12 @@ public class Zelle {
     }
 
     public void zaehleAngerenzendeMinenHochUmEins(){
-        this.angrenzendeMinen += 1;
+        if(this.angrenzendeMinen >= 8)
+        {
+            throw new ArithmeticException("Die Anzahl angrenzender Minen kann nicht größer 8 sein.");
+        }
+            this.angrenzendeMinen += 1;
+        
     }
 }
     

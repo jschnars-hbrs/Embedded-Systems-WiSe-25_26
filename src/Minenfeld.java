@@ -23,20 +23,20 @@ public class Minenfeld {
         }
     }
     
-    //private Methoden
-        private void platziereMinen(int zuVerteilendeMinen, Random Zufallsgenerator){
+    //private Methoden    
+    private void platziereMinen(int zuVerteilendeMinen, Random Zufallsgenerator){
         int zufaelligeZeile = Zufallsgenerator.nextInt(zeilenAnzahl);
         int zufaelligeSpalte = Zufallsgenerator.nextInt(spaltenAnzahl);
         if (zuVerteilendeMinen > 0){
-            if (this.spielfeld[zufaelligeZeile][zufaelligeSpalte].gebeIstMineZustand() == false){
+            try {
                 this.spielfeld[zufaelligeZeile][zufaelligeSpalte].setzeMine();
                 platziereMinen((zuVerteilendeMinen - 1),Zufallsgenerator);
-            }else{
+            } catch (ArithmeticException e) {
                 platziereMinen(zuVerteilendeMinen,Zufallsgenerator);
             }
         }            
-    }   
-    
+    }
+
     private void zaehleMinen(){
         for (int zeilenIndex = 0; zeilenIndex < this.zeilenAnzahl; zeilenIndex++)  {
             for (int spaltenIndex = 0; spaltenIndex < this.spaltenAnzahl; spaltenIndex++){
@@ -115,8 +115,6 @@ public class Minenfeld {
         printSpielfeld(); //DEBUG Print
         
     }
-
-
 
     //aufdecken(zeilenNummer: int, spaltenNummer: int): Zelle.istMine
     //wechselMarkierung(zeilenNummer: int, spaltenNummer: int)
