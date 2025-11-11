@@ -99,6 +99,10 @@ public class Minenfeld {
         this.spaltenAnzahl = spaltenAnzahl;
         this.minenAnzahl = minenAnzahl;
 
+        if(this.minenAnzahl > this.zeilenAnzahl*this.spaltenAnzahl){
+            throw new ArithmeticException("Die Anzahl der Minen darf die Anzahl der Felder des Speifeld nicht überschreiten.");
+        }
+
         //Leeres Spifelfeld der Breite "spaltenAnzahl" & der Höhe "zeilenAnzahl" erstellt
         this.spielfeld = new Zelle[this.zeilenAnzahl][this.spaltenAnzahl];
 
