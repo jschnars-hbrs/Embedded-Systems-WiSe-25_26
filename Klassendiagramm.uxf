@@ -20,7 +20,7 @@
 - minenGefundenAnzahl: int
 --
 + Minenfeld(zeilenAnzahl: int, spaltenAnzahl: int, minenAnzahl: int)
-+ aufdecken(zeilenNummer: int, spaltenNummer: int): Zelle.istMine
++ aufdecken(zeilenNummer: int, spaltenNummer: int): boolean
 + wechselMarkierung(zeilenNummer: int, spaltenNummer: int)
 + gebeFeld(zeilenNummer, spaltenNummer): Zelle
 </panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>598</x><y>559</y><w>221</w><h>208</h></coordinates><panel_attributes>Timer
