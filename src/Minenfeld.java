@@ -1,5 +1,7 @@
 //Autorin: Tabea Barteldrees
 import java.util.Random;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Minenfeld {
 
@@ -10,15 +12,29 @@ public class Minenfeld {
 
     Zelle[][] testfeld;
 
-
-    
-
     //DEBUG Methode
     private void printSpielfeld(){
          for (int zeilenIndex = 0; zeilenIndex < this.zeilenAnzahl; zeilenIndex++) {
             for (int spaltenIndex = 0; spaltenIndex < this.spaltenAnzahl; spaltenIndex++) {
                 if (this.spielfeld[zeilenIndex][spaltenIndex].gebeIstMineZustand()==true) {
                     System.out.print("X");
+                }else{
+                    System.out.print(this.spielfeld[zeilenIndex][spaltenIndex].gebeAnzahlAngrenzenderMinen());
+                }
+                System.out.print(" ");
+            }
+            System.out.println("");
+        }
+    }
+
+    private void printSpielfeldAufgedeckt(){
+         for (int zeilenIndex = 0; zeilenIndex < this.zeilenAnzahl; zeilenIndex++) {
+            for (int spaltenIndex = 0; spaltenIndex < this.spaltenAnzahl; spaltenIndex++) {
+                if (this.spielfeld[zeilenIndex][spaltenIndex].gebeIstAufgedecktZustand() == false) {
+                    System.out.print("#");
+                }else if(this.spielfeld[zeilenIndex][spaltenIndex].gebeIstMineZustand() == true) {
+                    System.out.print("X");
+                    
                 }else{
                     System.out.print(this.spielfeld[zeilenIndex][spaltenIndex].gebeAnzahlAngrenzenderMinen());
                 }
@@ -65,11 +81,8 @@ public class Minenfeld {
         this.testfeld[5][3].zaehleAngerenzendeMinenHochUmEins();
         this.testfeld[5][3].zaehleAngerenzendeMinenHochUmEins();
         this.testfeld[5][5].zaehleAngerenzendeMinenHochUmEins();
-
-
     }
 
-    
     //private Methoden    
     private void platziereMinen(int zuVerteilendeMinen, Random Zufallsgenerator){
         int zufaelligeZeile = Zufallsgenerator.nextInt(zeilenAnzahl);
@@ -91,10 +104,9 @@ public class Minenfeld {
                     zaehleAngernzendeFelderUmEinsHoch(zeilenIndex, spaltenIndex);
                 }
             }
-            
         }
     }
-    //zaehleAngerenzendeMinenHochUmEins();
+    
     private  void zaehleAngernzendeFelderUmEinsHoch(int minenZeile, int minenSpalte){
         int indexStart;
 
@@ -140,6 +152,119 @@ public class Minenfeld {
         }
     }
 
+    private void aufdeckenKomplett(){
+        for (int zeilenIndex = 0; zeilenIndex < this.zeilenAnzahl; zeilenIndex++) {
+            for (int spaltenIndex = 0; spaltenIndex < this.spaltenAnzahl; spaltenIndex++) {
+                this.spielfeld[zeilenIndex][spaltenIndex].deckeAuf();
+            }
+        }
+    }
+
+    private void aufdeckenFlaeche(int zeilenNummer, int spaltenNummer){
+
+        int position[] = {zeilenNummer, spaltenNummer};
+        
+        ArrayList<int[]> aufzudeckenListe = new ArrayList<int[]>();
+        aufzudeckenListe.add(position);
+        this.spielfeld[position[0]][position[1]].deckeAuf();
+
+        while(!aufzudeckenListe.isEmpty()){
+
+            //Kantennachbarn aufdecken und Kantennachbarn mit 0 in die aufzudeckenListe hinzufügen.
+            //System.out.println("Suche Kantennachbarn");
+            if(position[1] > 0){ //Die aktuelle Zelle liegt NICHT am linken Rand.
+                //System.out.println("Die aktuelle Zelle liegt NICHT am linken Rand");
+                if(this.spielfeld[position[0]][position[1]-1].gebeIstAufgedecktZustand() == false){
+                    this.spielfeld[position[0]][position[1]-1].deckeAuf();
+                    if(this.spielfeld[position[0]][position[1]-1].gebeAnzahlAngrenzenderMinen() == 0){
+                        aufzudeckenListe.add(new int[]{position[0], position[1]-1});
+            }}}
+
+            if(position[0] > 0){ //Die aktuelle Zelle liegt NICHT am oberen Rand.
+                //System.out.println("Die aktuelle Zelle liegt NICHT am oberen Rand");
+                if(this.spielfeld[position[0]-1][position[1]].gebeIstAufgedecktZustand() == false){
+                this.spielfeld[position[0]-1][position[1]].deckeAuf();
+                if(this.spielfeld[position[0]-1][position[1]].gebeAnzahlAngrenzenderMinen() == 0){
+                    aufzudeckenListe.add(new int[]{position[0]-1, position[1]});
+            }}}
+
+            if(position[1] < this.spaltenAnzahl-1){ //Die aktuelle Zelle liegt NICHT am rechten Rand.
+                //System.out.println("Die aktuelle Zelle liegt NICHT am rechten Rand");
+                if(this.spielfeld[position[0]][position[1]+1].gebeIstAufgedecktZustand() == false){
+                    this.spielfeld[position[0]][position[1]+1].deckeAuf();
+                    if(this.spielfeld[position[0]][position[1]+1].gebeAnzahlAngrenzenderMinen() == 0){
+                        aufzudeckenListe.add(new int[]{position[0], position[1]+1});
+            }}}
+
+            if(position[0] < this.zeilenAnzahl-1){ //Die aktuelle Zelle liegt NICHT am unteren Rand.
+                //System.out.println("Die aktuelle Zelle liegt NICHT am unteren Rand");
+                if(this.spielfeld[position[0]+1][position[1]].gebeIstAufgedecktZustand() == false){
+                    this.spielfeld[position[0]+1][position[1]].deckeAuf();
+                    if(this.spielfeld[position[0]+1][position[1]].gebeAnzahlAngrenzenderMinen() == 0){
+                        aufzudeckenListe.add(new int[]{position[0]+1, position[1]});
+            }}}
+
+
+            //diagonale Nachbarn aufdecken und Diagonalnachbar mit 0 in die aufzudeckenListe hinzufügen.
+            //System.out.println("Diagonalnachbarn");
+            if(position[0] > 0){ //Die aktuelle Zelle liegt NICHT am oberen Rand
+                //System.out.println("Die aktuelle Zelle liegt NICHT am oberen Rand");
+                if(position[1] > 0){ //Die aktuelle Zelle liegt NICHT am linken Rand
+                    //System.out.println("Die aktuelle Zelle liegt NICHT am linken Rand");
+                    if(this.spielfeld[position[0]-1][position[1]-1].gebeIstAufgedecktZustand() == false){
+                        this.spielfeld[position[0]-1][position[1]-1].deckeAuf();
+                        if(this.spielfeld[position[0]-1][position[1]-1].gebeAnzahlAngrenzenderMinen() == 0){
+                            aufzudeckenListe.add(new int[]{position[0]-1, position[1]-1});
+                        }   
+                    }
+                }
+                if(position[1] < this.spaltenAnzahl-1){ //Die aktuelle Zelle liegt NICHT am rechten Rand
+                    //System.out.println("Die aktuelle Zelle liegt NICHT am rechten Rand");
+                    if(this.spielfeld[position[0]-1][position[1]+1].gebeIstAufgedecktZustand() == false){
+                        this.spielfeld[position[0]-1][position[1]+1].deckeAuf();
+                        if(this.spielfeld[position[0]-1][position[1]+1].gebeAnzahlAngrenzenderMinen() == 0){
+                            aufzudeckenListe.add(new int[]{position[0]-1, position[1]+1});
+                        }
+                    }
+                }
+            }
+
+            if(position[0] < this.zeilenAnzahl-1){ //Die aktuelle Zelle liegt NICHT am unteren Rand
+                //System.out.println("Die aktuelle Zelle liegt NICHT am unteren Rand");
+                if(position[1] > 0){ //Die aktuelle Zelle liegt NICHT am linken Rand
+                    //System.out.println("Die aktuelle Zelle liegt NICHT am linken Rand");
+                    if(this.spielfeld[position[0]+1][position[1]-1].gebeIstAufgedecktZustand() == false){
+                        this.spielfeld[position[0]+1][position[1]-1].deckeAuf();
+                        if(this.spielfeld[position[0]+1][position[1]-1].gebeAnzahlAngrenzenderMinen() == 0){
+                            aufzudeckenListe.add(new int[]{position[0]+1, position[1]-1});
+                        }
+                    }
+                }
+                if(position[1] < this.spaltenAnzahl-1){ //Die aktuelle Zelle liegt NICHT am rechten Rand
+                    //System.out.println("Die aktuelle Zelle liegt NICHT am rechten Rand");
+                    if(this.spielfeld[position[0]+1][position[1]+1].gebeIstAufgedecktZustand() == false){
+                        this.spielfeld[position[0]+1][position[1]+1].deckeAuf();
+                        if(this.spielfeld[position[0]+1][position[1]+1].gebeAnzahlAngrenzenderMinen() == 0){
+                            aufzudeckenListe.add(new int[]{position[0]+1, position[1]+1});
+                        }
+                    }
+                }
+            }
+            /* 
+            for (int i[] : aufzudeckenListe) {// DEBUG print
+                System.out.println(Arrays.toString(i));
+            }*/
+
+            aufzudeckenListe.remove(0);
+            if(aufzudeckenListe.isEmpty() == false){
+                position = aufzudeckenListe.get(0);
+                //System.out.println("Position der obersten Zelle übernehmen: " + position[0] + position[1]);
+            }        
+            //System.out.println(""); 
+        }
+    }
+
+
     public Minenfeld(int zeilenAnzahl, int spaltenAnzahl, int minenAnzahl){
         
         this.zeilenAnzahl = zeilenAnzahl;
@@ -163,18 +288,21 @@ public class Minenfeld {
         Random Zufallsgenerator = new Random();
         platziereMinen(this.minenAnzahl, Zufallsgenerator);
         zaehleMinen();
-        printSpielfeld(); //DEBUG Print
+        //printSpielfeld(); //DEBUG Print
+        //System.out.println("");
 
         /* 
+         
         erstelleTestfeld(); //DEBUG Print
         this.spaltenAnzahl=6;
         this.zeilenAnzahl=6;
         this.spielfeld = this.testfeld;
         printSpielfeld(); //DEBUG Print
         
-        if(aufdecken(5, 4) == true){
-            System.out.println("Mine getroffen");
+        if(aufdecken(4, 4) == true){
+            //System.out.println("Mine getroffen");
         }
+        //printSpielfeldAufgedeckt(); //DEBUG Print
         */
     }
 
@@ -185,12 +313,13 @@ public class Minenfeld {
             return false;
         }else if(this.spielfeld[zeilenNummer][spaltenNummer].gebeIstMineZustand() == true){ //Liegt dort eine Mine?
             this.spielfeld[zeilenNummer][spaltenNummer].deckeAuf();
+            aufdeckenKomplett();
             return true;
-        }else if(this.spielfeld[zeilenNummer][spaltenNummer].gebeAnzahlAngrenzenderMinen() > 0){ //Zelle mit Zahl?
+        }else if(this.spielfeld[zeilenNummer][spaltenNummer].gebeAnzahlAngrenzenderMinen() > 0){ //Zelle mit Zahl > 0?
             this.spielfeld[zeilenNummer][spaltenNummer].deckeAuf();
             return false;
-        }else{
-            //TODO Add Breath-first search
+        }else{ //Die Zelle ist 0. Über Breitensuche werden alle zusammenhängenden 0 und die erste Reihe Zahlen aufgedeckt.
+            aufdeckenFlaeche(zeilenNummer, spaltenNummer);
             return false;
         }
         
