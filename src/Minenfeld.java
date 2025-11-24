@@ -10,79 +10,6 @@ public class Minenfeld {
     int spaltenAnzahl;
     int minenAnzahl;
 
-    Zelle[][] testfeld;
-
-    //DEBUG Methode
-    private void printSpielfeld(){
-         for (int zeilenIndex = 0; zeilenIndex < this.zeilenAnzahl; zeilenIndex++) {
-            for (int spaltenIndex = 0; spaltenIndex < this.spaltenAnzahl; spaltenIndex++) {
-                if (this.spielfeld[zeilenIndex][spaltenIndex].gebeIstMineZustand()==true) {
-                    System.out.print("X");
-                }else{
-                    System.out.print(this.spielfeld[zeilenIndex][spaltenIndex].gebeAnzahlAngrenzenderMinen());
-                }
-                System.out.print(" ");
-            }
-            System.out.println("");
-        }
-    }
-
-    private void printSpielfeldAufgedeckt(){
-         for (int zeilenIndex = 0; zeilenIndex < this.zeilenAnzahl; zeilenIndex++) {
-            for (int spaltenIndex = 0; spaltenIndex < this.spaltenAnzahl; spaltenIndex++) {
-                if (this.spielfeld[zeilenIndex][spaltenIndex].gebeIstAufgedecktZustand() == false) {
-                    System.out.print("#");
-                }else if(this.spielfeld[zeilenIndex][spaltenIndex].gebeIstMineZustand() == true) {
-                    System.out.print("X");
-                    
-                }else{
-                    System.out.print(this.spielfeld[zeilenIndex][spaltenIndex].gebeAnzahlAngrenzenderMinen());
-                }
-                System.out.print(" ");
-            }
-            System.out.println("");
-        }
-    }
-
-    private  void erstelleTestfeld(){
-        this.testfeld = new Zelle[6][6];
-
-        for (int zeilenIndex = 0; zeilenIndex < 6; zeilenIndex++) {
-            for (int spaltenIndex = 0; spaltenIndex < 6; spaltenIndex++) {
-                this.testfeld[zeilenIndex][spaltenIndex] = new Zelle();
-            }
-        }
-
-        //platziere Minen
-        this.testfeld[2][2].setzeMine();
-        this.testfeld[4][3].setzeMine();
-        this.testfeld[5][4].setzeMine();
-
-        this.testfeld[1][1].zaehleAngerenzendeMinenHochUmEins();
-        this.testfeld[1][2].zaehleAngerenzendeMinenHochUmEins();
-        this.testfeld[1][3].zaehleAngerenzendeMinenHochUmEins();
-
-        this.testfeld[2][1].zaehleAngerenzendeMinenHochUmEins();
-        this.testfeld[2][3].zaehleAngerenzendeMinenHochUmEins();
-
-        this.testfeld[3][1].zaehleAngerenzendeMinenHochUmEins();
-        this.testfeld[3][2].zaehleAngerenzendeMinenHochUmEins();
-        this.testfeld[3][2].zaehleAngerenzendeMinenHochUmEins();
-        this.testfeld[3][3].zaehleAngerenzendeMinenHochUmEins();
-        this.testfeld[3][3].zaehleAngerenzendeMinenHochUmEins();
-        this.testfeld[3][4].zaehleAngerenzendeMinenHochUmEins();
-
-        this.testfeld[4][2].zaehleAngerenzendeMinenHochUmEins();
-        this.testfeld[4][4].zaehleAngerenzendeMinenHochUmEins();
-        this.testfeld[4][4].zaehleAngerenzendeMinenHochUmEins();
-        this.testfeld[4][5].zaehleAngerenzendeMinenHochUmEins();
-
-        this.testfeld[5][2].zaehleAngerenzendeMinenHochUmEins();
-        this.testfeld[5][3].zaehleAngerenzendeMinenHochUmEins();
-        this.testfeld[5][3].zaehleAngerenzendeMinenHochUmEins();
-        this.testfeld[5][5].zaehleAngerenzendeMinenHochUmEins();
-    }
-
     //private Methoden    
     private void platziereMinen(int zuVerteilendeMinen, Random Zufallsgenerator){
         int zufaelligeZeile = Zufallsgenerator.nextInt(zeilenAnzahl);
@@ -316,4 +243,84 @@ public class Minenfeld {
     public Zelle gebeFeld(int zeilenNummer, int spaltenNummer){
         return this.spielfeld[zeilenNummer][spaltenNummer];
     }
+
+
+
+
+
+
+    //Testmethoden die bei der Entwicklung gebraucht wurden:
+
+     Zelle[][] testfeld;
+
+    private void printSpielfeld(){
+         for (int zeilenIndex = 0; zeilenIndex < this.zeilenAnzahl; zeilenIndex++) {
+            for (int spaltenIndex = 0; spaltenIndex < this.spaltenAnzahl; spaltenIndex++) {
+                if (this.spielfeld[zeilenIndex][spaltenIndex].gebeIstMineZustand()==true) {
+                    System.out.print("X");
+                }else{
+                    System.out.print(this.spielfeld[zeilenIndex][spaltenIndex].gebeAnzahlAngrenzenderMinen());
+                }
+                System.out.print(" ");
+            }
+            System.out.println("");
+        }
+    }
+
+    private void printSpielfeldAufgedeckt(){
+         for (int zeilenIndex = 0; zeilenIndex < this.zeilenAnzahl; zeilenIndex++) {
+            for (int spaltenIndex = 0; spaltenIndex < this.spaltenAnzahl; spaltenIndex++) {
+                if (this.spielfeld[zeilenIndex][spaltenIndex].gebeIstAufgedecktZustand() == false) {
+                    System.out.print("#");
+                }else if(this.spielfeld[zeilenIndex][spaltenIndex].gebeIstMineZustand() == true) {
+                    System.out.print("X");
+                    
+                }else{
+                    System.out.print(this.spielfeld[zeilenIndex][spaltenIndex].gebeAnzahlAngrenzenderMinen());
+                }
+                System.out.print(" ");
+            }
+            System.out.println("");
+        }
+    }
+
+    private  void erstelleTestfeld(){
+        this.testfeld = new Zelle[6][6];
+
+        for (int zeilenIndex = 0; zeilenIndex < 6; zeilenIndex++) {
+            for (int spaltenIndex = 0; spaltenIndex < 6; spaltenIndex++) {
+                this.testfeld[zeilenIndex][spaltenIndex] = new Zelle();
+            }
+        }
+
+        //platziere Minen
+        this.testfeld[2][2].setzeMine();
+        this.testfeld[4][3].setzeMine();
+        this.testfeld[5][4].setzeMine();
+
+        this.testfeld[1][1].zaehleAngerenzendeMinenHochUmEins();
+        this.testfeld[1][2].zaehleAngerenzendeMinenHochUmEins();
+        this.testfeld[1][3].zaehleAngerenzendeMinenHochUmEins();
+
+        this.testfeld[2][1].zaehleAngerenzendeMinenHochUmEins();
+        this.testfeld[2][3].zaehleAngerenzendeMinenHochUmEins();
+
+        this.testfeld[3][1].zaehleAngerenzendeMinenHochUmEins();
+        this.testfeld[3][2].zaehleAngerenzendeMinenHochUmEins();
+        this.testfeld[3][2].zaehleAngerenzendeMinenHochUmEins();
+        this.testfeld[3][3].zaehleAngerenzendeMinenHochUmEins();
+        this.testfeld[3][3].zaehleAngerenzendeMinenHochUmEins();
+        this.testfeld[3][4].zaehleAngerenzendeMinenHochUmEins();
+
+        this.testfeld[4][2].zaehleAngerenzendeMinenHochUmEins();
+        this.testfeld[4][4].zaehleAngerenzendeMinenHochUmEins();
+        this.testfeld[4][4].zaehleAngerenzendeMinenHochUmEins();
+        this.testfeld[4][5].zaehleAngerenzendeMinenHochUmEins();
+
+        this.testfeld[5][2].zaehleAngerenzendeMinenHochUmEins();
+        this.testfeld[5][3].zaehleAngerenzendeMinenHochUmEins();
+        this.testfeld[5][3].zaehleAngerenzendeMinenHochUmEins();
+        this.testfeld[5][5].zaehleAngerenzendeMinenHochUmEins();
+    }
+
 }
