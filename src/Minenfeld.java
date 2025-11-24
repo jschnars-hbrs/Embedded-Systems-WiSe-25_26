@@ -230,17 +230,11 @@ public class Minenfeld {
                     }
                 }
             }
-            /* 
-            for (int i[] : aufzudeckenListe) {// DEBUG print
-                System.out.println(Arrays.toString(i));
-            }*/
-
+        
             aufzudeckenListe.remove(0);
             if(aufzudeckenListe.isEmpty() == false){
                 position = aufzudeckenListe.get(0);
-                //System.out.println("Position der obersten Zelle übernehmen: " + position[0] + position[1]);
             }        
-            //System.out.println(""); 
         }
     }
 
@@ -252,7 +246,15 @@ public class Minenfeld {
         this.minenAnzahl = minenAnzahl;
 
         if(this.minenAnzahl > this.zeilenAnzahl*this.spaltenAnzahl){
-            throw new ArithmeticException("Die Anzahl der Minen darf die Anzahl der Felder des Speifeld nicht überschreiten.");
+            
+            /*Falls versucht wird ein Spielfeld mit mehr Minen zu erzeugen als das Feld Zellen besitzt, 
+            wird die Anzahl der Minen auf die Halbe Zellenanzahl runter gesetzt. */
+            if(this.zeilenAnzahl*this.spaltenAnzahl % 2 != 0){
+                this.minenAnzahl = (this.zeilenAnzahl*this.spaltenAnzahl+1)/2;
+            }else{
+                this.minenAnzahl = (this.zeilenAnzahl*this.spaltenAnzahl)/2;
+            }
+            
         }
 
         //Leeres Spifelfeld der Breite "spaltenAnzahl" & der Höhe "zeilenAnzahl" erstellt
@@ -268,8 +270,8 @@ public class Minenfeld {
         Random Zufallsgenerator = new Random();
         platziereMinen(this.minenAnzahl, Zufallsgenerator);
         zaehleMinen();
-        printSpielfeld(); //DEBUG Print
-        System.out.println("");
+        //printSpielfeld(); //DEBUG Print
+        //System.out.println("");
 
         /* 
          
@@ -278,12 +280,13 @@ public class Minenfeld {
         this.zeilenAnzahl=6;
         this.spielfeld = this.testfeld;
         printSpielfeld(); //DEBUG Print
-        */
+        
         if(aufdecken(4, 4) == true){
             System.out.println("Mine getroffen");
         }
          
         printSpielfeldAufgedeckt(); //DEBUG Print
+        */
        
     }
 
