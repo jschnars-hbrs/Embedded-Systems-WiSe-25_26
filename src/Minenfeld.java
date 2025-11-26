@@ -15,12 +15,19 @@ public class Minenfeld {
         int zufaelligeZeile = Zufallsgenerator.nextInt(zeilenAnzahl);
         int zufaelligeSpalte = Zufallsgenerator.nextInt(spaltenAnzahl);
         if (zuVerteilendeMinen > 0){
+            if(this.spielfeld[zufaelligeZeile][zufaelligeSpalte].gebeIstMineZustand() == false){
+                this.spielfeld[zufaelligeZeile][zufaelligeSpalte].setzeMine();
+                platziereMinen((zuVerteilendeMinen - 1),Zufallsgenerator);
+            }else{
+                platziereMinen(zuVerteilendeMinen,Zufallsgenerator);
+            }
+            /* 
             try {
                 this.spielfeld[zufaelligeZeile][zufaelligeSpalte].setzeMine();
                 platziereMinen((zuVerteilendeMinen - 1),Zufallsgenerator);
             } catch (ArithmeticException e) {
                 platziereMinen(zuVerteilendeMinen,Zufallsgenerator);
-            }
+            }*/
         }            
     }
 
@@ -197,7 +204,7 @@ public class Minenfeld {
         Random Zufallsgenerator = new Random();
         platziereMinen(this.minenAnzahl, Zufallsgenerator);
         zaehleMinen();
-        //printSpielfeld(); //DEBUG Print
+        printSpielfeld(); //DEBUG Print
         //System.out.println("");
 
         /* 
