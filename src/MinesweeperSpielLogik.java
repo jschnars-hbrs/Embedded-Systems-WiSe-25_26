@@ -23,7 +23,8 @@ public class MinesweeperSpielLogik {
         int minen = level.getMinen();
 
         // 2. WECHSEL! Wir rufen den BAUHERRN von Tabea an (nicht generieren).
-        this.minenfeld = new Minenfeld(zeilen, spalten, minen);
+        this.minenfeld = new Minenfeld(); //Hab die Generierung in eine eigene Methode gepackt -Tabea
+        this.minenfeld.generiere(zeilen, spalten, minen);//Diese Methode gibt nun true bei erfolgreicher Generierung zurück -Tabea
         //Timmer
         this.timer.starten();
     }

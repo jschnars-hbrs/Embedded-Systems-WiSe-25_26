@@ -1,7 +1,6 @@
 //Autorin: Tabea Barteldrees
-import java.util.Random;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Random;
 
 public class Minenfeld {
 
@@ -21,13 +20,6 @@ public class Minenfeld {
             }else{
                 platziereMinen(zuVerteilendeMinen,Zufallsgenerator);
             }
-            /* 
-            try {
-                this.spielfeld[zufaelligeZeile][zufaelligeSpalte].setzeMine();
-                platziereMinen((zuVerteilendeMinen - 1),Zufallsgenerator);
-            } catch (ArithmeticException e) {
-                platziereMinen(zuVerteilendeMinen,Zufallsgenerator);
-            }*/
         }            
     }
 
@@ -173,24 +165,18 @@ public class Minenfeld {
     }
 
 
-    public Minenfeld(int zeilenAnzahl, int spaltenAnzahl, int minenAnzahl){
-        
+    public boolean generiere(int zeilenAnzahl, int spaltenAnzahl, int minenAnzahl){
+
+        /*Bevor das Minenfeld generiert wird, wird überprüft, ob versucht wird ein Feld mit mehr Minen
+        zu erstellen, als auf dem Minenfeld Platz haben. Dann handelt es sich um ein ungültiges Feld
+        und die Generierung wird abgebrochen.*/
+        if(minenAnzahl > zeilenAnzahl*spaltenAnzahl){
+            return false;
+        }
+
         this.zeilenAnzahl = zeilenAnzahl;
         this.spaltenAnzahl = spaltenAnzahl;
         this.minenAnzahl = minenAnzahl;
-
-        if(this.minenAnzahl > this.zeilenAnzahl*this.spaltenAnzahl){
-            
-            /*Falls versucht wird ein Spielfeld mit mehr Minen zu erzeugen als das Feld Zellen besitzt, 
-            wird die Anzahl der Minen auf die Halbe Zellenanzahl runter gesetzt. */
-            if(this.zeilenAnzahl*this.spaltenAnzahl % 2 != 0){
-                this.minenAnzahl = (this.zeilenAnzahl*this.spaltenAnzahl+1)/2;
-            }else{
-                this.minenAnzahl = (this.zeilenAnzahl*this.spaltenAnzahl)/2;
-            }
-            
-        }
-
         //Leeres Spifelfeld der Breite "spaltenAnzahl" & der Höhe "zeilenAnzahl" erstellt
         this.spielfeld = new Zelle[this.zeilenAnzahl][this.spaltenAnzahl];
 
@@ -204,26 +190,24 @@ public class Minenfeld {
         Random Zufallsgenerator = new Random();
         platziereMinen(this.minenAnzahl, Zufallsgenerator);
         zaehleMinen();
-        printSpielfeld(); //DEBUG Print
+        //printSpielfeld(); //DEBUG Print
         //System.out.println("");
 
-        /* 
-         
+        /*     
         erstelleTestfeld(); //DEBUG Print
         this.spaltenAnzahl=6;
         this.zeilenAnzahl=6;
         this.spielfeld = this.testfeld;
         printSpielfeld(); //DEBUG Print
-        
+            
         if(aufdecken(4, 4) == true){
             System.out.println("Mine getroffen");
         }
-         
+            
         printSpielfeldAufgedeckt(); //DEBUG Print
         */
-       
+        return true;
     }
-
     
     public boolean aufdecken(int zeilenNummer, int spaltenNummer){
          

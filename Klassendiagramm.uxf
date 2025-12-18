@@ -10,7 +10,7 @@
 + gebeFeld(zeilenNummer, spaltenNummer): Zelle
 + gebeScore(): int
 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>143</x><y>468</y><w>78</w><h>117</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>40;10;10;70</additional_attributes></element><element><id>UMLClass</id><coordinates><x>13</x><y>559</y><w>533</w><h>247</h></coordinates><panel_attributes>Minenfeld
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>143</x><y>468</y><w>78</w><h>117</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>40;10;10;70</additional_attributes></element><element><id>UMLClass</id><coordinates><x>13</x><y>559</y><w>572</w><h>247</h></coordinates><panel_attributes>Minenfeld
 --
 - spielfeld: Zelle[ ][ ]
 - zeilenAnzahl: int
@@ -19,7 +19,7 @@
 - flaggenUebrigAnzahl: int
 - minenGefundenAnzahl: int
 --
-+ Minenfeld(zeilenAnzahl: int, spaltenAnzahl: int, minenAnzahl: int)
++ generiere(zeilenAnzahl: int, spaltenAnzahl: int, minenAnzahl: int): boolean
 + aufdecken(zeilenNummer: int, spaltenNummer: int): boolean
 + wechselMarkierung(zeilenNummer: int, spaltenNummer: int)
 + gebeFeld(zeilenNummer, spaltenNummer): Zelle
