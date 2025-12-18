@@ -1,0 +1,28 @@
+\documentclass[12pt,			%changed by me
+  numbers=noenddot,			% Kein . am Ende einer Nummerierung
+  bibliography=totoc,       % Literatur im Inhaltsverzeichnis
+  listof=totoc,				% Verzeichnisse im Inhaltsverzeichnis
+  captions=tableheading,    % Tabellenüberschriften
+]{scrbook}
+\input{header.tex}
+
+\begin{document}
+\input{Titelseite}
+
+
+%\tableofcontents    %Inhaltsverzeichnis
+%\cleardoublepage
+
+\mainmatter         %Beginn des Haupteils (arabische Seitennummerierung)
+\input{Inhalt/Einleitung}
+\input{Inhalt/Zelle}
+\input{Inhalt/Minenfeld}
+
+
+\appendix%Beginn des Anhangs, nummeriert in lateinischen Buchstaben
+\input{Inhalt/Anhang}%Anhang hier einfügen
+\backmatter%Ende des Dokuments
+%\printbibliography
+
+
+\end{document}

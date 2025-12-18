@@ -1,0 +1,109 @@
+% Deutsche Spracheinstellungen & Silbentrennung
+\usepackage{polyglossia}
+\setmainlanguage{german}
+
+% Korrekte Anführungszeichen und Zitate
+\usepackage[autostyle=true]{csquotes}
+
+% --- SEITENGEOMETRIE & LAYOUT ---
+% Seitenränder laut Leitfaden, Tabelle 2 [cite: 402]
+\usepackage[
+  left=4cm,	%Linker Seitenrand (Bindung beachten!!!)
+  right=2cm,
+  top=3.5cm,
+  bottom=2cm,
+  %footskip=2cm,
+  a4paper
+]{geometry}
+
+% Zeilenabstand auf 1,5-zeilig setzen [cite: 404]
+\usepackage{setspace}
+\onehalfspacing
+
+% --- SCHRIFTARTEN ---
+% Empfehlung: Eine "seriöse" Schriftart wie Times New Roman oder Libertinus verwenden [cite: 402]
+% XeLaTeX wird benötigt
+\usepackage{fontspec}
+\setmainfont{Times New Roman} % Oder z.B. "Libertinus Serif"
+%\setsansfont{Arial}           % Oder z.B. "Libertinus Sans"
+%\setmonofont{Courier New}      % Oder z.B. "Libertinus Mono"
+
+% --- KOPF- UND FUSSZEILE ---
+% [cite: 405]
+\usepackage[automark]{scrlayer-scrpage}
+\pagestyle{scrheadings}
+\clearpairofpagestyles
+\ihead{\headmark} % Innere Kopfzeile: Kapitel
+\ohead{}          % Äußere Kopfzeile: leer
+\ofoot[\pagemark]{\pagemark} % Fußzeile: Seitenzahl
+\ifoot{}
+
+\setlength{\footskip}{1.0cm}
+
+% --- MATHEMATIK & PHYSIK ---
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{siunitx} % Für korrekten Satz von Einheiten
+
+% --- GRAFIKEN & TABELLEN ---
+\usepackage{graphicx}
+%\graphicspath{{images/}} % Bilder im Unterordner 'images' ablegen
+\usepackage{caption}     % Für Bild- und Tabellenunterschriften
+\usepackage{subcaption}
+\usepackage{booktabs}    % Für schönere Tabellenlinien
+\usepackage{tabularx}
+
+% --- LITERATURVERZEICHNIS ---
+% Harvard-Stil (Autor-Jahr) 
+\usepackage[
+    backend=biber,
+    style=numeric,%authoryear-comp,
+    sorting=nyt,
+    citestyle=numeric,
+    %citestyle=authoryear,
+    maxcitenames=2,
+    maxbibnames=99,
+    giveninits=true,
+    uniquename=init,
+    doi=true,
+    url=true,
+    isbn=false
+]{biblatex}
+\addbibresource{bibliography.bib} % Name der .bib Datei
+
+% --- ABKÜRZUNGSVERZEICHNIS ---
+% 
+\usepackage[acronym, toc, nonumberlist]{glossaries-extra}
+\setabbreviationstyle[acronym]{long-short}
+%\input{abbreviations.tex} % Lädt die definierten Abkürzungen
+%\makeglossaries
+%\makenoidxglossaries
+
+% --- VERLINKUNGEN IM PDF ---
+\usepackage{hyperref}
+
+
+% --- SONSTIGES ---
+\usepackage[german]{cleveref} % Für intelligente Verweise, z.B. "siehe Abbildung 2.1"
+\usepackage{float}
+
+
+\usepackage{scrhack}
+\usepackage{lipsum} % Nur für Fülltext, kann später entfernt werden
+
+\usepackage{scrlayer-scrpage}
+
+\usepackage{todonotes}
+\usepackage{siunitx}
+\sisetup{locale = DE}
+\usepackage[section]{placeins}
+
+\usepackage{pgf}
+\usepackage{adjustbox}
+
+\providecommand{\mathdefault}[1]{#1}
+
+\usepackage{pdfpages}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{textcomp}
