@@ -1,0 +1,185 @@
+<diagram program="umletino" version="15.1"><zoom_level>5</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>895</x><y>260</y><w>105</w><h>60</h></coordinates><panel_attributes>TaskManager
+--
+TaskManager (Timer &amp;timer) 
+virtual void 	add (Task *ptr)
+virtual DWORD 	getCycleTime (void)
+ virtual LWORD 	getTics (void)
+ T * 	getNext (void)
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1000</x><y>380</y><w>105</w><h>35</h></coordinates><panel_attributes>Task 
+--
+virtual void 	update (void)=0
+T * 	getNext (void)
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>940</x><y>315</y><w>120</w><h>75</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;220;130</additional_attributes></element><element><id>UMLClass</id><coordinates><x>680</x><y>365</y><w>265</w><h>60</h></coordinates><panel_attributes>Clock
+--
+Clock (TaskManager &amp;taskHandler, DWORD timeToWait_msec=0, WORD timeToWait_usec=0)
+void 	start (DWORD timeToWait_msec, WORD timeToWait_usec=0)
+void 	start (void)
+bool 	trigger (void)
+void 	stop (void)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>820</x><y>315</y><w>135</w><h>60</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes><additional_attributes>250;20;250;10;10;100</additional_attributes></element><element><id>UMLClass</id><coordinates><x>760</x><y>535</y><w>300</w><h>35</h></coordinates><panel_attributes>DigitalButton
+--
+DigitalButton (Digital &amp;devDigital, TaskManager &amp;taskManager, WORD timeBebounce, WORD timeLong)
+Action 	getAction ()
+T * 	getNext (void)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>905</x><y>410</y><w>155</w><h>135</h></coordinates><panel_attributes>lt=&lt;.
+&lt;&lt;instanceOf&gt;&gt;</panel_attributes><additional_attributes>290;10;10;250</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1070</x><y>535</y><w>105</w><h>35</h></coordinates><panel_attributes>DigitalEncoder
+--
+getEvent (void)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1045</x><y>410</y><w>85</w><h>135</h></coordinates><panel_attributes>lt=&lt;.
+&lt;&lt;instanceOf&gt;&gt;</panel_attributes><additional_attributes>10;10;150;250</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1180</x><y>535</y><w>255</w><h>65</h></coordinates><panel_attributes>DigitalIndicator
+--
+DigitalIndicator (Digital &amp;devDigital, TaskManager &amp;taskManager, BYTE brightness=100)
+virtual void 	setBrightness (BYTE b)
+virtual void 	clr (void)
+virtual void 	set (void)
+virtual void 	trigger (WORD time)
+void 	blink (WORD time, WORD duty)
+T * 	getNext (void)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1045</x><y>410</y><w>195</w><h>135</h></coordinates><panel_attributes>lt=&lt;.
+&lt;&lt;instanceOf&gt;&gt;</panel_attributes><additional_attributes>10;10;370;250</additional_attributes></element><element><id>UMLClass</id><coordinates><x>220</x><y>520</y><w>260</w><h>135</h></coordinates><panel_attributes>ScreenGraphic
+--
+ScreenGraphic (DisplayGraphic &amp;display)
+virtual void 	clear (void)
+virtual void 	refresh (void)
+virtual void 	printf (BYTE line, BYTE column, const char *format,...)
+virtual void 	setFont (const Font &amp;font, BYTE zoom=1)
+virtual void 	setZoom (BYTE zoom=1)
+virtual void 	setBackColor (WORD color)
+virtual void 	setTextColor (WORD color)
+virtual void 	drawText (WORD x, WORD y, const char *format,...)
+virtual void 	drawPixel (WORD x, WORD y, WORD color)
+virtual void 	drawRectangle (WORD x, WORD y, WORD w, WORD h, WORD color)
+virtual void 	drawRectangle (WORD x, WORD y, WORD w, WORD h, WORD th, WORD color)
+virtual void 	drawCircle (WORD x, WORD y, WORD r, WORD th, WORD color)
+virtual void 	drawCircle (WORD x, WORD y, WORD r, WORD color)
+virtual void 	drawLine (WORD x0, WORD y0, WORD x1, WORD y1, WORD th, WORD color)
+virtual void 	drawBitmap (WORD x, WORD y, const Bitmap &amp;bitmap)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>380</x><y>235</y><w>190</w><h>50</h></coordinates><panel_attributes>ScreenChar
+--
+ScreenChar (DisplayChar &amp;display)
+virtual void 	clear (void)
+virtual void 	refresh (void)
+virtual void 	printf (BYTE line, BYTE column, const char *format,...)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>365</x><y>740</y><w>130</w><h>45</h></coordinates><panel_attributes>Terminal
+--
+char * 	getString (void)
+WORD 	get ()
+virtual void 	printf (const char *format,...)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1190</x><y>695</y><w>360</w><h>35</h></coordinates><panel_attributes>DigitalEncoderJoystick 
+--
+DigitalEncoderJoystick (Digital *btnLeft, Digital *btnRight, Digital *btnCtrl, TaskManager &amp;taskManager, WORD repeatTime=0)
+Event 	getEvent (void)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1115</x><y>565</y><w>135</w><h>140</h></coordinates><panel_attributes>lt=&lt;.
+&lt;&lt;instanceOf&gt;&gt;</panel_attributes><additional_attributes>10;10;250;260</additional_attributes></element><element><id>UMLClass</id><coordinates><x>995</x><y>635</y><w>310</w><h>35</h></coordinates><panel_attributes>DigitalEncoderRotaryknob
+--
+DigitalEncoderRotaryknob (Digital *switchA, Digital *switchB, Digital *btnCtrl, TaskManager &amp;taskManager)
+Event 	getEvent (void)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1040</x><y>565</y><w>90</w><h>80</h></coordinates><panel_attributes>lt=&lt;.
+&lt;&lt;instanceOf&gt;&gt;</panel_attributes><additional_attributes>160;10;10;140</additional_attributes></element><element><id>UMLClass</id><coordinates><x>995</x><y>730</y><w>105</w><h>35</h></coordinates><panel_attributes>Analog
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>890</x><y>825</y><w>145</w><h>55</h></coordinates><panel_attributes>AnalogIn
+--
+virtual float 	get (void)
+virtual 	operator float (void)
+void 	calibrate (float x1, float y1, float x2, float y2)
+virtual WORD 	getRaw (void)=0
+virtual void 	enable ()=0</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>960</x><y>760</y><w>95</w><h>75</h></coordinates><panel_attributes>lt=&lt;.
+&lt;&lt;instanceOf&gt;&gt;</panel_attributes><additional_attributes>170;10;10;130</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1090</x><y>825</y><w>105</w><h>35</h></coordinates><panel_attributes>AnalogOut
+--
+virtual void 	set (float value)
+virtual float 	operator= (float value)
+virtual void 	setRaw (WORD value)=0</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1040</x><y>760</y><w>115</w><h>75</h></coordinates><panel_attributes>lt=&lt;.
+&lt;&lt;instanceOf&gt;&gt;</panel_attributes><additional_attributes>10;10;210;130</additional_attributes></element><element><id>UMLClass</id><coordinates><x>840</x><y>925</y><w>240</w><h>60</h></coordinates><panel_attributes>AnalogInAdc
+--
+AnalogInAdc (Adc &amp;adc, BYTE channel=0, float max=1.0, float min=0.0, BYTE para=0)
+virtual WORD 	getRaw (void)
+virtual void 	enable ()
+virtual float 	get (void)
+virtual 	operator float (void)
+	void 	calibrate (float x1, float y1, float x2, float y2)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>955</x><y>875</y><w>50</w><h>60</h></coordinates><panel_attributes>lt=&lt;.
+&lt;&lt;instanceOf&gt;&gt;</panel_attributes><additional_attributes>10;10;10;100</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1035</x><y>995</y><w>215</w><h>40</h></coordinates><panel_attributes>AnalogOutDac
+--
+AnalogOutDac (Dac &amp;dac, BYTE channel=0, float max=1.0f, float min=0.0f)
+virtual void 	setRaw (WORD value)
+virtual float 	operator= (float value)
+virtual void 	set (float value)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1135</x><y>855</y><w>50</w><h>150</h></coordinates><panel_attributes>lt=&lt;.
+&lt;&lt;instanceOf&gt;&gt;</panel_attributes><additional_attributes>10;10;10;280</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1160</x><y>1040</y><w>325</w><h>50</h></coordinates><panel_attributes>AnalogOutPWM
+--
+AnalogOutPWM (Timer &amp;timer, Timer::Mode mode=Timer::NORMAL, BYTE channel=0, float max=1.0f, float min=0.0f)
+virtual void 	setRaw (WORD value)
+virtual float 	operator= (float value)
+virtual void 	set (float value)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1135</x><y>855</y><w>200</w><h>195</h></coordinates><panel_attributes>lt=&lt;.
+&lt;&lt;instanceOf&gt;&gt;</panel_attributes><additional_attributes>10;10;380;370</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1350</x><y>345</y><w>165</w><h>95</h></coordinates><panel_attributes>Digital
+--
+Digital (Port &amp;port, BYTE pinId, Mode mode, bool def=0) 
+virtual void 	setMode (Mode mode)
+virtual void 	set (bool value)
+virtual void 	set (void)
+virtual void 	clr (void)
+virtual void 	toggle (void)
+virtual bool 	get (void)
+virtual Event 	getEvent (void)
+virtual bool 	operator= (bool value)
+virtual bool 	operator= (Digital &amp;x)
+virtual 	operator bool (void)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1370</x><y>435</y><w>80</w><h>270</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes><additional_attributes>140;10;10;520</additional_attributes></element><element><id>Relation</id><coordinates><x>1300</x><y>435</y><w>140</w><h>225</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes><additional_attributes>260;10;10;430</additional_attributes></element><element><id>Relation</id><coordinates><x>935</x><y>395</y><w>425</w><h>150</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes><additional_attributes>830;10;10;280</additional_attributes></element><element><id>Relation</id><coordinates><x>1230</x><y>410</y><w>130</w><h>135</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes><additional_attributes>240;10;10;250</additional_attributes></element><element><id>UMLClass</id><coordinates><x>135</x><y>230</y><w>200</w><h>150</h></coordinates><panel_attributes>DisplayGraphic 
+--
+virtual void 	setFont (const Font &amp;font, BYTE zoom=1)
+virtual void 	setZoom (BYTE zoom=1)
+virtual void 	setBackColor (WORD color)
+virtual void 	setPaintColor (WORD color)
+virtual void 	setTextColor (WORD color)
+virtual void 	gotoPixelPos (WORD x, WORD y)
+virtual void 	gotoTextPos (BYTE line, BYTE colum)
+virtual void 	putChar (char c)
+virtual void 	putPixel (WORD x, WORD y)
+virtual void 	putRectangle (WORD x, WORD y, WORD w, WORD h)
+virtual void 	putBitmap (WORD x, WORD y, const Bitmap &amp;bitmap)
+virtual void 	refresh (void)
+virtual WORD 	getWidth (void)
+virtual WORD 	getHeight (void)
+virtual void 	clear (void)=0
+virtual void 	putString (const char *str)
+virtual BYTE 	getNumberOfLines (void)
+virtual BYTE 	getNumberOfColumns (void)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>225</x><y>375</y><w>80</w><h>155</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;140;290</additional_attributes></element><element><id>UMLClass</id><coordinates><x>850</x><y>100</y><w>205</w><h>45</h></coordinates><panel_attributes>Timer
+--
+virtual DWORD 	getCycleTime (void)
+virtual void 	add (Task *ptr)
+virtual void 	enablePWM (BYTE channel, Mode polarity=NORMAL)=0
+virtual void 	setPWM (BYTE channel, WORD value)=0</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>945</x><y>140</y><w>15</w><h>130</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;240</additional_attributes></element><element><id>UMLClass</id><coordinates><x>805</x><y>185</y><w>105</w><h>35</h></coordinates><panel_attributes>Task 
+--
+virtual void 	update (void)=0
+T * 	getNext (void)
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>855</x><y>140</y><w>65</w><h>55</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes><additional_attributes>110;10;10;90</additional_attributes></element><element><id>Relation</id><coordinates><x>850</x><y>215</y><w>80</w><h>55</h></coordinates><panel_attributes>lt=&lt;.
+&lt;&lt;instanceOf&gt;&gt;</panel_attributes><additional_attributes>10;10;140;90</additional_attributes></element><element><id>UMLClass</id><coordinates><x>560</x><y>85</y><w>105</w><h>35</h></coordinates><panel_attributes>_object: Class_
+--
+id: Long="36548"
+[waiting for message]</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>555</x><y>320</y><w>130</w><h>35</h></coordinates><panel_attributes>Adc
+--
+virtual void 	enable (BYTE ch, BYTE para=0)
+virtual WORD 	get (BYTE ch)
+virtual void 	update (void)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>615</x><y>200</y><w>200</w><h>130</h></coordinates><panel_attributes>lt=&lt;.
+&lt;&lt;instanceOf&gt;&gt;</panel_attributes><additional_attributes>380;10;10;240</additional_attributes></element><element><id>Relation</id><coordinates><x>615</x><y>350</y><w>255</w><h>585</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;490;1150</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1415</x><y>205</y><w>130</w><h>45</h></coordinates><panel_attributes>Bitmap
+--
+Bitmap (const BYTE *ptr)
+WORD 	getWidth (void) const
+WORD 	getHeight (void) const
+WORD 	getPixel (WORD x, WORD y) const</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1335</x><y>805</y><w>120</w><h>35</h></coordinates><panel_attributes>DAC
+--
+virtual void 	set (BYTE ch, WORD value)=0
+virtual void 	enable (BYTE ch)=0</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1165</x><y>835</y><w>245</w><h>170</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes><additional_attributes>470;10;10;320</additional_attributes></element><element><id>UMLClass</id><coordinates><x>160</x><y>40</y><w>160</w><h>70</h></coordinates><panel_attributes>DisplayChar
+--
+virtual void 	clear (void)=0
+virtual void 	refresh (void)=0
+virtual void 	gotoTextPos (BYTE line, BYTE column)=0
+virtual void 	putChar (char c)=0
+virtual void 	putString (const char *str)
+virtual BYTE 	getNumberOfLines (void)
+virtual BYTE 	getNumberOfColumns (void)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>230</x><y>105</y><w>50</w><h>135</h></coordinates><panel_attributes>lt=&lt;.
+&lt;&lt;instanceOf&gt;&gt;</panel_attributes><additional_attributes>10;10;10;250</additional_attributes></element><element><id>Relation</id><coordinates><x>250</x><y>105</y><w>230</w><h>140</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;440;260</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1685</x><y>275</y><w>140</w><h>30</h></coordinates><panel_attributes>Rtc
+--
+virtual void 	set (const Rtc::Properties &amp;clock)=0
+virtual BYTE 	get (Rtc::Properties &amp;clock)=0</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>5</x><y>40</y><w>90</w><h>45</h></coordinates><panel_attributes>Touch
+--
+virtual void 	update (void)=0
+virtual WORD 	getPosX (void)
+virtual WORD 	getPosY (void)
+virtual BYTE 	isTouched (void)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>540</x><y>675</y><w>145</w><h>70</h></coordinates><panel_attributes>Uart
+--
+virtual void 	set (BYTE data)
+virtual void 	set (const BYTE *data, WORD length)
+virtual void 	set (const char *str)
+virtual bool 	isTxBufferFull (void)
+virtual WORD 	getFifoRemainingSize (void)
+virtual bool 	get (BYTE &amp;data)
+virtual BYTE 	get (void)</panel_attributes><additional_attributes></additional_attributes></element></diagram>
