@@ -10,27 +10,24 @@ public class MinesweeperSpielLogik {
   
     // --- KONSTRUKTOR ---
     public MinesweeperSpielLogik() {
-        this.minenfeld = new Minenfeld();
+        this.minenfeld = null;
         this.timer = new Timer();
     }
     // --- ÖFFENTLICHE METHODEN (API) ---
-    
-    public void starten(Schwierigkeit level) {
-      /** 
-       * Diese drei Zahlen (Zeilen, Spalten, Minen) hängen direkt von der Schwierigkeitsstufe ab, 
-       * die du in Schwierigkeit-Block definierst. 
-       */
 
-        // Wir verwenden die Werte des empfangenen „Levels”.
-        this.minenfeld.generieren(
-            level.getZeilen(), 
-            level.getSpalten(), 
-            level.getMinen()
-        );
+    public void starten(Schwierigkeit level) {
         
+        // 1. Wir bekommen die Zahlen aus Juliáns Objekt (Schwierigkeit).
+        int zeilen = level.getZeilen();
+        int spalten = level.getSpalten();
+        int minen = level.getMinen();
+
+        // 2. WECHSEL! Wir rufen den BAUHERRN von Tabea an (nicht generieren).
+        this.minenfeld = new Minenfeld(); //Hab die Generierung in eine eigene Methode gepackt -Tabea
+        this.minenfeld.generiere(zeilen, spalten, minen);//Diese Methode gibt nun true bei erfolgreicher Generierung zurück -Tabea
+        //Timmer
         this.timer.starten();
     }
-
     
     public void stoppen() {
         this.timer.stoppen();

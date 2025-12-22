@@ -23,7 +23,9 @@ public class Zelle {
     }
 
     public void deckeAuf(){
-        this.istAufgedeckt = true;
+        if(this.istMarkiert == false){
+            this.istAufgedeckt = true;
+        }
     }
 
 
