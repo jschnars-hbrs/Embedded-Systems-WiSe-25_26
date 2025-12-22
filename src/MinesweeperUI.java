@@ -8,6 +8,7 @@ public class MinesweeperUI {
 
     protected MinesweeperSpielLogik spielLogik;
     protected Schwierigkeit schwierigkeit;
+    
 
     public MinesweeperUI() {
     }
