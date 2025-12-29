@@ -4,31 +4,29 @@ import Timer;
 import Zelle;
 
 public class MinesweeperSpielLogik {
-    // --- ATTRIBUTE ---
+
     private Minenfeld minenfeld;
     private Timer timer;
-  
-    // --- KONSTRUKTOR ---
+
     public MinesweeperSpielLogik() {
+
         this.minenfeld = null;
         this.timer = new Timer();
     }
-    // --- ÖFFENTLICHE METHODEN (API) ---
 
     public void starten(Schwierigkeit level) {
         
-        // 1. Wir bekommen die Zahlen aus Juliáns Objekt (Schwierigkeit).
+
         int zeilen = level.getZeilen();
         int spalten = level.getSpalten();
         int minen = level.getMinen();
 
-        // 2. WECHSEL! Wir rufen den BAUHERRN von Tabea an (nicht generieren).
-        this.minenfeld = new Minenfeld(); //Hab die Generierung in eine eigene Methode gepackt -Tabea
-        this.minenfeld.generiere(zeilen, spalten, minen);//Diese Methode gibt nun true bei erfolgreicher Generierung zurück -Tabea
-        //Timmer
+
+        this.minenfeld = new Minenfeld();
+        boolean exito = this.minenfeld.generiere(zeilen, spalten, minen);
         this.timer.starten();
     }
-    
+
     public void stoppen() {
         this.timer.stoppen();
     }
