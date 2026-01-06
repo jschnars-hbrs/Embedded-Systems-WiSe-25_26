@@ -1,7 +1,3 @@
-import Schwierigkeit; 
-import Minenfeld;
-import Timer;
-import Zelle;
 
 public class MinesweeperSpielLogik {
 
@@ -44,6 +40,6 @@ public class MinesweeperSpielLogik {
     }
 
     public int gebeScore() {
-        return this.timer.gebeZeit(); 
+        return this.timer.getZeit(); 
     }
 }

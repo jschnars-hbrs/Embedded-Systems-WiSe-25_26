@@ -1,5 +1,5 @@
 import java.util.Scanner;
-import Schwierigkeit;
+
 
 
 public class MinesweeperTerminal extends MinesweeperUI {

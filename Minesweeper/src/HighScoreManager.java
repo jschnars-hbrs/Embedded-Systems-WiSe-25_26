@@ -2,13 +2,6 @@ import java.nio.file.Path;
 import java.io.IOException;
 import java.nio.file.Files;
 
-// TODO das enum ist zu Testzwecken enthalten und sollte in eine eigene Datei
-// ausgelagert werden
-enum Schwierigkeit {
-    LEICHT,
-    MITTEL,
-    SCHWER
-}
 
 public class HighScoreManager {
     // Hier werden die Highscore-Objekte für jede Schwierigkeit gehalte
