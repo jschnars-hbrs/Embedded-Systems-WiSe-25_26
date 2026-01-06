@@ -1,23 +1,24 @@
 public class Timer {
 
-    private long startZeit;      // Marca el momento exacto en que el timer comenzó a contar
-    private long laufZeit;       // Tiempo acumulado en milisegundos
-    private TimerStatus status;  // Estado actual del timer
+    private long startZeit;     // Zeitpunkt (in ms), an dem der Timer gestartet wurde
+    private long laufZeit;      // Bereits verstrichene Zeit in Millisekunden
+    private TimerStatus status; // Aktueller Zustand des Timers
 
+    // Konstruktor: initialisiert den Timer
     public Timer() {
         this.laufZeit = 0;
         this.status = TimerStatus.neugestartet;
     }
 
-    // Inicia o reanuda el timer
+    // Startet oder setzt den Timer fort, falls er aktuell nicht läuft
     public void starten() {
         if (status != TimerStatus.laufend) {
-            startZeit = System.currentTimeMillis(); // Momento actual
+            startZeit = System.currentTimeMillis(); // aktueller Systemzeitpunkt
             status = TimerStatus.laufend;
         }
     }
 
-    // Detiene el timer y guarda el tiempo acumulado
+    // Stoppt den Timer und speichert die bisher verstrichene Zeit
     public void stoppen() {
         if (status == TimerStatus.laufend) {
             laufZeit += System.currentTimeMillis() - startZeit;
@@ -25,22 +26,22 @@ public class Timer {
         }
     }
 
-    // Reinicia completamente el contador a 0
+    // Setzt den Timer vollständig zurück. Die gespeicherte Zeit wird auf 0 gesetzt
     public void zuruecksetzen() {
         laufZeit = 0;
         status = TimerStatus.neugestartet;
     }
 
-    // Devuelve el tiempo transcurrido en segundos
+    // Gibt die aktuell verstrichene Zeit in Sekunden zurück
     public int getZeit() {
         if (status == TimerStatus.laufend) {
             long jetzt = System.currentTimeMillis();
-            return (int)((laufZeit + (jetzt - startZeit)) / 1000); // pasa ms → s
+            return (int) ((laufZeit + (jetzt - startZeit)) / 1000);
         }
-        return (int)(laufZeit / 1000);
+        return (int) (laufZeit / 1000);
     }
 
-    // Devuelve el estado actual del timer (necesario según el diagrama)
+    // Gibt den aktuellen Status des Timers zurück
     public TimerStatus getStatus() {
         return status;
     }
