@@ -220,8 +220,10 @@ public class Minenfeld {
         }else if(this.spielfeld[zeilenNummer][spaltenNummer].gebeAnzahlAngrenzenderMinen() > 0){ //Zelle mit Zahl > 0?
             this.spielfeld[zeilenNummer][spaltenNummer].deckeAuf();
             return false;
-        }else{ //Die Zelle ist 0. Über Breitensuche werden alle zusammenhängenden 0 und die erste Reihe Zahlen aufgedeckt.
+        }else if(this.spielfeld[zeilenNummer][spaltenNummer].gebeAnzahlAngrenzenderMinen() == 0){ //Die Zelle ist 0. Über Breitensuche werden alle zusammenhängenden 0 und die erste Reihe Zahlen aufgedeckt.
             aufdeckenFlaeche(zeilenNummer, spaltenNummer);
+            return false;
+        }else{ // Die Zelle ist breitsaufgedeckt
             return false;
         }
         
