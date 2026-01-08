@@ -211,19 +211,19 @@ public class Minenfeld {
     
     public boolean aufdecken(int zeilenNummer, int spaltenNummer){
          
-        if(this.spielfeld[zeilenNummer][spaltenNummer].gebeIstMarkiertZustand() == true){//Ist die Zelle markiert & darf nicht aufgedeckt werden?
-            return false;
-        }else if(this.spielfeld[zeilenNummer][spaltenNummer].gebeIstMineZustand() == true){ //Liegt dort eine Mine?
+        if(this.spielfeld[zeilenNummer][spaltenNummer].gebeIstMineZustand() == true){ //Liegt dort eine Mine?
             this.spielfeld[zeilenNummer][spaltenNummer].deckeAuf();
             aufdeckenKomplett();
             return true;
-        }else if(this.spielfeld[zeilenNummer][spaltenNummer].gebeAnzahlAngrenzenderMinen() > 0){ //Zelle mit Zahl > 0?
+        }else if(this.spielfeld[zeilenNummer][spaltenNummer].gebeIstAufgedecktZustand() == true){ //Ist die Zelle bereits aufgedeckt?
+            return false;
+        }else if(this.spielfeld[zeilenNummer][spaltenNummer].gebeIstMarkiertZustand() == true){//Ist die Zelle markiert? Dann darf sie nicht aufgedeckt werden.
+            return false;
+        }else if(this.spielfeld[zeilenNummer][spaltenNummer].gebeAnzahlAngrenzenderMinen() > 0){ //Begfindet sich eine Minen in der Nachbarschaft?
             this.spielfeld[zeilenNummer][spaltenNummer].deckeAuf();
             return false;
-        }else if(this.spielfeld[zeilenNummer][spaltenNummer].gebeAnzahlAngrenzenderMinen() == 0){ //Die Zelle ist 0. Über Breitensuche werden alle zusammenhängenden 0 und die erste Reihe Zahlen aufgedeckt.
+        }else { //Die Zelle ist 0. Über Breitensuche werden alle zusammenhängenden 0 und die erste Reihe Zahlen aufgedeckt.
             aufdeckenFlaeche(zeilenNummer, spaltenNummer);
-            return false;
-        }else{ // Die Zelle ist breitsaufgedeckt
             return false;
         }
         
