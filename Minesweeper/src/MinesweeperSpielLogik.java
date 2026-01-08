@@ -42,4 +42,6 @@ public class MinesweeperSpielLogik {
     public int gebeScore() {
         return this.timer.getZeit(); 
     }
+
+    
 }
