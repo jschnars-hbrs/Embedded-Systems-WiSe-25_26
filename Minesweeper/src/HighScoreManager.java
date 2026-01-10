@@ -70,15 +70,22 @@ class HighScore {
     private Path dateiPfad;
 
     HighScore(String dateiPfad) {
-        this.dateiPfad = Path.of(dateiPfad);
+        this.dateiPfad = java.nio.file.Paths.get(dateiPfad);
+
         this.highScores = new Score[MAX_SCORES];
+        for (int i = 0; i < MAX_SCORES; i++) {
+            highScores[i] = new Score();
+            highScores[i].Name = "---";
+            highScores[i].Score = 0;
+        }
         ladeAusDatei();
     }
 
     private void ladeAusDatei() {
         // Lade die Highscores aus der Datei
         try {
-            String fileContent = Files.readString(dateiPfad);
+            String fileContent = new String(Files.readAllBytes(dateiPfad), java.nio.charset.StandardCharsets.UTF_8);
+
             String[] lines = fileContent.split("\n");// Teile den Inhalt in Zeilen auf gibt auch die ranfolge der Scores
                                                      // vor
             if (lines.length < MAX_SCORES) {
@@ -109,6 +116,9 @@ class HighScore {
             for (int i = 0; i < MAX_SCORES; i++) {
                 // Initialisiere mit Standardwerten, wenn die Datei nicht existiert oder ein
                 // Fehler auftritt Fängt explizit nicht alle Fehler ab nur IO bezogene
+                 if (highScores[i] == null) {
+                    highScores[i] = new Score();
+                }
                 highScores[i].Name = "---";
                 highScores[i].Score = 0;
             }
@@ -136,7 +146,8 @@ class HighScore {
             fileContent.append(highScores[i].Name).append(":").append(highScores[i].Score).append("\n");
         }
         try {
-            Files.writeString(dateiPfad, fileContent.toString());
+            Files.write(dateiPfad, fileContent.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8));
+
         } catch (IOException e) {
             // TODO Schreibe in den log das die Datei nicht gespeichert werden konnte
             // hier sollte keine outofmemory exception auftreten da das array auf max size

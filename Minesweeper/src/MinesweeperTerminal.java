@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class MinesweeperTerminal extends MinesweeperUI {
 
     private final Scanner scanner = new Scanner(System.in);
+    private final HighScoreManager highScoreManager = new HighScoreManager();
 
     public MinesweeperTerminal(MinesweeperSpielLogik spielLogik) {
         super(spielLogik);
@@ -125,7 +126,8 @@ public class MinesweeperTerminal extends MinesweeperUI {
                     spielLogik.aufdecken(r, c);
                     if (spielLogik.gebeFeld(r, c).gebeIstMineZustand()) {
                         gebeAus(level);
-                        return false; // verloren
+                        System.out.println("BOOM! Du hast eine Mine getroffen.");  
+                        return false;
                     }
 
                     
@@ -189,14 +191,60 @@ public class MinesweeperTerminal extends MinesweeperUI {
             && (correctFlags == level.getMinen())
             && alleFelderAufgedeckt;
 
-    if (gewonnen) {
-        gebeAus(level);
-        return true; 
-    }else{
-        return false;
+if (gewonnen) {
+    gebeAus(level);
+    System.out.println("Gewonnen! Alle Minen wurden gefunden!");
+    handleHighscoreNachSieg(level);
+    return true;
+}else{
+    return false;
+}
+
+}
+
+
+private void handleHighscoreNachSieg(Schwierigkeit level) {
+    float score = spielLogik.gebeScore(); // Zeit in Sekunden als Score
+
+
+    System.out.print("Möchtest du deinen Highscore speichern? (j/n) > ");
+    String input = scanner.nextLine().trim().toLowerCase();
+
+    if (input.equals("j") || input.equals("ja")) {
+        String name = "";
+        while (name.trim().isEmpty()) {
+
+            System.out.print("Name eingeben > ");
+            name = scanner.nextLine().trim();
+            if (name.trim().isEmpty()) {
+
+                System.out.println("Name darf nicht leer sein.");
+            }
+        }
+
+        highScoreManager.updateScore(level, name, score);
+        System.out.println("Highscore wurde gespeichert!");
     }
 
-    
+    zeigeTop5(level);
+}
+
+private void zeigeTop5(Schwierigkeit level) {
+    Score[] scores = highScoreManager.ladeScore(level);
+
+    System.out.println();
+    System.out.println("Top 5 Highscores (" + level + ")");
+    System.out.println("----------------------------");
+
+    for (int i = 0; i < scores.length; i++) {
+        Score s = scores[i];
+        String name = (s == null || s.Name == null || s.Name.trim().isEmpty()) ? "---" : s.Name;
+        float value = (s == null) ? 0 : s.Score;
+
+        System.out.printf("%d) %-15s  %6.0fs%n", (i + 1), name, value);
+    }
+
+    System.out.println();
 }
 
 }
