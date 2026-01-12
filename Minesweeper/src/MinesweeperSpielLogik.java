@@ -1,47 +1,121 @@
-
 public class MinesweeperSpielLogik {
 
     private Minenfeld minenfeld;
     private Timer timer;
+    private Schwierigkeit level;
+
+
+
+    // Statusmeldungn als boolean, um verschiedene Spielzustände abzufragen
+    private boolean spielLaeuft;
+    private boolean gewonnen;
+    private boolean verloren;
+    private boolean pausiert;
+
 
     public MinesweeperSpielLogik() {
-
-        this.minenfeld = null;
         this.timer = new Timer();
     }
 
     public void starten(Schwierigkeit level) {
-        
-
-        int zeilen = level.getZeilen();
-        int spalten = level.getSpalten();
-        int minen = level.getMinen();
-
+        this.level = level;
 
         this.minenfeld = new Minenfeld();
-        boolean exito = this.minenfeld.generiere(zeilen, spalten, minen);
-        this.timer.starten();
+        minenfeld.generiere(
+                level.getZeilen(),
+                level.getSpalten(),
+                level.getMinen()
+        );
+
+        timer.zuruecksetzen();
+        timer.starten();
+
+        spielLaeuft = true;
+        gewonnen = false;
+        verloren = false;
     }
 
     public void stoppen() {
-        this.timer.stoppen();
+        timer.stoppen();
+        spielLaeuft = false;
+    }
+    public boolean istPausiert() {
+    return pausiert;
     }
 
-    public void aufdecken(int zeilenNummer, int spaltenNummer) {
-        this.minenfeld.aufdecken(zeilenNummer, spaltenNummer);
+    public void togglePause() {
+    if (!spielLaeuft) return;
+
+        if (!pausiert) {
+            pausiert = true;
+            timer.stoppen();      // Zeit anhalten
+        } else {
+            pausiert = false;
+            timer.starten();      // Zeit weiterlaufen lassen
+        }
     }
 
-    public void wechselMarkierung(int zeilenNummer, int spaltenNummer) {
-        this.minenfeld.wechselMarkierung(zeilenNummer, spaltenNummer);
+    public boolean laeuftNoch() {
+        return spielLaeuft;
     }
 
-    public Zelle gebeFeld(int zeilenNummer, int spaltenNummer) {
-        return this.minenfeld.gebeFeld(zeilenNummer, spaltenNummer);
+    public boolean istGewonnen() {
+        return gewonnen;
+    }
+
+    public boolean istVerloren() {
+        return verloren;
     }
 
     public int gebeScore() {
-        return this.timer.getZeit(); 
+        return timer.getZeit();
     }
 
-    
+    public Zelle gebeFeld(int r, int c) {
+        return minenfeld.gebeFeld(r, c);
+    }
+
+    public void aufdecken(int r, int c) {
+        if (!spielLaeuft || pausiert) return;
+
+        minenfeld.aufdecken(r, c);
+        Zelle z = minenfeld.gebeFeld(r, c);
+
+        if (z.gebeIstMineZustand()) {  // Wenn man Zelle aufdeckt und diese eine Mine ist, dann hat man verloren
+            verloren = true;
+            spielLaeuft = false;
+            timer.stoppen();
+            return;
+        }
+
+        if (pruefeGewonnen()) {         // Wenn alle Flaggen korrekt gesetzt sind und alle übrigen Nicht-Minen-Felder aufgedckt sind, hat man gewonne
+            gewonnen = true;
+            spielLaeuft = false;
+            timer.stoppen();
+        }
+    }
+
+    public void wechselMarkierung(int r, int c) {
+        if (!spielLaeuft || pausiert) return;
+
+        minenfeld.wechselMarkierung(r, c);
+
+        if (pruefeGewonnen()) {   //Wenn alle Flaggen korrekt gesetzt sind, und alle Felder aufgedckt sind, hat man gewonnen
+            gewonnen = true;
+            spielLaeuft = false;
+            timer.stoppen();
+        }
+    }
+
+    private boolean pruefeGewonnen() {
+        for (int r = 0; r < level.getZeilen(); r++) {
+            for (int c = 0; c < level.getSpalten(); c++) {
+                Zelle z = minenfeld.gebeFeld(r, c);
+                if (!z.gebeIstMineZustand() && !z.gebeIstAufgedecktZustand()) {
+                    return false;
+             }
+            }
+        }
+        return true;
+    }
 }
