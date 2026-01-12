@@ -100,14 +100,9 @@ public class MinesweeperSpielLogik {
 
         minenfeld.wechselMarkierung(r, c);
 
-        if (pruefeGewonnen()) {   //Wenn alle Flaggen korrekt gesetzt sind, und alle Felder aufgedckt sind, hat man gewonnen
-            gewonnen = true;
-            spielLaeuft = false;
-            timer.stoppen();
-        }
     }
 
-    private boolean pruefeGewonnen() {
+    private boolean pruefeGewonnen() {                      //Wenn alle Nicht-Minen-Felder aufgedeckt sind, hat man gewonnen (klassische Regeln, die Flaggen müssen theoretisch gar nicht gesetzt werden)
         for (int r = 0; r < level.getZeilen(); r++) {
             for (int c = 0; c < level.getSpalten(); c++) {
                 Zelle z = minenfeld.gebeFeld(r, c);
