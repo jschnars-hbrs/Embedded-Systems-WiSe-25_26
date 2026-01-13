@@ -1,0 +1,204 @@
+ver-01.05.06
+============
+* Bug fix
+    - NetEthTCP: Check pointer app before using
+
+ver-01.05.05
+============
+* Bug fix
+    - Clock::timeout() returns true continously when timer not running
+
+* New feature:
+    - Display-Driver NT35510 (variant of OTM8009A) added.
+    - Touch-Driver FT6306 (variant of FT6206) added.
+
+ver-01.05.04
+============
+* Bug fix
+    - board_pinout.txt: table layout
+    - configHw.h: typo
+    - Demo/Blinky/main.cpp: better name of variable
+    - HwAdc.cpp, HwDac.cpp: avoid type mismatch (warning)
+    - USB, IAD: use subclass, protocol and function from major interface descriptor
+
+* New feature:
+    - Ethernet and TCP/UDP: Check connection and generate connection events
+
+ver-01.05.03
+============
+* Bug fix
+    - STM32-Nucleo32-L432, config.h: Missing pin configuration
+    - STM32F4, *F7, USB: No Bulk IN transfer
+    - Example StdClock.cpp: format mismatch
+    - NetEthTCP.cpp: unused variable
+    - Rtos_Mcu.h: Missing getTics() and getTimeOfTic()
+    - USB_Uart: Wrong data type bufferSize
+
+ver-01.05.02
+============
+* Bug fix
+    - Std::Clock timeout() replaces isRunning()
+    - USB: missing OUT transfer 
+    - USB: avoid second ZLP
+
+* New feature:
+    - Clock features added to RTOS
+
+ver-01.05.01
+============
+* Bug fix
+    - NetEthTCP.cpp: Spurious FIN flag received
+    - STM32: Timer ARR overflow
+
+ver-01.05.00
+============
+* Bug fix
+    - Documentation moved to Doc/HTML
+    - Typo and comments
+    - asm("NOP") added due to uVision optimization
+    - STM32F7xx: missing Port K
+    - STM32F7xx: I2Cmaster_Mcu, register STOP condition corrected
+
+* New feature:
+    - MQTT
+    
+* New hardware support
+    - Ethernet_ENC28J60
+    - Touch controller FT5336
+    - Graphic-RAM display
+    - New Controller: STM32746
+    - New Example: STM32F746-Discovery
+
+* Minor changes:
+    - Documentation updated
+    - HTML.zip replaces Doc.exe
+    - STM32_Programmer replaces ST-Link_CLI
+    - List of examples (main.cpp) refined
+    - STM32F7xx: LTDC and FMC configuration refined
+    - SPImaster: new method transceiveByte() and configuration refined
+
+ver-01.04.04
+============
+* Bug fix
+    - NetEthTCP: Check port first
+    - STM32L4xx: I2Cmaster_Mcu, register STOP condition corrected
+    - STM32L4xx: Return false, if PinConfig::set() failed
+    - STM32L1xx: DAC enable buffer
+
+ver-01.04.03
+============
+* Bug fix:
+    - Typo
+    - Missing TCP acknowledge and wrong data size
+
+* New feature:
+    - New methods: Net::isNewIP() and NetSocket::get() 
+
+* Minor changes:
+    - Select bitmap and font source in example
+
+ver-01.04.02
+============
+* Bug fix:
+    - Use const Font&, const Bitmap&
+    - Typo: 'Mcu' in file names
+
+* New feature:
+    - STM32L7xx: UART7 added  
+
+ver-01.04.01
+============
+* Bug fix:
+    - AnalogOut: Parameter channel and value changed
+  
+* New feature:
+    - DigitalIndicator with brightness control
+  
+ver-01.04.00
+============
+* New feature:
+    - Touch with rotation
+    - TCP/UDP stack
+
+* New hardware support
+    - External interrupt
+    - Ethernet 
+    
+* Minor changes:
+    - Touch moved to new directory
+    - New version of example Demo/Blinky
+    - New example Demo/LED 
+    
+ver-01.03.00
+============
+* Bug fix:
+    - Reference to ATmega documentation
+    - Architecture-depend 16/32 bit missmatch in printf formats 
+    - Minor changes / documentation
+    - STM32L4xx/UART: Interrupt error
+
+* New feature:
+    - Inter system communication (ISC): Unified transceiving of data packages via UART or USB    
+    - Device/Analog: More generic support of analog interfaces like ADC,DAC, PWM
+    - Std/Clock: Support of time measurement / timeout 
+    - Std/SharedMem: Support of concurrent memory access 
+    - Std/Fifo: New method: getFree() to get free memory size
+    - Std/Sequence: New index operator[]
+    - Std/Crc: CRC calculation 
+
+* New hardware support
+    - Hardware/Encoder: HW based quadrature encode (STM32)
+    - Display SSD1306 with I2C interface
+    - STM32L4xx/SPImaster
+
+ver-01.02.01
+============
+* Bug fix: 
+    - Additional "" in batch files starting an app
+    - typo corrected
+    - #defines corrected (name missmatch)
+    - DisplayGraphic default black background
+    - STM32L1xx: asm("NOP") and "volatile" added to avoid compiler optimization
+    - Missing ATmega Documentation
+    
+ver-01.02.00
+============
+* Bug fix: 
+    - STM32L4: TIM1 added
+    - STM32L4: SystemInit_48MHzClock, enable CRS
+    - STM32L4: startup_stm32l432xx.S, no compiler flag '_PROJECT_CPP'
+    - enums in USBdescriptor public
+    - Module USB_Uart, connection detection
+    - typo corrected
+    - uVision project file STM32L4xx: reset after flash, optimization
+    
+* New feature:
+    - I2Cslave
+    
+* New hardware support
+    - ATmega32u4
+
+ver-01.01.01
+============
+* Bug fix: Support path names with white spaces
+
+ver-01.01.00
+============
+* New feasture: Context switching and a simple RTOS
+* New hardware support: 
+    - STM32F4xx
+    - STM32F7xx
+    - Display devices 
+* New classes: 
+    - 'Control' classes for user I/O
+    - More abstract handling of LCD output, touch event input, terminal input and task handling
+    - MemoryImage to handle independent objects within a flash sector
+    - SPImaster
+* Minor changes:
+   - Example/.../config*.h reorganized
+   - Improved Documentation 
+   - Some bugfixes
+  
+ver-01.00.00
+============
+initial version
