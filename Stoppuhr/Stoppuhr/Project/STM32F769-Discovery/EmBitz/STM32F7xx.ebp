@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <EmBitz_project_file>
-	<EmBitzVersion release="2.60" revision="0" />
+	<EmBitzVersion release="2.65" revision="0" />
 	<FileVersion major="2" minor="0" />
 	<Project>
 		<Option title="STM32F7xx" />
 		<Option pch_mode="2" />
 		<Option compiler="armgcc_eb" />
+		<Option virtualFolders="..\..\..\Src\;" />
 		<Build>
 			<Target title="Debug">
 				<Option output="bin\Debug\STM32F7xx.elf" />
@@ -82,12 +83,25 @@
 		<Unit filename="startup.S">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="StopUhrTimer.h">
+			<Option virtualFolder="..\..\..\Src\" />
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="..\..\..\Src\Board\STM32F769-Discovery\ReportHandler.h" />
 		<Unit filename="..\..\..\Src\lib.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\..\Src\main.cpp">
 			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\Src\StopUhr.h">
+			<Option virtualFolder="..\..\..\Src\" />
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="..\..\..\Src\StopUhrTimer.cpp">
+			<Option compilerVar="CC" />
+			<Option virtualFolder="..\..\..\Src\" />
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Extensions>
 			<code_completion />
