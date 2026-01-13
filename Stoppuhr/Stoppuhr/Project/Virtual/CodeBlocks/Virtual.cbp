@@ -61,6 +61,10 @@
 			<Add library="${EMBSYSLIB}/Src/Hardware/MCU/Virtual/Sys/libusb-1.0.a" />
 		</Linker>
 		<Unit filename="../../../Src/Board/Virtual/ReportHandler.h" />
+		<Unit filename="../../../Src/StopUhr.cpp" />
+		<Unit filename="../../../Src/StopUhr.h" />
+		<Unit filename="../../../Src/StopUhrTimer.cpp" />
+		<Unit filename="../../../Src/StopUhrTimer.h" />
 		<Unit filename="../../../Src/lib.cpp" />
 		<Unit filename="../../../Src/main.cpp" />
 		<Extensions>
