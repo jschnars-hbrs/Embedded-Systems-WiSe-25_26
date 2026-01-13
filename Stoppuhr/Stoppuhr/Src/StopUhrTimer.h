@@ -4,28 +4,25 @@
 #include <cstdint>
 #include "StopUhr.h"
 
-using namespace EmbSysLib::Hw; //dann kennt man Timer usw.
+using namespace EmbSysLib::Hw;
 
-class StopUhrTimer : public StopUhr {   //StopUhrTimer erbt von StopUhr
+class StopUhrTimer : public StopUhr, public Timer::Task {
 public:
+    explicit StopUhrTimer(Timer* timer);
+    ~StopUhrTimer() override = default;
 
-    explicit StopUhrTimer(Timer* timer); //Konstruktor, nimmt Timer erntgegen
-
-    ~StopUhrTimer() override = default; //Destruktor
+    void update() override;  // Wird vom Timer aufgerufen
 
     DWORD getPassedTimeuS();
-
-    // Implementierung der StopUhr-Interface-Methoden
     DWORD getPassedTime() override;
     void start() override;
     void stop() override;
     void reset() override;
 
 private:
-    Timer* m_timer;           // Pointer auf das Timer-Objekt
-    DWORD m_startTime;        // Startzeitpunkt
-    DWORD m_accumulatedTime;  // Akkumulierte Zeit (für Pause/Resume)
-    bool m_running;           // Hilfsvariable ob die Stoppuhr läuft
+    DWORD m_cycleTime;      // Zykluszeit in µs
+    DWORD m_counter;        // Zählt die Zyklen
+    bool m_running;
 };
 
-#endif /* STOPUHRTIMER_H_INCLUDED */
+#endif
