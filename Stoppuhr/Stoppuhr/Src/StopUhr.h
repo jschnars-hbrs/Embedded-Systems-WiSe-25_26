@@ -1,6 +1,6 @@
 #ifndef STOPUHR_H_INCLUDED
 #define STOPUHR_H_INCLUDED
-
+#include "EmbSysLib.h"
 
 class StopUhr
 {

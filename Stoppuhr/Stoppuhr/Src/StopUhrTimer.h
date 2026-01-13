@@ -1,9 +1,10 @@
 #ifndef STOPUHRTIMER_H_INCLUDED
 #define STOPUHRTIMER_H_INCLUDED
-
+#include "EmbSysLib.h"
 #include <cstdint>
 #include "StopUhr.h"
-#include "Timer.h"
+
+using namespace EmbSysLib::Hw; //dann kennt man Timer usw.
 
 class StopUhrTimer : public StopUhr {   //StopUhrTimer erbt von StopUhr
 public:

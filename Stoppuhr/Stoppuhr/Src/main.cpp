@@ -5,82 +5,63 @@
 \date   20.09.2022
 \brief  Template
 */
-
 //*******************************************************************
 #include <stdio.h>
-
 #include "EmbSysLib.h"
-
 //-------------------------------------------------------------------
 #include "ReportHandler.h"
 #include "config.h"
 #include "StopUhrTimer.h"
-
-
-//*******************************************************************
-/*
-  LED:
-    LD1  red   PJ13
-    LD2 green  PJ5
-
-  Button:
-    Btn1       PF8
-    Btn2       PF9
-    Btn3       PA6
-    User       PA0
-
-*/
 //*******************************************************************
 
-//*******************************************************************
-class App : public Timer::Task
-{
-	public:
-    //---------------------------------------------------------------
-    App( Timer *timer )
-    {
-      T = timer->getCycleTime()*1E-6;
-      timer->add( this );
-    }
-
-    //---------------------------------------------------------------
-    void update()
-    {
-      cnt++;
-    }
-
-    //---------------------------------------------------------------
-    float getTime()
-    {
-      return( (float)cnt*T );
-    }
-
-	private:
-    //---------------------------------------------------------------
-    DWORD cnt = 0;
-    float T;
-};
-
-//*******************************************************************
 int main(void)
 {
   lcd.printf( 0, 0, __DATE__ "," __TIME__ );
-  lcd.printf( 1, 0, "Hello world!" );
+  lcd.printf( 1, 0, "Stopuhr Demo" );
   lcd.refresh();
 
-  App app( &timer );
+  StopUhrTimer stopuhr( &timer );
+
+  bool lastBtnState = false;
 
   while(1)
   {
-	  lcd.printf( 2, 0, "Time: %6.3f sec",app.getTime() );
+    bool btnPressed = Btn1.get();
 
-	  LD1.set( Btn1.get() );
-	  LD2.set( Btn2.get() );
+    // Flankenerkennung: Start/Stop bei Tastendruck
+    if( btnPressed && !lastBtnState )
+    {
+      if( stopuhr.getPassedTimeuS() == 0 || !LD1.get() )
+      {
+        stopuhr.start();
+        LD1.set( true );   // LED an = läuft
+      }
+      else
+      {
+        stopuhr.stop();
+        LD1.set( false );  // LED aus = gestoppt
+      }
+    }
+    lastBtnState = btnPressed;
 
-	  lcd.printf( 4, 0, "User:%d", User.get() );
-	  lcd.printf( 5, 0, "Btn1:%d", Btn1.get() );
-	  lcd.printf( 6, 0, "Btn2:%d", Btn2.get() );
-	  lcd.printf( 7, 0, "Btn3:%d", Btn3.get() );
-	  lcd.refresh();
+    // Reset mit Btn2
+    if( Btn2.get() )
+    {
+      stopuhr.reset();
+      LD1.set( false );
+    }
+
+    // Zeit anzeigen
+    DWORD timeUs = stopuhr.getPassedTimeuS();
+    DWORD timeMs = stopuhr.getPassedTime();
+
+    lcd.printf( 2, 0, "Zeit: %lu us   ", timeUs );
+    lcd.printf( 3, 0, "Zeit: %lu ms   ", timeMs );
+    lcd.printf( 4, 0, "Zeit: %.3f s   ", timeUs / 1000000.0f );
+
+    lcd.printf( 6, 0, "Btn1: Start/Stop" );
+    lcd.printf( 7, 0, "Btn2: Reset" );
+
+    lcd.refresh();
   }
 }
