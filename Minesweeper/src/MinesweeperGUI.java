@@ -633,7 +633,7 @@ public class MinesweeperGUI extends MinesweeperUI {
             spielPanel = null;
 
             SwingUtilities.invokeLater(() -> {
-                MinesweeperGUI_old_ohne_textures neueGUI = new MinesweeperGUI_old_ohne_textures(new MinesweeperSpielLogik());
+                MinesweeperGUI neueGUI = new MinesweeperGUI(new MinesweeperSpielLogik());
                 neueGUI.starten();
             });
         }
