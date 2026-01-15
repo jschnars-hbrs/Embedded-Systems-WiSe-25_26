@@ -28,7 +28,7 @@ public class MinesweeperGUI extends MinesweeperUI {
     private static final String TEXTUR_ZAHL_6 = "textures/zahl_6_1.png";             // z.B. "textures/zahl_6.png"
     private static final String TEXTUR_ZAHL_7 = "textures/zahl_7_1.png";             // z.B. "textures/zahl_7.png"
     private static final String TEXTUR_ZAHL_8 = "textures/zahl_8_1.png";             // z.B. "textures/zahl_8.png"
-    private static final String TEXTUR_HINTERGRUND = "textures/hintergrund.png";        // z.B. "textures/hintergrund.png"
+    private static final String TEXTUR_HINTERGRUND = "textures/hintergrund_1.png";        // z.B. "textures/hintergrund.png"
     // =============================================================================
 
     private static final Color FARBE_VERDECKT = new Color(170, 170, 170);
@@ -57,6 +57,8 @@ public class MinesweeperGUI extends MinesweeperUI {
     private BufferedImage bildFlagge;
     private BufferedImage[] bildZahlen = new BufferedImage[9];
     private BufferedImage bildHintergrund;
+
+    private static JFrame aktuelleInstanz = null;
 
     private JFrame frame;
     private SpielPanel spielPanel;
@@ -239,7 +241,12 @@ public class MinesweeperGUI extends MinesweeperUI {
     }
 
     private void initialisiereGUI(Schwierigkeit level) {
+        if (aktuelleInstanz != null) {
+            aktuelleInstanz.dispose();
+        }
+
         frame = new JFrame("Minesweeper");
+        aktuelleInstanz = frame;
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setLayout(new BorderLayout(5, 5));
@@ -540,9 +547,13 @@ public class MinesweeperGUI extends MinesweeperUI {
             return;
         }
 
+        Zelle zelle = spielLogik.gebeFeld(zeile, spalte);
+
         if (SwingUtilities.isLeftMouseButton(e)) {
-            spielLogik.aufdecken(zeile, spalte);
-            eingabeErhalten = true;
+            if (!zelle.gebeIstMarkiertZustand()) {
+                spielLogik.aufdecken(zeile, spalte);
+                eingabeErhalten = true;
+            }
         } else if (SwingUtilities.isRightMouseButton(e)) {
             spielLogik.wechselMarkierung(zeile, spalte);
             eingabeErhalten = true;
@@ -676,6 +687,7 @@ public class MinesweeperGUI extends MinesweeperUI {
         int antwort = JOptionPane.showConfirmDialog(
             frame,
             "Du hast gewonnen!\nZeit: " + score + " Sekunden\n\nMöchtest du deinen Score speichern?",
+
             "Gewonnen!",
             JOptionPane.YES_NO_OPTION,
             JOptionPane.QUESTION_MESSAGE
