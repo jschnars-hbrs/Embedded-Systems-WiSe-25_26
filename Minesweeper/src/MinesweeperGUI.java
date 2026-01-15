@@ -15,20 +15,20 @@ public class MinesweeperGUI extends MinesweeperUI {
     // TEXTUR-PFADE - Hier einfach den Pfad zu deinen PNG-Dateien eintragen
     // Wenn ein Pfad null oder leer ist, wird die Standard-Grafik verwendet
     // =============================================================================
-    private static final String TEXTUR_VERDECKT = "textures/verdeckt_normal.png";           // z.B. "textures/verdeckt.png"
-    private static final String TEXTUR_VERDECKT_HOVER = "textures/verdeckt_hover.png";     // z.B. "textures/verdeckt_hover.png"
-    private static final String TEXTUR_AUFGEDECKT = "textures/aufgedeckt.png";         // z.B. "textures/aufgedeckt.png"
-    private static final String TEXTUR_MINE = "textures/mine.png";               // z.B. "textures/mine.png"
-    private static final String TEXTUR_FLAGGE = "textures/flagge.png";             // z.B. "textures/flagge.png"
-    private static final String TEXTUR_ZAHL_1 = "textures/zahl_1.png";             // z.B. "textures/zahl_1.png"
-    private static final String TEXTUR_ZAHL_2 = "textures/zahl_2.png";             // z.B. "textures/zahl_2.png"
-    private static final String TEXTUR_ZAHL_3 = "textures/zahl_3.png";             // z.B. "textures/zahl_3.png"
-    private static final String TEXTUR_ZAHL_4 = "textures/zahl_4.png";             // z.B. "textures/zahl_4.png"
-    private static final String TEXTUR_ZAHL_5 = "textures/zahl_5.png";             // z.B. "textures/zahl_5.png"
-    private static final String TEXTUR_ZAHL_6 = "textures/zahl_6.png";             // z.B. "textures/zahl_6.png"
-    private static final String TEXTUR_ZAHL_7 = "textures/zahl_7.png";             // z.B. "textures/zahl_7.png"
-    private static final String TEXTUR_ZAHL_8 = "textures/zahl_8.png";             // z.B. "textures/zahl_8.png"
-    private static final String TEXTUR_HINTERGRUND = "";        // z.B. "textures/hintergrund.png"
+    private static final String TEXTUR_VERDECKT = "textures/verdeckt_normal_1.png";           // z.B. "textures/verdeckt.png"
+    private static final String TEXTUR_VERDECKT_HOVER = "textures/verdeckt_hover1.png";     // z.B. "textures/verdeckt_hover.png"
+    private static final String TEXTUR_AUFGEDECKT = "textures/aufgedeckt1.png";         // z.B. "textures/aufgedeckt.png"
+    private static final String TEXTUR_MINE = "textures/mine_1.png";               // z.B. "textures/mine.png"
+    private static final String TEXTUR_FLAGGE = "textures/flagge1.png";             // z.B. "textures/flagge.png"
+    private static final String TEXTUR_ZAHL_1 = "textures/zahl_1_1.png";             // z.B. "textures/zahl_1.png"
+    private static final String TEXTUR_ZAHL_2 = "textures/zahl_2_2.png";             // z.B. "textures/zahl_2.png"
+    private static final String TEXTUR_ZAHL_3 = "textures/zahl_3_1.png";             // z.B. "textures/zahl_3.png"
+    private static final String TEXTUR_ZAHL_4 = "textures/zahl_4_1.png";             // z.B. "textures/zahl_4.png"
+    private static final String TEXTUR_ZAHL_5 = "textures/zahl_5_1.png";             // z.B. "textures/zahl_5.png"
+    private static final String TEXTUR_ZAHL_6 = "textures/zahl_6_1.png";             // z.B. "textures/zahl_6.png"
+    private static final String TEXTUR_ZAHL_7 = "textures/zahl_7_1.png";             // z.B. "textures/zahl_7.png"
+    private static final String TEXTUR_ZAHL_8 = "textures/zahl_8_1.png";             // z.B. "textures/zahl_8.png"
+    private static final String TEXTUR_HINTERGRUND = "textures/hintergrund.png";        // z.B. "textures/hintergrund.png"
     // =============================================================================
 
     private static final Color FARBE_VERDECKT = new Color(170, 170, 170);
