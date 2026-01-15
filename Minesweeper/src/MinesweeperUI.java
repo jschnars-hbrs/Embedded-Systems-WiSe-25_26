@@ -6,7 +6,7 @@ public abstract class MinesweeperUI {
         this.spielLogik = spielLogik;
     }
 
-    public final void starten() {
+    public void starten() {
         Schwierigkeit level = waehleSchwierigkeit();
         spielLogik.starten(level);
 
