@@ -1,8 +1,8 @@
 public enum Schwierigkeit {
     TEST(4, 4, 1),
-    LEICHT(8, 8, 10),
-    MITTEL(14, 14, 40),
-    SCHWER(20, 20, 99);
+    LEICHT(9, 9, 10),
+    MITTEL(16, 16, 40),
+    SCHWER(16, 30, 99);
 
     private int zeilen;
     private int spalten;
