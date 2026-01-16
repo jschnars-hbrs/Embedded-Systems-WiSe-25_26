@@ -550,13 +550,15 @@ public class MinesweeperGUI extends MinesweeperUI {
         Zelle zelle = spielLogik.gebeFeld(zeile, spalte);
 
         if (SwingUtilities.isLeftMouseButton(e)) {
-            if (!zelle.gebeIstMarkiertZustand()) {
+            if (!zelle.gebeIstMarkiertZustand() && !zelle.gebeIstAufgedecktZustand()) {
                 spielLogik.aufdecken(zeile, spalte);
                 eingabeErhalten = true;
             }
         } else if (SwingUtilities.isRightMouseButton(e)) {
-            spielLogik.wechselMarkierung(zeile, spalte);
-            eingabeErhalten = true;
+            if (!zelle.gebeIstAufgedecktZustand()) {
+                spielLogik.wechselMarkierung(zeile, spalte);
+                eingabeErhalten = true;
+            }
         }
 
         aktualisiereAnzeige();
