@@ -101,7 +101,7 @@ public class Minenfeld {
 
         int position[] = {zeilenNummer, spaltenNummer};
         
-        ArrayList<int[]> aufzudeckenListe = new ArrayList();
+        ArrayList<int[]> aufzudeckenListe = new ArrayList<>();
         aufzudeckenListe.add(position);
         this.spielfeld[position[0]][position[1]].deckeAuf();
 
@@ -243,6 +243,7 @@ public class Minenfeld {
 
 
     //Testmethoden die bei der Entwicklung gebraucht wurden:
+/* 
 
      Zelle[][] testfeld;
 
@@ -315,5 +316,5 @@ public class Minenfeld {
         this.testfeld[5][3].zaehleAngerenzendeMinenHochUmEins();
         this.testfeld[5][5].zaehleAngerenzendeMinenHochUmEins();
     }
-
+*/
 }
