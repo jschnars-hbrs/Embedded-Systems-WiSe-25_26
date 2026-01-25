@@ -34,10 +34,8 @@ public class Zelle {
     }
 
     public void wechselMarkierung(){
-        if (this.gebeIstMarkiertZustand() == false) {
-            this.istMarkiert = true;
-        }else{
-            this.istMarkiert = false;
+        if(!this.istAufgedeckt){
+            this.istMarkiert = !this.istMarkiert;
         }
     }
 
