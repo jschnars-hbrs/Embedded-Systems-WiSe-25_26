@@ -190,6 +190,8 @@ public class Minenfeld {
         Random Zufallsgenerator = new Random();
         platziereMinen(this.minenAnzahl, Zufallsgenerator);
         zaehleMinen();
+
+        //Code der für den Modultest gebraucht wurde:
         //printSpielfeld(); //DEBUG Print
         //System.out.println("");
 
@@ -211,13 +213,14 @@ public class Minenfeld {
     
     public boolean aufdecken(int zeilenNummer, int spaltenNummer){
          
-        if(this.spielfeld[zeilenNummer][spaltenNummer].gebeIstMineZustand() == true){ //Liegt dort eine Mine?
+        if(this.spielfeld[zeilenNummer][spaltenNummer].gebeIstMarkiertZustand() == true){//Ist die Zelle markiert? Dann darf sie nicht aufgedeckt werden.
+            return false;
+        }
+        else if(this.spielfeld[zeilenNummer][spaltenNummer].gebeIstMineZustand() == true){ //Liegt dort eine Mine?
             this.spielfeld[zeilenNummer][spaltenNummer].deckeAuf();
             aufdeckenKomplett();
             return true;
         }else if(this.spielfeld[zeilenNummer][spaltenNummer].gebeIstAufgedecktZustand() == true){ //Ist die Zelle bereits aufgedeckt?
-            return false;
-        }else if(this.spielfeld[zeilenNummer][spaltenNummer].gebeIstMarkiertZustand() == true){//Ist die Zelle markiert? Dann darf sie nicht aufgedeckt werden.
             return false;
         }else if(this.spielfeld[zeilenNummer][spaltenNummer].gebeAnzahlAngrenzenderMinen() > 0){ //Begfindet sich eine Minen in der Nachbarschaft?
             this.spielfeld[zeilenNummer][spaltenNummer].deckeAuf();
@@ -226,7 +229,6 @@ public class Minenfeld {
             aufdeckenFlaeche(zeilenNummer, spaltenNummer);
             return false;
         }
-        
     }
     
     public void wechselMarkierung(int zeilenNummer, int spaltenNummer){
