@@ -12,7 +12,8 @@ Board:    STM32F769-Discovery
 */
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
+#ifndef config_guard
+#define config_guard
 //*******************************************************************
 #include "Hardware/Peripheral/Display/DisplayGraphic_OTM8009A.cpp"
 #include "Hardware/Peripheral/Touch/Touch_FT6206.cpp"
@@ -163,9 +164,9 @@ Pointer        pointer( touch );
 //-------------------------------------------------------------------
 // Digital
 //-------------------------------------------------------------------
-Digital    LD1 ( portJ,13, Digital::Out, 0 ); // LD1 (red)
-Digital    LD2 ( portJ, 5, Digital::Out, 0 ); // LD2 (green)
+
 Digital    Btn1( portF, 8, Digital::InPU,  1 );
 Digital    Btn2( portF, 9, Digital::InPU,  1 );
 Digital    Btn3( portA, 6, Digital::InPU,  1 );
 Digital    User( portA, 0, Digital::In,    0 ); // User button
+#endif

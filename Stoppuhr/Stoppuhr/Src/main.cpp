@@ -13,6 +13,7 @@
 #include "config.h"
 #include "StopUhrTimer.h"
 #include "ScreenManager.h"
+#include "BasicWatchface.h"
 //*******************************************************************
 int main(void)
 {
@@ -21,13 +22,15 @@ DigitalButton Button2(Btn2,taskManager,10,1000);
 DigitalButton Button3(Btn3,taskManager,10,1000);
 DigitalButton UserButton(User,taskManager,10,1000);
 ScreenManager screenManager(&Button1, &Button2, &Button3, &UserButton);
+BasicWatchface secondwatchface(&timer,&dispGraphic) ;
 // add watchfaces to screen manager here
-
+screenManager.addWatchFace(& secondwatchface);
 
 
 // add Screen manger to taskmanager
 
 taskManager.add(&screenManager);
+
 
   while (1)
   {
