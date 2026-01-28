@@ -2,7 +2,10 @@
 #define SCREENMANAGER_H_INCLUDED
 
 #include "EmbSysLib.h"
-#include "config.h"
+using namespace EmbSysLib::Hw;
+using namespace EmbSysLib::Dev;
+using namespace EmbSysLib::Ctrl;
+using namespace EmbSysLib::Mod;
 #include <vector>
 #include <algorithm>
 class Watchface{
@@ -12,7 +15,7 @@ public:
     virtual takeActionReturnValues handleButtons(DigitalButton * button1, DigitalButton * button2, DigitalButton * button3, DigitalButton * button_user)=0;
 };
 
-class ScreenManager: TaskManager::Task {
+class ScreenManager: public TaskManager::Task {
 public:
     ScreenManager(DigitalButton * button1, DigitalButton * button2, DigitalButton * button3, DigitalButton * user);
     bool setScreen(int numScreen);
@@ -23,7 +26,7 @@ public:
     bool removeWatchFace(Watchface * watchface);
     void update();
 private:
-    ScreenGraphic * m_screenGraphic;
+
     int m_numScreens;
     int m_currentScreen;
     std::vector<Watchface *> m_watchfaces;
