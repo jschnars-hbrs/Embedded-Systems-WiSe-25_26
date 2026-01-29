@@ -15,6 +15,15 @@ BouncingWatchFace::BouncingWatchFace(Timer_Mcu  *timer,DisplayGraphic * dispGrap
 
 }
 
+void BouncingWatchFace::changed_to(){
+
+    dispGraphic->setZoom(this->zoomFactor);
+    dispGraphic->setBackColor( this->colorBlack);
+    this->currentColor -= 1;
+    changeColor();
+}
+
+
 void BouncingWatchFace::setUp()
 {
     dispGraphic->setZoom(this->zoomFactor);
@@ -42,14 +51,6 @@ void BouncingWatchFace::update()
     }
 
     this->upDateDisplay();
-
-    /*
-    LD1.set( Btn1.get() );
-    LD2.set( Btn2.get() );
-
-    this->checkStartStoppBTN();
-    this->checkResetBTN();*/
-
 }
 
 //Graphics
@@ -57,17 +58,15 @@ void BouncingWatchFace::upDateDisplay()
 {
     dispGraphic->gotoPixelPos(this->posX, this->posY);
     dispGraphic->putString(this->displaytime);
-    //char txt[6] = "hello";
-    //dispGraphic->putString(txt);
     lcd->refresh();
 }
 
 void BouncingWatchFace::upDateDisplayTime()
 {
 
-    this->minuts=int(this->currenttime/60)%100;
-    this->sec=int(this->currenttime)%60;
-    this->milliSec=int(this->currenttime*1000)%1000;
+    this->minuts=int(this->currenttime/60000);
+    this->sec=int(this->currenttime/1000)%60;
+    this->milliSec=int(this->currenttime)%1000;
     this->displaytime[0] = (this->minuts/10)+48;
     this->displaytime[1] = this->minuts%10+48;
     this->displaytime[3] = this->sec/10+48;
@@ -117,7 +116,6 @@ void BouncingWatchFace::upDateAnimation()
 
 void BouncingWatchFace::upDatePos()
 {
-
     this->lastFrameUpdate = this->currenttime;
     this->posXOld = this->posX;
     this->posYOld = this->posY;
@@ -216,6 +214,9 @@ BouncingWatchFace::takeActionReturnValues BouncingWatchFace::handleButtons(Digit
     }
     if (button_user->getAction() == DigitalButton::LONG)
     {
+        myStoppWatch.stop();
+        this->run = false;
+        this->allowReset = true;
         return PREVIOUS_SCRREEN;
     }
 

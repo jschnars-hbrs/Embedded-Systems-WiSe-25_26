@@ -23,6 +23,7 @@ class BouncingWatchFace : public Watchface {
     public:
         BouncingWatchFace(Timer_Mcu  *timer,DisplayGraphic * dispGraphic, ScreenGraphic * lcd);
         void update() override;
+        void changed_to() override;
         takeActionReturnValues handleButtons(DigitalButton * button1, DigitalButton * button2, DigitalButton * button3, DigitalButton * button_user) override;
 
     private:
@@ -71,7 +72,6 @@ class BouncingWatchFace : public Watchface {
         bool setUpStatus = false;
         bool run = false;
         bool allowReset = true;
-
 
 
 
