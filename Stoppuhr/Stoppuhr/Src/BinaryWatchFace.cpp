@@ -70,7 +70,7 @@ void BinaryWatchFace::update() {
     lcd->refresh();
 }
 
-// Button-Steuerung (identisch zur Logik der Partnerin)
+// Button-Steuerung 
 Watchface::takeActionReturnValues BinaryWatchFace::handleButtons(DigitalButton * button1, DigitalButton * button2, DigitalButton * button3, DigitalButton * button_user) {
     
     // Button 1: Start
