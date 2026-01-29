@@ -12,6 +12,7 @@ class Watchface{
 public:
     enum takeActionReturnValues {NO_ACTION, NEXT_SCREEN, PREVIOUS_SCRREEN};
     virtual void update()=0;
+    virtual void changed_to()=0;
     virtual takeActionReturnValues handleButtons(DigitalButton * button1, DigitalButton * button2, DigitalButton * button3, DigitalButton * button_user)=0;
 };
 

@@ -19,6 +19,7 @@ bool ScreenManager::setScreen(int numScreen)
         return false;
     }
     m_currentScreen = numScreen;
+    m_watchfaces[m_currentScreen]->changed_to();
     return true;
 }
 bool ScreenManager::setNextScreen()
@@ -28,6 +29,7 @@ bool ScreenManager::setNextScreen()
         return false;
     }
     m_currentScreen = (m_currentScreen + 1) % m_numScreens;
+    m_watchfaces[m_currentScreen]->changed_to();
     return true;
 }
 bool ScreenManager::setPrevScreen()
@@ -37,6 +39,7 @@ bool ScreenManager::setPrevScreen()
         return false;
     }
     m_currentScreen = (m_currentScreen - 1 + m_numScreens) % m_numScreens;
+    m_watchfaces[m_currentScreen]->changed_to();
     return true;
 }
 void ScreenManager::addWatchFace(Watchface *watchface)
@@ -78,6 +81,7 @@ void ScreenManager::update(){
     {
         case Watchface::NEXT_SCREEN:
             setNextScreen();
+
             break;
         case Watchface::PREVIOUS_SCRREEN:
             setPrevScreen();
