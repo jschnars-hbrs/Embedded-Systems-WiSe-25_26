@@ -5,15 +5,25 @@ BasicWatchface::BasicWatchface(Timer_Mcu *timer, DisplayGraphic *in_dispGraphic,
 {
     dispGraphic = in_dispGraphic;
     lcd = in_lcd;
+    dispGraphic->setZoom(6);
     dispGraphic->setTextColor(RGB2COLOR(0, 0, 0));
     dispGraphic->setBackColor(RGB2COLOR(255, 255, 255));
     dispGraphic->clear();
     lcd->refresh();
 }
+
+void BasicWatchface::changed_to(){
+    dispGraphic->setZoom(6);
+    dispGraphic->setTextColor(RGB2COLOR(0, 0, 0));
+    dispGraphic->setBackColor(RGB2COLOR(255, 255, 255));
+    dispGraphic->clear();
+    lcd->refresh();
+}
+
 void BasicWatchface::update()
 {
-    char txt[1000] = "Hello World";
-    dispGraphic->clear();
+    char txt[100] = "Hello World";
+    //dispGraphic->clear();
     // Update display with stopwatch time
     DWORD time = stopwatch.getPassedTime();
     // Code to update the display goes here
