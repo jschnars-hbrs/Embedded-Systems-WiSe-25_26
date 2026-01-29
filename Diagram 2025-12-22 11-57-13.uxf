@@ -198,7 +198,7 @@ bool setNextScreen()
 bool setPrevScreen()
 void addWatchFace(Watchface *)
 void removeWatchFace(int numScreen)
-void update()</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>594</x><y>564</y><w>18</w><h>78</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;110;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>750</x><y>504</y><w>420</w><h>60</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes><additional_attributes>680;80;210;10;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>54</x><y>630</y><w>126</w><h>42</h></coordinates><panel_attributes>BasicWatchface
+void update()</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>594</x><y>564</y><w>18</w><h>78</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;110;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>54</x><y>630</y><w>126</w><h>42</h></coordinates><panel_attributes>BasicWatchface
 --
 BasicWatchface(StopUhr *)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>270</x><y>306</y><w>126</w><h>30</h></coordinates><panel_attributes>StopUhrRtc
 --
@@ -216,6 +216,6 @@ int getPassedTimeuS()</panel_attributes><additional_attributes></additional_attr
 &lt;&lt;instanceOf&gt;&gt;</panel_attributes><additional_attributes>150;10;10;160</additional_attributes></element><element><id>Relation</id><coordinates><x>390</x><y>0</y><w>1500</w><h>258</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes><additional_attributes>2480;410;670;10;10;340</additional_attributes></element><element><id>UMLClass</id><coordinates><x>0</x><y>678</y><w>180</w><h>42</h></coordinates><panel_attributes>BouncingWatchface
 --
 BouncingWatchface(StopUhr *)
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>750</x><y>522</y><w>1032</w><h>234</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes><additional_attributes>1700;370;530;350;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>174</x><y>684</y><w>372</w><h>30</h></coordinates><panel_attributes>lt=&lt;.
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>750</x><y>522</y><w>1032</w><h>234</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes><additional_attributes>1700;370;600;360;530;350;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>174</x><y>684</y><w>372</w><h>30</h></coordinates><panel_attributes>lt=&lt;.
 &lt;&lt;instanceOf&gt;&gt;</panel_attributes><additional_attributes>10;30;600;20</additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>228</x><y>288</y><w>432</w><h>78</h></coordinates><panel_attributes>Alternative not Implemented
 halign=left</panel_attributes><additional_attributes></additional_attributes></element></diagram>

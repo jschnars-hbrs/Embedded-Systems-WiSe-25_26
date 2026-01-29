@@ -94,6 +94,10 @@
 		<Unit filename="..\..\..\Src\main.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\..\Src\ScreenManager.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\Src\ScreenManager.h" />
 		<Unit filename="..\..\..\Src\StopUhr.h">
 			<Option virtualFolder="..\..\..\Src\" />
 			<Option target="&lt;{~None~}&gt;" />

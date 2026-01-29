@@ -1,7 +1,7 @@
 import java.nio.file.Path;
 import java.io.IOException;
 import java.nio.file.Files;
-
+import java.net.http.*;
 
 public class HighScoreManager {
     // Hier werden die Highscore-Objekte für jede Schwierigkeit gehalte
@@ -13,9 +13,9 @@ public class HighScoreManager {
 
     HighScoreManager() {
         // Initialisiere die Highscore-Objekte
-        highScoreLeicht = new HighScore("scores/HighScores_Leicht.txt");
-        highScoreMittel = new HighScore("scores/HighScores_Mittel.txt");
-        highScoreSchwer = new HighScore("scores/HighScores_Schwer.txt");
+        highScoreLeicht = new HighScore("scores/HighScores_Leicht.csv");
+        highScoreMittel = new HighScore("scores/HighScores_Mittel.csv");
+        highScoreSchwer = new HighScore("scores/HighScores_Schwer.csv");
         // theoretisch könnten die Highscore-Klassen auch mit IO Buffern übergeben
         // werden um später flexibler zu sein dies ist aber erstmal nicht vorgesehen
 
@@ -81,42 +81,46 @@ class HighScore {
         ladeAusDatei();
     }
 
+    protected void parseString(String fileContent) {
+        String[] lines = fileContent.split("\n");// Teile den Inhalt in Zeilen auf gibt auch die ranfolge der Scores
+                                                 // vor
+
+        if (lines.length < MAX_SCORES) {
+            // TODO Schreibe in den log das die Scores erweitert werden müssen
+        } else if (lines.length > MAX_SCORES) {
+            // TODO Schreibe in den log das die Scores gekürzt werden müssen
+        }
+        for (int i = 0; i < MAX_SCORES; i++) {
+            String[] parts = lines[i].split(":");// Versuche die Zeile in Name und Score zu teilen
+            if (parts.length != 2) {
+                // TODO Schreibe in den log das die Zeile i fehlerhaft ist
+                highScores[i].Name = "---";
+                highScores[i].Score = 0;
+            } else {
+                try {
+                    // Versuche den Score zu parsen
+                    highScores[i].Name = parts[0];
+                    highScores[i].Score = Float.parseFloat(parts[1]);
+                } catch (NumberFormatException e) {
+                    // TODO Schreibe in den log das die Zeile i fehlerhaft ist
+                    highScores[i].Name = "---";
+                    highScores[i].Score = 0;
+                }
+            }
+        }
+    }
+
     private void ladeAusDatei() {
         // Lade die Highscores aus der Datei
         try {
             String fileContent = new String(Files.readAllBytes(dateiPfad), java.nio.charset.StandardCharsets.UTF_8);
-
-            String[] lines = fileContent.split("\n");// Teile den Inhalt in Zeilen auf gibt auch die ranfolge der Scores
-                                                     // vor
-            if (lines.length < MAX_SCORES) {
-                // TODO Schreibe in den log das die Scores erweitert werden müssen
-            } else if (lines.length > MAX_SCORES) {
-                // TODO Schreibe in den log das die Scores gekürzt werden müssen
-            }
-            for (int i = 0; i < MAX_SCORES; i++) {
-                String[] parts = lines[i].split(":");// Versuche die Zeile in Name und Score zu teilen
-                if (parts.length != 2) {
-                    // TODO Schreibe in den log das die Zeile i fehlerhaft ist
-                    highScores[i].Name = "---";
-                    highScores[i].Score = 0;
-                } else {
-                    try {
-                        // Versuche den Score zu parsen
-                        highScores[i].Name = parts[0];
-                        highScores[i].Score = Float.parseFloat(parts[1]);
-                    } catch (NumberFormatException e) {
-                        // TODO Schreibe in den log das die Zeile i fehlerhaft ist
-                        highScores[i].Name = "---";
-                        highScores[i].Score = 0;
-                    }
-                }
-            }
+            parseString(fileContent);
 
         } catch (IOException | OutOfMemoryError e) {
             for (int i = 0; i < MAX_SCORES; i++) {
                 // Initialisiere mit Standardwerten, wenn die Datei nicht existiert oder ein
                 // Fehler auftritt Fängt explizit nicht alle Fehler ab nur IO bezogene
-                 if (highScores[i] == null) {
+                if (highScores[i] == null) {
                     highScores[i] = new Score();
                 }
                 highScores[i].Name = "---";
@@ -180,4 +184,81 @@ class HighScore {
         // Speichere die aktualisierte Highscore-Liste in der Datei
         speichereInDatei();
     }
+}
+
+class HighScoreOnline extends HighScore {
+    private String url;
+    private OnlineError loaded_from_server = OnlineError.KEINE_VERBINDUNG_GESTARTET;
+
+    // Platzhalter für eine zukünftige Online-Highscore-Implementierung
+    enum OnlineError {
+        KEIN_FEHLER,
+        VERBINDUNGSFEHLER,
+        AUTHENTIFIZIERUNGSFEHLER,
+        SERVERFEHLER,
+        KEINE_VERBINDUNG_GESTARTET
+    }
+
+    HighScoreOnline(String fileString, String url) {
+        super(fileString);
+        this.url = url;
+        // Initialisierung für Online-Highscore
+    }
+
+    private OnlineError ladevonServer() {
+        // Platzhalter-Methode zum Laden von Highscores vom Server
+        HttpClient score_server_client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(java.net.URI.create(url))
+                .build();
+
+        try {
+            HttpResponse<String> response = score_server_client.send(request, HttpResponse.BodyHandlers.ofString());
+            int status = response.statusCode();
+            if (status >= 200 && status < 300) {
+                String bodydata = response.body();
+                parseString(bodydata);
+
+
+                return OnlineError.KEIN_FEHLER;
+            } else if (status == 401 || status == 403) {
+                return OnlineError.AUTHENTIFIZIERUNGSFEHLER;
+            } else {
+                return OnlineError.SERVERFEHLER;
+            }
+        } catch (IOException e) {
+            return OnlineError.VERBINDUNGSFEHLER;
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            return OnlineError.VERBINDUNGSFEHLER;
+        }
+    }
+
+    private OnlineError speicherAufServer(String playerName, float scoreValue) {
+        // Platzhalter-Methode zum Speichern von Highscores auf dem Server
+        // Platzhalter-Methode zum Laden von Highscores vom Server
+        String score_data = playerName + ";" + String.valueOf(scoreValue);
+        HttpClient score_server_client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(java.net.URI.create(url))
+                .PUT(HttpRequest.BodyPublishers.ofString(score_data))
+                .build();
+        try {
+            HttpResponse<String> response = score_server_client.send(request, HttpResponse.BodyHandlers.ofString());
+            int status = response.statusCode();
+            if (status >= 200 && status < 300) {
+                return OnlineError.KEIN_FEHLER;
+            } else if (status == 401 || status == 403) {
+                return OnlineError.AUTHENTIFIZIERUNGSFEHLER;
+            } else {
+                return OnlineError.SERVERFEHLER;
+            }
+        } catch (IOException e) {
+            return OnlineError.VERBINDUNGSFEHLER;
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            return OnlineError.VERBINDUNGSFEHLER;
+        }
+    }
+
 }

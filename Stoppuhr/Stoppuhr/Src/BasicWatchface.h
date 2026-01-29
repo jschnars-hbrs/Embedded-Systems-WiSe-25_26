@@ -8,15 +8,17 @@ using namespace EmbSysLib::Hw;
 using namespace EmbSysLib::Dev;
 using namespace EmbSysLib::Ctrl;
 
-class BasicWatchface : public Watchface {
+class BasicWatchface : public Watchface
+{
 public:
-    BasicWatchface(Timer_Mcu  *timer,DisplayGraphic * in_dispGraphic,ScreenGraphic * in_lcd);
+    BasicWatchface(Timer_Mcu *timer, DisplayGraphic *in_dispGraphic, ScreenGraphic *in_lcd);
 
-    void update() override;
-    takeActionReturnValues handleButtons(DigitalButton * button1, DigitalButton * button2, DigitalButton * button3, DigitalButton * button_user) override;
-    private:
+    void update();
+    takeActionReturnValues handleButtons(DigitalButton *button1, DigitalButton *button2, DigitalButton *button3, DigitalButton *button_user);
+
+private:
     StopUhrTimer stopwatch;
-    DisplayGraphic * dispGraphic;
-    ScreenGraphic * lcd;
+    DisplayGraphic *dispGraphic;
+    ScreenGraphic *lcd;
 };
 #endif
