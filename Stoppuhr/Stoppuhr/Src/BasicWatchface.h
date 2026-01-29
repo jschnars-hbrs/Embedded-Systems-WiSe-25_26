@@ -10,12 +10,13 @@ using namespace EmbSysLib::Ctrl;
 
 class BasicWatchface : public Watchface {
 public:
-    BasicWatchface(Timer_Mcu  *timer,DisplayGraphic * in_dispGraphic);
+    BasicWatchface(Timer_Mcu  *timer,DisplayGraphic * in_dispGraphic,ScreenGraphic * in_lcd);
 
     void update() override;
     takeActionReturnValues handleButtons(DigitalButton * button1, DigitalButton * button2, DigitalButton * button3, DigitalButton * button_user) override;
     private:
     StopUhrTimer stopwatch;
     DisplayGraphic * dispGraphic;
+    ScreenGraphic * lcd;
 };
 #endif

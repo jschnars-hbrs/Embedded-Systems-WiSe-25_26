@@ -1,48 +1,48 @@
-/*!
-\file   BouncingWatchFace.cpp
-*/
-#include "BouncingWatchFace.h"
+#include "BasicWatchface.h"
+#include <stdio.h>
 
-void BouncingWatchFace::setUp()
+BasicWatchface::BasicWatchface(Timer_Mcu  *timer,DisplayGraphic * in_dispGraphic,ScreenGraphic * in_lcd): stopwatch(timer)
 {
-    dispGraphic.setZoom(this->zoomFactor);
-    dispGraphic.setTextColor( Color::White );
-    dispGraphic.setBackColor( Color::Black );
-    dispGraphic.clear();
-    lcd.refresh();
-}
-
-void BouncingWatchFace::update()
+      dispGraphic=in_dispGraphic;
+      lcd=in_lcd;
+      //dispGraphic->setTextColor( Color::White    );
+      //dispGraphic->setBackColor( Color::DarkBlue );
+      }
+void BasicWatchface::update()
 {
-
-    if(this->setUpStatus == false)
-    {
-        this->setUpStatus = true;
-        this->setUp();
-    }
-
-    /*
-    if (this->getIfRunning())
-    {
-        this->upDateCurrentTime();
-        this->upDateDisplayTime();
-        this->upDateAnimation();
-    }
-        */
-    this->upDateDisplay();
-
-    /*
-    LD1.set( Btn1.get() );
-    LD2.set( Btn2.get() );
-
-    this->checkStartStoppBTN();
-    this->checkResetBTN();*/
+    char txt[1000]="Hello World";
+    dispGraphic->clear();
+    // Update display with stopwatch time
+    DWORD time = stopwatch.getPassedTime();
+    // Code to update the display goes here
+    printf(txt,"%02lu:%02lu.%03lu", (time / 60000), (time / 1000) % 60, time % 1000);
+    dispGraphic->gotoPixelPos(0,0);
+    dispGraphic->putString(txt);
+    lcd->refresh();
 
 }
 
-void BouncingWatchFace::upDateDisplay()
+BasicWatchface::takeActionReturnValues BasicWatchface::handleButtons(DigitalButton * button1, DigitalButton * button2, DigitalButton * button3, DigitalButton * button_user)
 {
-    dispGraphic.gotoPixelPos(this->posX, this->posY);
-    dispGraphic.putString(this->displaytime);
-    lcd.refresh();
+    if(button1->getAction() == DigitalButton::ACTIVATED) {
+        stopwatch.start();
+        return NO_ACTION;
+    }
+    if(button2->getAction() == DigitalButton::ACTIVATED) {
+       stopwatch.stop();
+        return NO_ACTION;
+    }
+    if(button3->getAction() == DigitalButton::ACTIVATED) {
+       stopwatch.reset();
+        return NO_ACTION;
+    }
+    if(button_user->getAction() == DigitalButton::ACTIVATED) {
+        return NEXT_SCREEN;
+    }
+    if (button_user->getAction() == DigitalButton::LONG)
+    {
+        return PREVIOUS_SCRREEN;
+    }
+
+    return NO_ACTION;
 }
