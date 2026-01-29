@@ -14,12 +14,10 @@
 #include "StopUhrTimer.h"
 #include "ScreenManager.h"
 #include "BasicWatchface.h"
+#include "BouncingWatchFace.h"
 //*******************************************************************
 int main(void)
 {
-Timer_Mcu  timer2( Timer_Mcu::TIM_9, 10000L/*us*/ );
-
-TaskManager taskManagerScrreen( timer2 );
 
 DigitalButton Button1(Btn1,taskManager,10,1000);
 DigitalButton Button2(Btn2,taskManager,10,1000);
@@ -27,17 +25,19 @@ DigitalButton Button3(Btn3,taskManager,10,1000);
 DigitalButton UserButton(User,taskManager,10,1000);
 ScreenManager screenManager(&Button1, &Button2, &Button3, &UserButton);
 BasicWatchface secondwatchface(&timer,&dispGraphic, &lcd) ;
+BouncingWatchFace bouncingWatchFace(&timer,&dispGraphic, &lcd);
 // add watchfaces to screen manager here
 screenManager.addWatchFace(& secondwatchface);
-
+screenManager.addWatchFace(&bouncingWatchFace);
 
 // add Screen manger to taskmanager
 
-taskManagerScrreen.add(&screenManager);
+screenManager.setNextScreen();
 
 
   while (1)
   {
+      screenManager.update();
     // Main loop does nothing, everything is handled by interrupts
   }
 
