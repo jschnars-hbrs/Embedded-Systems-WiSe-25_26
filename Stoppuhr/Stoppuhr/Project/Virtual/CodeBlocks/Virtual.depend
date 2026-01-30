@@ -906,7 +906,7 @@
 1768242641 c:\users\julia\documents\github\embedded-systems-wise-25_26\stoppuhr\stoppuhr\src\resource\color\color.h
 	"MCU_Types.h"
 
-1768311036 c:\users\julia\documents\github\embedded-systems-wise-25_26\stoppuhr\stoppuhr\src\stopuhrtimer.h
+1769788228 c:\users\julia\documents\github\embedded-systems-wise-25_26\stoppuhr\stoppuhr\src\stopuhrtimer.h
 	"EmbSysLib.h"
 	<cstdint>
 	"StopUhr.h"
@@ -918,5 +918,41 @@
 
 1768311075 source:c:\users\julia\documents\github\embedded-systems-wise-25_26\stoppuhr\stoppuhr\src\stopuhrtimer.cpp
 	"EmbSysLib.h"
+	"StopUhrTimer.h"
+
+1769783580 source:c:\users\julia\documents\github\embedded-systems-wise-25_26\stoppuhr\stoppuhr\src\basicwatchface.cpp
+	"BasicWatchface.h"
+	<stdio.h>
+
+1769783580 c:\users\julia\documents\github\embedded-systems-wise-25_26\stoppuhr\stoppuhr\src\basicwatchface.h
+	"EmbSysLib.h"
+	"ScreenManager.h"
+	"StopUhrTimer.h"
+
+1769783580 c:\users\julia\documents\github\embedded-systems-wise-25_26\stoppuhr\stoppuhr\src\screenmanager.h
+	"EmbSysLib.h"
+	<vector>
+	<algorithm>
+
+1769783580 source:c:\users\julia\documents\github\embedded-systems-wise-25_26\stoppuhr\stoppuhr\src\bouncingwatchface.cpp
+	"BouncingWatchFace.h"
+	<stdio.h>
+
+1769783580 c:\users\julia\documents\github\embedded-systems-wise-25_26\stoppuhr\stoppuhr\src\bouncingwatchface.h
+	"EmbSysLib.h"
+	"ScreenManager.h"
+	"StopUhrTimer.h"
+	"StopUhrTimer.h"
+
+1769783580 source:c:\users\julia\documents\github\embedded-systems-wise-25_26\stoppuhr\stoppuhr\src\screenmanager.cpp
+	"ScreenManager.h"
+
+1769788981 source:c:\users\julia\documents\github\embedded-systems-wise-25_26\stoppuhr\stoppuhr\src\binarywatchface.cpp
+	"BinaryWatchFace.h"
+	<stdio.h>
+
+1769788915 c:\users\julia\documents\github\embedded-systems-wise-25_26\stoppuhr\stoppuhr\src\binarywatchface.h
+	"EmbSysLib.h"
+	"ScreenManager.h"
 	"StopUhrTimer.h"
 

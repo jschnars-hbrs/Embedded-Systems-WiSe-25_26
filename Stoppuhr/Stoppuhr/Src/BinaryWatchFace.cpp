@@ -2,7 +2,7 @@
 \file   BinaryWatchFace.cpp
 */
 #include "BinaryWatchFace.h"
-#include <stdio.h> 
+#include <stdio.h>
 
 BinaryWatchFace::BinaryWatchFace(Timer_Mcu *timer, DisplayGraphic * dispGraphic, ScreenGraphic * lcd)
 : myStoppWatch(timer)
@@ -13,10 +13,10 @@ BinaryWatchFace::BinaryWatchFace(Timer_Mcu *timer, DisplayGraphic * dispGraphic,
     // Calculamos la geometría UNA VEZ, centrada
     int wScr = dispGraphic->getWidth();
     int hScr = dispGraphic->getHeight();
-    
-    int colW = 2 * radius; 
+
+    int colW = 2 * radius;
     int scaleWidth = 30; // Espacio para la escala lateral
-    
+
     // Ancho total del bloque
     int totalBlockWidth = (6 * colW) + (3 * colGap) + (2 * groupGap) + scaleWidth;
 
@@ -31,7 +31,7 @@ void BinaryWatchFace::changed_to() {
     dispGraphic->setBackColor(colorBlack);
     dispGraphic->setTextColor(colorWhite);
     dispGraphic->setPaintColor(colorBlack); // Resetear paint color
-    
+
     dispGraphic->clear();
     drawStaticLayout();
     lcd->refresh();
@@ -39,25 +39,25 @@ void BinaryWatchFace::changed_to() {
 
 void BinaryWatchFace::update() {
     int timeMs = myStoppWatch.getPassedTime();
-    
+
     // Desglose del tiempo
-    uint32_t ms   = (timeMs % 1000) / 10; 
+    uint32_t ms   = (timeMs % 1000) / 10;
     uint32_t sec  = (timeMs / 1000) % 60;
-    uint32_t min  = (timeMs / 60000); 
+    uint32_t min  = (timeMs / 60000);
 
     int minDec = (min / 10) % 10; int minUni = min % 10;
     int secDec = sec / 10;        int secUni = sec % 10;
     int msDec  = ms / 10;         int msUni  = ms % 10;
 
     int colW = 2 * radius;
-    
+
     // Recalcular posiciones X (deben coincidir con drawStaticLayout)
     int xMin1 = startX;
     int xMin0 = xMin1 + colW + colGap;
-    
+
     int xSec1 = xMin0 + colW + groupGap;
     int xSec0 = xSec1 + colW + colGap;
-    
+
     int xMs1  = xSec0 + colW + groupGap;
     int xMs0  = xMs1 + colW + colGap;
 
@@ -72,13 +72,13 @@ void BinaryWatchFace::update() {
     drawBinaryDigit(xMs0,  yBase, msUni,  4, radius, gap);
 
     // 2. Dibujar Números (Recuperado)
-    int yNum = yBase + radius + 15; 
+    int yNum = yBase + radius + 15;
     drawDigitNumber(xMin1, yNum, minDec);
     drawDigitNumber(xMin0, yNum, minUni);
-    
+
     drawDigitNumber(xSec1, yNum, secDec);
     drawDigitNumber(xSec0, yNum, secUni);
-    
+
     drawDigitNumber(xMs1, yNum, msDec);
     drawDigitNumber(xMs0, yNum, msUni);
 
@@ -104,7 +104,7 @@ Watchface::takeActionReturnValues BinaryWatchFace::handleButtons(DigitalButton *
     }
     if (button_user->getAction() == DigitalButton::LONG) {
         myStoppWatch.stop();
-        return PREVIOUS_SCREEN;
+        return PREVIOUS_SCRREEN;
     }
     return NO_ACTION;
 }
@@ -114,7 +114,7 @@ Watchface::takeActionReturnValues BinaryWatchFace::handleButtons(DigitalButton *
 void BinaryWatchFace::drawStaticLayout() {
     dispGraphic->setTextColor(colorWhite);
     dispGraphic->setBackColor(colorBlack);
-    
+
     int colW = 2 * radius;
     int xMinStart = startX;
     int xSecStart = xMinStart + 2*colW + colGap + groupGap;
@@ -142,11 +142,11 @@ void BinaryWatchFace::drawDigitNumber(int x, int y, int number) {
     // Usamos BackColor para que sobrescriba el número anterior limpiamente
     dispGraphic->setBackColor(colorBlack);
     dispGraphic->setTextColor(colorWhite);
-    
+
     char buf[4];
     sprintf(buf, "%d", number);
-    
-    dispGraphic->gotoPixelPos(x - 4, y); 
+
+    dispGraphic->gotoPixelPos(x - 4, y);
     dispGraphic->putString(buf);
 }
 
@@ -159,7 +159,7 @@ void BinaryWatchFace::drawBinaryDigit(int x, int yBase, int digit, int rows, int
         if (isOn) {
             drawFilledCircle(x, y, radius, colorMagenta);
         } else {
-            drawFilledCircle(x, y, radius, colorBlack); 
+            drawFilledCircle(x, y, radius, colorBlack);
             drawCircleOutline(x, y, radius, colorWhite);
         }
     }

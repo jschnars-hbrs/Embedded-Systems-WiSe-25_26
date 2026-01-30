@@ -15,6 +15,7 @@
 #include "ScreenManager.h"
 #include "BasicWatchface.h"
 #include "BouncingWatchFace.h"
+#include "BinaryWatchFace.h"
 //*******************************************************************
 int main(void)
 {
@@ -26,9 +27,11 @@ DigitalButton UserButton(User,taskManager,10,1000);
 ScreenManager screenManager(&Button1, &Button2, &Button3, &UserButton);
 BasicWatchface secondwatchface(&timer,&dispGraphic, &lcd) ;
 BouncingWatchFace bouncingWatchFace(&timer,&dispGraphic, &lcd);
+BinaryWatchFace binaryWatchFace(&timer,&dispGraphic, &lcd);
 // add watchfaces to screen manager here
 screenManager.addWatchFace(& secondwatchface);
 screenManager.addWatchFace(&bouncingWatchFace);
+screenManager.addWatchFace(&binaryWatchFace);
 
 // add Screen manger to taskmanager
 
