@@ -16,6 +16,7 @@
 #include "BasicWatchface.h"
 #include "BouncingWatchFace.h"
 #include "BinaryWatchFace.h"
+#include "StopwatchViewRings.h"
 //*******************************************************************
 int main(void)
 {
@@ -28,10 +29,12 @@ ScreenManager screenManager(&Button1, &Button2, &Button3, &UserButton);
 BasicWatchface secondwatchface(&timer,&dispGraphic, &lcd) ;
 BouncingWatchFace bouncingWatchFace(&timer,&dispGraphic, &lcd);
 BinaryWatchFace binaryWatchFace(&timer,&dispGraphic, &lcd);
+StopwatchViewRings stopwatchViewRings(&timer,&dispGraphic, &lcd);
 // add watchfaces to screen manager here
 screenManager.addWatchFace(& secondwatchface);
 screenManager.addWatchFace(&bouncingWatchFace);
 screenManager.addWatchFace(&binaryWatchFace);
+screenManager.addWatchFace(&stopwatchViewRings);
 
 // add Screen manger to taskmanager
 

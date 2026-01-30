@@ -890,12 +890,17 @@
 
 1761583211 c:\users\julia\documents\github\embedded-systems-wise-25_26\stoppuhr\stoppuhr\src\embsyslib-01.05.06\src\module\usb\usbdevicesimpleio.h
 
-1768310946 source:c:\users\julia\documents\github\embedded-systems-wise-25_26\stoppuhr\stoppuhr\src\main.cpp
+1769793643 source:c:\users\julia\documents\github\embedded-systems-wise-25_26\stoppuhr\stoppuhr\src\main.cpp
 	<stdio.h>
 	"EmbSysLib.h"
 	"ReportHandler.h"
 	"config.h"
 	"StopUhrTimer.h"
+	"ScreenManager.h"
+	"BasicWatchface.h"
+	"BouncingWatchFace.h"
+	"BinaryWatchFace.h"
+	"StopwatchViewRings.h"
 
 1768242641 c:\users\julia\documents\github\embedded-systems-wise-25_26\stoppuhr\stoppuhr\src\board\virtual\reporthandler.h
 	<windows.h>
@@ -955,4 +960,10 @@
 	"EmbSysLib.h"
 	"ScreenManager.h"
 	"StopUhrTimer.h"
+
+1769796442 c:\users\julia\documents\github\embedded-systems-wise-25_26\stoppuhr\stoppuhr\src\stopwatchviewrings.h
+	"EmbSysLib.h"
+	"ScreenManager.h"
+	"StopUhrTimer.h"
+	<cstdint>
 

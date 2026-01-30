@@ -3,9 +3,11 @@
 #include <cmath>
 #include <cstring>
 
+//#include "C:\Users\julia\Documents\GitHub\Embedded-Systems-WiSe-25_26\Stoppuhr\Stoppuhr\Src\Resource\Font\Font_16x24.h" - Pfad direkt angegeben, sonst hat es nicht funktioniert
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
+
 
 namespace
 {
@@ -296,7 +298,7 @@ void StopwatchViewRings::update()
   const int charWms = 16 * zoomMs;
   const int totalWms = 3 * charWms;
 
-  dispGraphic->setFont(fontFont_16x24, zoomMs);
+  //dispGraphic->setFont(fontFont_16x24, zoomMs);
   dispGraphic->setTextColor((WORD)colorText);
 
   int xMs = cx - totalWms / 2;
