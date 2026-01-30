@@ -4,7 +4,7 @@
 #include <cstdint>
 #include "StopUhr.h"
 
-using namespace EmbSysLib::Hw;
+using namespace EmbSysLib::Hw;  // namespace wichtig für DWORD z.B.
 
 class StopUhrTimer : public StopUhr, public Timer::Task {
 public:

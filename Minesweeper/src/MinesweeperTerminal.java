@@ -96,7 +96,7 @@ public class MinesweeperTerminal extends MinesweeperUI {
             String line = scanner.nextLine().trim();
 
             
-            if (line.equalsIgnoreCase("q")) {   // Beenden ist immer erlaubt, auch währned der Pause
+            if (line.equalsIgnoreCase("q")) {   // Beenden ist immer erlaubt, auch während der Pause
                 return false;
             }
 
@@ -164,7 +164,7 @@ public class MinesweeperTerminal extends MinesweeperUI {
         handleHighscoreNachSieg(level);
     }
 
-    private void handleHighscoreNachSieg(Schwierigkeit level) {
+    private void handleHighscoreNachSieg(Schwierigkeit level) {  //Wenn man gewonnen hat, wird HighScore ggf. gespeichert und die HighScoreListe ausgegeben
         float score = spielLogik.gebeScore(); // Zeit in Sekunden als Score
 
         System.out.print("Möchtest du deinen Highscore speichern? (j/n) > ");
@@ -187,7 +187,7 @@ public class MinesweeperTerminal extends MinesweeperUI {
         zeigeTop5(level);
     }
 
-    private void zeigeTop5(Schwierigkeit level) {
+    private void zeigeTop5(Schwierigkeit level) {       // Ausgabe der Top 5 Highscores
         Score[] scores = highScoreManager.ladeScore(level);
 
         System.out.println();

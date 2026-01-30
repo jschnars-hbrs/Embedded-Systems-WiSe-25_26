@@ -10,7 +10,7 @@ public abstract class MinesweeperUI {
         Schwierigkeit level = waehleSchwierigkeit();
         spielLogik.starten(level);
 
-        while (spielLogik.laeuftNoch()) {
+        while (spielLogik.laeuftNoch()) {       // Schleife, die immer weiter Befehle nimmt und UI ausgibt, wenn das Spiel noch laeuft. GUI overrided die Methode
             System.out.print("\033[H\033[2J"); // Spielfeld wird immer neu geprinted, aber durch den Befehl sieht es aus, als würde es sich aktualisieren
             System.out.flush();
             gebeAus(level);

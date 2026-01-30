@@ -7,28 +7,25 @@ import java.io.File;
 
 public class MinesweeperGUI extends MinesweeperUI {
 
-    private static final int ZELLEN_GROESSE = 64;
-    private static final int SCHRIFT_GROESSE = 36;
+    private static final int ZELLEN_GROESSE = 64;       // erstmal Feste Größen für die Zellen (in Pixeln)
+    private static final int SCHRIFT_GROESSE = 36;      // erstmal Feste Größen für die Schriftgröße (in Pixeln)
     private static final int TIMER_INTERVALL = 100;
 
-    // =============================================================================
-    // TEXTUR-PFADE - Hier einfach den Pfad zu deinen PNG-Dateien eintragen
-    // Wenn ein Pfad null oder leer ist, wird die Standard-Grafik verwendet
-    // =============================================================================
-    private static final String TEXTUR_VERDECKT = "textures/verdeckt_normal_1.png";           // z.B. "textures/verdeckt.png"
-    private static final String TEXTUR_VERDECKT_HOVER = "textures/verdeckt_hover1.png";     // z.B. "textures/verdeckt_hover.png"
-    private static final String TEXTUR_AUFGEDECKT = "textures/aufgedeckt1.png";         // z.B. "textures/aufgedeckt.png"
-    private static final String TEXTUR_MINE = "textures/mine_1.png";               // z.B. "textures/mine.png"
-    private static final String TEXTUR_FLAGGE = "textures/flagge1.png";             // z.B. "textures/flagge.png"
-    private static final String TEXTUR_ZAHL_1 = "textures/zahl_1_1.png";             // z.B. "textures/zahl_1.png"
-    private static final String TEXTUR_ZAHL_2 = "textures/zahl_2_2.png";             // z.B. "textures/zahl_2.png"
-    private static final String TEXTUR_ZAHL_3 = "textures/zahl_3_1.png";             // z.B. "textures/zahl_3.png"
-    private static final String TEXTUR_ZAHL_4 = "textures/zahl_4_1.png";             // z.B. "textures/zahl_4.png"
-    private static final String TEXTUR_ZAHL_5 = "textures/zahl_5_1.png";             // z.B. "textures/zahl_5.png"
-    private static final String TEXTUR_ZAHL_6 = "textures/zahl_6_1.png";             // z.B. "textures/zahl_6.png"
-    private static final String TEXTUR_ZAHL_7 = "textures/zahl_7_1.png";             // z.B. "textures/zahl_7.png"
-    private static final String TEXTUR_ZAHL_8 = "textures/zahl_8_1.png";             // z.B. "textures/zahl_8.png"
-    private static final String TEXTUR_HINTERGRUND = "textures/hintergrund_1.png";        // z.B. "textures/hintergrund.png"
+    // relative Pfade zu den selbsterstellten Texturen, wenn leer, werden generische Strukturen generiert
+    private static final String TEXTUR_VERDECKT = "textures/verdeckt_normal_1.png";          
+    private static final String TEXTUR_VERDECKT_HOVER = "textures/verdeckt_hover1.png";     
+    private static final String TEXTUR_AUFGEDECKT = "textures/aufgedeckt1.png";         
+    private static final String TEXTUR_MINE = "textures/mine_1.png";              
+    private static final String TEXTUR_FLAGGE = "textures/flagge1.png";            
+    private static final String TEXTUR_ZAHL_1 = "textures/zahl_1_1.png";             
+    private static final String TEXTUR_ZAHL_2 = "textures/zahl_2_2.png";            
+    private static final String TEXTUR_ZAHL_3 = "textures/zahl_3_1.png";             
+    private static final String TEXTUR_ZAHL_4 = "textures/zahl_4_1.png";             
+    private static final String TEXTUR_ZAHL_5 = "textures/zahl_5_1.png";             
+    private static final String TEXTUR_ZAHL_6 = "textures/zahl_6_1.png";             
+    private static final String TEXTUR_ZAHL_7 = "textures/zahl_7_1.png";             
+    private static final String TEXTUR_ZAHL_8 = "textures/zahl_8_1.png";             
+    private static final String TEXTUR_HINTERGRUND = "textures/hintergrund_1.png";       
     // =============================================================================
 
     private static final Color FARBE_VERDECKT = new Color(170, 170, 170);
@@ -142,7 +139,7 @@ public class MinesweeperGUI extends MinesweeperUI {
     }
 
     @Override
-    protected Schwierigkeit waehleSchwierigkeit() {
+    protected Schwierigkeit waehleSchwierigkeit() {             // Schwierigkeit auswählen über 4 Buttons
         String[] optionen = {"Leicht (8x8, 10 Minen)", "Mittel (14x14, 40 Minen)", "Schwer (20x20, 99 Minen)","Test (4x4, 1 Mine)"};
 
         int auswahl = JOptionPane.showOptionDialog(
@@ -277,7 +274,7 @@ public class MinesweeperGUI extends MinesweeperUI {
         });
     }
 
-    private JPanel erstelleInfoPanel() {
+    private JPanel erstelleInfoPanel() {                // Infos für den User während des Spielvorgangs
         JPanel panel = new JPanel(new GridLayout(1, 3, 10, 0));
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
         panel.setBackground(new Color(50, 50, 50));
@@ -370,7 +367,7 @@ public class MinesweeperGUI extends MinesweeperUI {
         }
 
         @Override
-        protected void paintComponent(Graphics g) {
+        protected void paintComponent(Graphics g) { // Generische Texturen werden erstellt, wenn keine Texturpfade am Anfang hinterlegt sind
             super.paintComponent(g);
 
             Graphics2D g2d = (Graphics2D) g;
