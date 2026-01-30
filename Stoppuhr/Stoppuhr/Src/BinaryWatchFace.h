@@ -12,7 +12,7 @@ using namespace EmbSysLib::Hw;
 using namespace EmbSysLib::Dev;
 using namespace EmbSysLib::Ctrl;
 
-// Makro für Farbkonvertierung
+// Makro para conversión de colores
 #define RGB2COLOR(red, green, blue ) \
     ( (((blue )& 0xF8) >> 3)  /* 5 bit,  0.. 4 */\
      |(((green)& 0xFC) << 3)  /* 6 bit,  5..10 */\
@@ -32,29 +32,26 @@ class BinaryWatchFace : public Watchface {
         DisplayGraphic * dispGraphic;
         ScreenGraphic * lcd;
 
-        // Farben
+        // Colores
         int colorBlack   = RGB2COLOR(0, 0, 0);
         int colorWhite   = RGB2COLOR(255, 255, 255);
         int colorMagenta = RGB2COLOR(255, 0, 255); 
-        int colorDark    = RGB2COLOR(50, 50, 50); 
-
-        // Geometrie-Parameter (VERKLEINERT)
-        int radius = 10;      // Kleinerer Radius (war 20)
-        int gap = 6;          // Abstand vertikal
-        int colGap = 8;       // Abstand zwischen Spalten
-        int groupGap = 35;    // Abstand zwischen Gruppen
+        
+        // Geometría (Ajustada para Zoom 1)
+        int radius = 10;      // Radio reducido para que entre bien
+        int gap = 8;          // Espacio vertical
+        int colGap = 16;      // Más aire entre columnas
+        int groupGap = 40;    // Separación clara entre grupos
+        
+        // Variables calculadas
         int startX = 0;
         int yBase = 0;
 
-        // Hilfsmethoden
+        // Helpers
         void drawFilledCircle(int cx, int cy, int radius, int color);
         void drawCircleOutline(int cx, int cy, int radius, int color);
         void drawBinaryDigit(int x, int yBase, int digit, int rows, int radius, int gap);
         void drawStaticLayout(); 
-        
-        // Helper um Dezimalzahlen zu zeichnen
-        void drawDigitNumber(int x, int y, int number);
-
-        bool isSetup = false;
+        void drawDigitNumber(int x, int y, int number); // ¡Recuperamos esta función!
 };
 #endif

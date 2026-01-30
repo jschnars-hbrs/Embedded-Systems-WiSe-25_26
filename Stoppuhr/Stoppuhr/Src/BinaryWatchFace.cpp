@@ -2,7 +2,7 @@
 \file   BinaryWatchFace.cpp
 */
 #include "BinaryWatchFace.h"
-#include <stdio.h> // Wichtig für sprintf
+#include <stdio.h> 
 
 BinaryWatchFace::BinaryWatchFace(Timer_Mcu *timer, DisplayGraphic * dispGraphic, ScreenGraphic * lcd)
 : myStoppWatch(timer)
@@ -10,26 +10,27 @@ BinaryWatchFace::BinaryWatchFace(Timer_Mcu *timer, DisplayGraphic * dispGraphic,
     this->dispGraphic = dispGraphic;
     this->lcd = lcd;
 
-    // Berechnung der Startpositionen
+    // Calculamos la geometría UNA VEZ, centrada
     int wScr = dispGraphic->getWidth();
     int hScr = dispGraphic->getHeight();
     
-    // Wir behalten Radius 10, das sieht eleganter aus
     int colW = 2 * radius; 
-    int scaleWidth = 25; 
+    int scaleWidth = 30; // Espacio para la escala lateral
     
+    // Ancho total del bloque
     int totalBlockWidth = (6 * colW) + (3 * colGap) + (2 * groupGap) + scaleWidth;
 
+    // Centrado X e Y
     this->startX = (wScr / 2) - (totalBlockWidth / 2) + scaleWidth + radius;
-    this->yBase = (hScr / 2) + 50; 
+    this->yBase = (hScr / 2) + 60; // Bajamos un poco la base para dejar espacio al título
 }
 
 void BinaryWatchFace::changed_to() {
-    // --- FIX VON TABEA ---
-    // Wir müssen sicherstellen, dass der Zoom und die Farben zurückgesetzt werden
-    dispGraphic->setZoom(1); // WICHTIG: Zoom auf Standard zurücksetzen!
-    dispGraphic->setBackColor(this->colorBlack);
-    dispGraphic->setTextColor(this->colorWhite);
+    // === FIX CRÍTICO: RESETEAR ESTADO ===
+    dispGraphic->setZoom(1);            // Arregla el problema de Tabea
+    dispGraphic->setBackColor(colorBlack);
+    dispGraphic->setTextColor(colorWhite);
+    dispGraphic->setPaintColor(colorBlack); // Resetear paint color
     
     dispGraphic->clear();
     drawStaticLayout();
@@ -39,6 +40,7 @@ void BinaryWatchFace::changed_to() {
 void BinaryWatchFace::update() {
     int timeMs = myStoppWatch.getPassedTime();
     
+    // Desglose del tiempo
     uint32_t ms   = (timeMs % 1000) / 10; 
     uint32_t sec  = (timeMs / 1000) % 60;
     uint32_t min  = (timeMs / 60000); 
@@ -48,14 +50,18 @@ void BinaryWatchFace::update() {
     int msDec  = ms / 10;         int msUni  = ms % 10;
 
     int colW = 2 * radius;
+    
+    // Recalcular posiciones X (deben coincidir con drawStaticLayout)
     int xMin1 = startX;
     int xMin0 = xMin1 + colW + colGap;
+    
     int xSec1 = xMin0 + colW + groupGap;
     int xSec0 = xSec1 + colW + colGap;
+    
     int xMs1  = xSec0 + colW + groupGap;
     int xMs0  = xMs1 + colW + colGap;
 
-    // 1. Binärspalten zeichnen
+    // 1. Dibujar Bolitas
     drawBinaryDigit(xMin1, yBase, minDec, 3, radius, gap);
     drawBinaryDigit(xMin0, yBase, minUni, 4, radius, gap);
 
@@ -65,8 +71,8 @@ void BinaryWatchFace::update() {
     drawBinaryDigit(xMs1,  yBase, msDec,  4, radius, gap);
     drawBinaryDigit(xMs0,  yBase, msUni,  4, radius, gap);
 
-    // 2. Dezimalzahlen unten zeichnen
-    int yNum = yBase + radius + 10; 
+    // 2. Dibujar Números (Recuperado)
+    int yNum = yBase + radius + 15; 
     drawDigitNumber(xMin1, yNum, minDec);
     drawDigitNumber(xMin0, yNum, minUni);
     
@@ -90,7 +96,7 @@ Watchface::takeActionReturnValues BinaryWatchFace::handleButtons(DigitalButton *
     }
     if(button3->getAction() == DigitalButton::ACTIVATED) {
         myStoppWatch.reset();
-        changed_to(); 
+        changed_to(); // Forzar redibujado limpio
         return NO_ACTION;
     }
     if(button_user->getAction() == DigitalButton::ACTIVATED) {
@@ -103,26 +109,29 @@ Watchface::takeActionReturnValues BinaryWatchFace::handleButtons(DigitalButton *
     return NO_ACTION;
 }
 
-// --- Grafik-Hilfsmethoden ---
+// --- Helpers ---
 
 void BinaryWatchFace::drawStaticLayout() {
-    dispGraphic->setTextColor(this->colorWhite);
+    dispGraphic->setTextColor(colorWhite);
+    dispGraphic->setBackColor(colorBlack);
     
     int colW = 2 * radius;
     int xMinStart = startX;
     int xSecStart = xMinStart + 2*colW + colGap + groupGap;
     int xMsStart  = xSecStart + 2*colW + colGap + groupGap;
 
-    int yTop = yBase - (4 * (2 * radius + gap)) - 20;
+    int yTop = yBase - (4 * (2 * radius + gap)) - 25; // Texto bien arriba
 
-    dispGraphic->gotoPixelPos(xMinStart, yTop); dispGraphic->putString("MIN");
-    dispGraphic->gotoPixelPos(xSecStart, yTop); dispGraphic->putString("SEC");
-    dispGraphic->gotoPixelPos(xMsStart,  yTop); dispGraphic->putString("DEC");
+    // Ajuste fino (+radius) para centrar texto sobre el par de columnas
+    dispGraphic->gotoPixelPos(xMinStart + radius, yTop); dispGraphic->putString("MIN");
+    dispGraphic->gotoPixelPos(xSecStart + radius, yTop); dispGraphic->putString("SEC");
+    dispGraphic->gotoPixelPos(xMsStart + radius,  yTop); dispGraphic->putString("DEC");
 
-    int xScale = startX - radius - 20;
+    // Escala lateral
+    int xScale = startX - radius - 25;
     for(int i=0; i<4; i++) {
         int yRow = yBase - i * (2 * radius + gap) - 8;
-        char numBuf[2];
+        char numBuf[4];
         sprintf(numBuf, "%d", 1 << i);
         dispGraphic->gotoPixelPos(xScale, yRow);
         dispGraphic->putString(numBuf);
@@ -130,17 +139,13 @@ void BinaryWatchFace::drawStaticLayout() {
 }
 
 void BinaryWatchFace::drawDigitNumber(int x, int y, int number) {
-    dispGraphic->setPaintColor(this->colorBlack);
-    int rectSize = 12; 
-    for(int j=0; j<rectSize; j++) {
-        for(int i=0; i<rectSize; i++) {
-            dispGraphic->putPixel(x - 6 + i, y + j);
-        }
-    }
+    // Usamos BackColor para que sobrescriba el número anterior limpiamente
+    dispGraphic->setBackColor(colorBlack);
+    dispGraphic->setTextColor(colorWhite);
     
-    char buf[2];
+    char buf[4];
     sprintf(buf, "%d", number);
-    dispGraphic->setTextColor(this->colorWhite);
+    
     dispGraphic->gotoPixelPos(x - 4, y); 
     dispGraphic->putString(buf);
 }
@@ -152,10 +157,10 @@ void BinaryWatchFace::drawBinaryDigit(int x, int yBase, int digit, int rows, int
         bool isOn = (digit & bitValue) != 0;
 
         if (isOn) {
-            drawFilledCircle(x, y, radius, this->colorMagenta);
+            drawFilledCircle(x, y, radius, colorMagenta);
         } else {
-            drawFilledCircle(x, y, radius, this->colorBlack); 
-            drawCircleOutline(x, y, radius, this->colorWhite);
+            drawFilledCircle(x, y, radius, colorBlack); 
+            drawCircleOutline(x, y, radius, colorWhite);
         }
     }
 }
