@@ -1,52 +1,48 @@
-
+/*!
+\file   BinaryWatchFace.cpp
+*/
 #include "BinaryWatchFace.h"
-#include <stdio.h>
+#include <stdio.h> // Wichtig für sprintf
 
-// Konstruktor: Initialisiert Timer und Grafik-Pointer
 BinaryWatchFace::BinaryWatchFace(Timer_Mcu *timer, DisplayGraphic * dispGraphic, ScreenGraphic * lcd)
 : myStoppWatch(timer)
 {
     this->dispGraphic = dispGraphic;
     this->lcd = lcd;
 
-    // Berechnung der Startpositionen für die Zentrierung
+    // Berechnung der Startpositionen (Dynamisch basierend auf Radius)
     int wScr = dispGraphic->getWidth();
     int hScr = dispGraphic->getHeight();
     
     int colW = 2 * radius; 
-    int scaleWidth = 30; // Platz für Skala links
+    int scaleWidth = 25; // Platz für Skala links
+    
+    // Gesamtbreite berechnen: 6 Spalten + Lücken + Skala
     int totalBlockWidth = (6 * colW) + (3 * colGap) + (2 * groupGap) + scaleWidth;
 
+    // Alles zentrieren
     this->startX = (wScr / 2) - (totalBlockWidth / 2) + scaleWidth + radius;
-    this->yBase = (hScr / 2) + 70;
+    // Etwas tiefer setzen, damit oben Platz für Text ist
+    this->yBase = (hScr / 2) + 50; 
 }
 
-// Wird aufgerufen, wenn zu diesem WatchFace gewechselt wird
 void BinaryWatchFace::changed_to() {
     dispGraphic->setBackColor(this->colorBlack);
     dispGraphic->clear();
-    
-    // Statische Elemente (Text, Skala) neu zeichnen
     drawStaticLayout();
     lcd->refresh();
 }
 
-// Hauptschleife: Aktualisiert Zeit und Anzeige
 void BinaryWatchFace::update() {
-    // Zeit holen
     int timeMs = myStoppWatch.getPassedTime();
     
-    uint32_t ms   = (timeMs % 1000) / 10; // 00-99
+    uint32_t ms   = (timeMs % 1000) / 10; 
     uint32_t sec  = (timeMs / 1000) % 60;
     uint32_t min  = (timeMs / 60000); 
 
-    // Ziffern berechnen
-    int minDec = (min / 10) % 10;
-    int minUni = min % 10;
-    int secDec = sec / 10;
-    int secUni = sec % 10;
-    int msDec  = ms / 10;
-    int msUni  = ms % 10;
+    int minDec = (min / 10) % 10; int minUni = min % 10;
+    int secDec = sec / 10;        int secUni = sec % 10;
+    int msDec  = ms / 10;         int msUni  = ms % 10;
 
     // X-Positionen berechnen
     int colW = 2 * radius;
@@ -57,7 +53,7 @@ void BinaryWatchFace::update() {
     int xMs1  = xSec0 + colW + groupGap;
     int xMs0  = xMs1 + colW + colGap;
 
-    // Binärspalten zeichnen
+    // 1. Binärspalten zeichnen
     drawBinaryDigit(xMin1, yBase, minDec, 3, radius, gap);
     drawBinaryDigit(xMin0, yBase, minUni, 4, radius, gap);
 
@@ -67,65 +63,91 @@ void BinaryWatchFace::update() {
     drawBinaryDigit(xMs1,  yBase, msDec,  4, radius, gap);
     drawBinaryDigit(xMs0,  yBase, msUni,  4, radius, gap);
 
+    // 2. Dezimalzahlen unten zeichnen (DAS FEHLTE VORHER)
+    int yNum = yBase + radius + 10; // Position unter den Kreisen
+    drawDigitNumber(xMin1, yNum, minDec);
+    drawDigitNumber(xMin0, yNum, minUni);
+    
+    drawDigitNumber(xSec1, yNum, secDec);
+    drawDigitNumber(xSec0, yNum, secUni);
+    
+    drawDigitNumber(xMs1, yNum, msDec);
+    drawDigitNumber(xMs0, yNum, msUni);
+
     lcd->refresh();
 }
 
-// Button-Steuerung 
 Watchface::takeActionReturnValues BinaryWatchFace::handleButtons(DigitalButton * button1, DigitalButton * button2, DigitalButton * button3, DigitalButton * button_user) {
-    
-    // Button 1: Start
     if(button1->getAction() == DigitalButton::ACTIVATED) {
         myStoppWatch.start();
         return NO_ACTION;
     }
-    // Button 2: Stopp
     if(button2->getAction() == DigitalButton::ACTIVATED) {
         myStoppWatch.stop();
         return NO_ACTION;
     }
-    // Button 3: Reset
     if(button3->getAction() == DigitalButton::ACTIVATED) {
         myStoppWatch.reset();
-        changed_to(); // Erzwingt Neuzeichnen des Hintergrunds
+        changed_to(); 
         return NO_ACTION;
     }
-    // User Button: Navigation
     if(button_user->getAction() == DigitalButton::ACTIVATED) {
         return NEXT_SCREEN;
     }
     if (button_user->getAction() == DigitalButton::LONG) {
-        myStoppWatch.stop(); // Sicherheitshalber stoppen
-        return PREVIOUS_SCREEN; // Achte auf Schreibweise im Enum (Screen vs Scrreen)
+        myStoppWatch.stop();
+        return PREVIOUS_SCREEN;
     }
-
     return NO_ACTION;
 }
 
 // --- Grafik-Hilfsmethoden ---
 
 void BinaryWatchFace::drawStaticLayout() {
-    // Farben setzen
     dispGraphic->setTextColor(this->colorWhite);
     
-    // Header Position berechnen
-    int yTop = yBase - (4 * (2 * radius + gap)) - 15;
     int colW = 2 * radius;
-    
-    // Header Text
-    // Hinweis: Hier werden einfache Positionsschätzungen verwendet
-    dispGraphic->gotoPixelPos(startX, yTop); dispGraphic->putString("MIN");
-    dispGraphic->gotoPixelPos(startX + 2*colW + groupGap, yTop); dispGraphic->putString("SEC");
-    dispGraphic->gotoPixelPos(startX + 4*colW + 2*groupGap, yTop); dispGraphic->putString("DEC");
+    // Wir berechnen die Startpositionen der Gruppen exakt wie in update()
+    int xMinStart = startX;
+    int xSecStart = xMinStart + 2*colW + colGap + groupGap;
+    int xMsStart  = xSecStart + 2*colW + colGap + groupGap;
+
+    // Header Position (über den Kreisen)
+    int yTop = yBase - (4 * (2 * radius + gap)) - 20;
+
+    // Textausgabe (etwas versetzt, damit es mittig über der Gruppe steht)
+    dispGraphic->gotoPixelPos(xMinStart, yTop); dispGraphic->putString("MIN");
+    dispGraphic->gotoPixelPos(xSecStart, yTop); dispGraphic->putString("SEC");
+    dispGraphic->gotoPixelPos(xMsStart,  yTop); dispGraphic->putString("DEC");
 
     // Skala links (8, 4, 2, 1)
-    int xScale = startX - radius - 30;
+    int xScale = startX - radius - 20;
     for(int i=0; i<4; i++) {
-        int yRow = yBase - i * (2 * radius + gap) - 10;
+        int yRow = yBase - i * (2 * radius + gap) - 8;
         char numBuf[2];
         sprintf(numBuf, "%d", 1 << i);
         dispGraphic->gotoPixelPos(xScale, yRow);
         dispGraphic->putString(numBuf);
     }
+}
+
+// Neue Methode zum Zeichnen der Zahlen unter den Säulen
+void BinaryWatchFace::drawDigitNumber(int x, int y, int number) {
+    // Kleiner Trick: Hintergrund löschen durch Zeichnen eines schwarzen Rechtecks
+    dispGraphic->setPaintColor(this->colorBlack);
+    int rectSize = 12; // Größe des Löschbereichs
+    for(int j=0; j<rectSize; j++) {
+        for(int i=0; i<rectSize; i++) {
+            dispGraphic->putPixel(x - 6 + i, y + j);
+        }
+    }
+    
+    // Zahl schreiben
+    char buf[2];
+    sprintf(buf, "%d", number);
+    dispGraphic->setTextColor(this->colorWhite);
+    dispGraphic->gotoPixelPos(x - 4, y); // Leicht zentrieren
+    dispGraphic->putString(buf);
 }
 
 void BinaryWatchFace::drawBinaryDigit(int x, int yBase, int digit, int rows, int radius, int gap) {
@@ -137,8 +159,8 @@ void BinaryWatchFace::drawBinaryDigit(int x, int yBase, int digit, int rows, int
         if (isOn) {
             drawFilledCircle(x, y, radius, this->colorMagenta);
         } else {
-            drawFilledCircle(x, y, radius, this->colorBlack); // Innen löschen
-            drawCircleOutline(x, y, radius, this->colorWhite); // Rahmen
+            drawFilledCircle(x, y, radius, this->colorBlack); 
+            drawCircleOutline(x, y, radius, this->colorWhite);
         }
     }
 }
