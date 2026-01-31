@@ -5,26 +5,40 @@
 #include "ScreenManager.h"
 #include "StopUhrTimer.h"
 
-
 #include <cstdint>
 
 using namespace EmbSysLib::Hw;
 using namespace EmbSysLib::Dev;
 using namespace EmbSysLib::Ctrl;
 
+/*
+ * Helper macro to convert RGB values into a 16-bit color format
+ * used by the display hardware.
+ */
 #define RGB2COLOR(red, green, blue ) \
     ( (((blue )& 0xF8) >> 3)  /* 5 bit,  0.. 4 */\
      |(((green)& 0xFC) << 3)  /* 6 bit,  5..10 */\
      |(((red  )& 0xF8) << 8)) /* 5 bit, 11..15 */
 
+/*
+ * StopwatchViewRings
+ * Watchface that visualizes a stopwatch using two concentric rings.
+ * The inner ring represents seconds, the outer ring represents minutes.
+ */
 class StopwatchViewRings : public Watchface
 {
 public:
-    StopwatchViewRings(Timer_Mcu *timer, DisplayGraphic *dispGraphic, ScreenGraphic *lcd);
+    StopwatchViewRings(Timer_Mcu *timer,
+                       DisplayGraphic *dispGraphic,
+                       ScreenGraphic *lcd);
 
+    // Periodic update of the watchface
     void update() override;
+
+    // Called when this watchface becomes active
     void changed_to() override;
 
+    // Handle user button input
     takeActionReturnValues handleButtons(DigitalButton *button1,
                                          DigitalButton *button2,
                                          DigitalButton *button3,
@@ -35,16 +49,16 @@ private:
     DisplayGraphic *dispGraphic {nullptr};
     ScreenGraphic  *lcd {nullptr};
 
-    // Estado para dibujar incrementalmente
+    // State variables for incremental drawing
     int lastSecStep {-1};
     int lastMinStep {-1};
 
-    // Colores (ajustables)
+    // Display colors
     int colorBack = RGB2COLOR(0, 0, 0);
     int colorText = RGB2COLOR(0, 255, 255);   // cyan
-    int colorBase = RGB2COLOR(0, 255, 255);   // anillo vacÃ­o (cyan)
+    int colorBase = RGB2COLOR(0, 255, 255);   // ring outline color
 
-    // Helpers
+    // Helper functions
     void resetDrawState();
     void formatTime(uint32_t timeMs, char out[16], uint32_t& msOut) const;
 

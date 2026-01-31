@@ -3,11 +3,9 @@
 #include <cmath>
 #include <cstring>
 
-//#include "C:\Users\julia\Documents\GitHub\Embedded-Systems-WiSe-25_26\Stoppuhr\Stoppuhr\Src\Resource\Font\Font_16x24.h" - Pfad direkt angegeben, sonst hat es nicht funktioniert
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
-
 
 namespace
 {
@@ -16,13 +14,13 @@ namespace
   constexpr int RING_THICKNESS = 40;
   constexpr int DOT_SIZE = 1;
 
-  // Progreso sólido continuo
+  // Continuous solid progress
   constexpr int FILL_STEPS = 1440;
 
-  // Anillo vacío punteado
+  // Dotted empty ring outline
   constexpr int OUTLINE_DOTS = 180;
 
-  // Random simple (sin rand())
+  // Simple random generator (no rand())
   static uint32_t g_rng = 0x12345678u;
   static inline uint32_t rng_next()
   {
@@ -69,7 +67,7 @@ StopwatchViewRings::StopwatchViewRings(Timer_Mcu *timer,
   this->dispGraphic = dispGraphic;
   this->lcd = lcd;
 
-  // Config visual
+  // Visual configuration
   this->dispGraphic->setZoom(1);
   this->dispGraphic->setTextColor(colorText);
   this->dispGraphic->setBackColor(colorBack);
@@ -87,7 +85,7 @@ void StopwatchViewRings::resetDrawState()
   lastMinStep = -1;
 }
 
-// MM:SS en out y milisegundos (0..999) en msOut
+// MM:SS in out and milliseconds (0..999) in msOut
 void StopwatchViewRings::formatTime(uint32_t timeMs, char out[16], uint32_t& msOut) const
 {
   const uint32_t ms = timeMs % 1000U;
@@ -107,7 +105,7 @@ void StopwatchViewRings::formatTime(uint32_t timeMs, char out[16], uint32_t& msO
   out[5] = '\0';
 }
 
-// Anillo vacío: puntos en borde interior y exterior
+// Empty ring outline: dots on inner and outer border
 void StopwatchViewRings::drawRingOutlineDots(int cx, int cy, int rOuter, int thickness)
 {
   const float a0 = -(float)M_PI / 2.0f;
@@ -137,7 +135,7 @@ void StopwatchViewRings::drawRingOutlineDots(int cx, int cy, int rOuter, int thi
   }
 }
 
-// Progreso: arco sólido (rellena rIn..rOut para cada ángulo)
+// Progress: solid arc (fills rIn..rOut for each angle)
 void StopwatchViewRings::drawRingArcSolid(int cx, int cy, int rOuter, int thickness,
                                          int stepFrom, int stepTo, WORD color)
 {
@@ -254,26 +252,35 @@ void StopwatchViewRings::update()
   lastSecStep = secStep;
   lastMinStep = minStep;
 
-  // ===== Texto MM:SS + mmm =====
+  // ===== Text MM:SS + mmm =====
   char buf[16];
   uint32_t msVal = 0;
   formatTime(timeMs, buf, msVal);
   const int len = (int)std::strlen(buf);
 
-  int zoom = 3;
-  int charW = 16 * zoom;
-  int charH = 24 * zoom;
+  // Base size estimation 8x12 (common)
+  int zoom = 6;
+  int charW = 8 * zoom;   // assumed base width
+  int charH = 12 * zoom;  // assumed base height
   int totalW = len * charW;
 
   if(totalW > w)
   {
-    zoom = 2;
-    charW = 16 * zoom;
-    charH = 24 * zoom;
+    zoom = 4;
+    charW = 8 * zoom;
+    charH = 12 * zoom;
+    totalW = len * charW;
+  }
+  if(totalW > w)
+  {
+    zoom = 3;
+    charW = 8 * zoom;
+    charH = 12 * zoom;
     totalW = len * charW;
   }
 
-  dispGraphic->setFont(fontFont_16x24, zoom);
+  // Font-independent
+  dispGraphic->setZoom(zoom);
   dispGraphic->setTextColor((WORD)colorText);
 
   int xText = cx - totalW / 2;
@@ -287,7 +294,7 @@ void StopwatchViewRings::update()
   dispGraphic->gotoPixelPos((WORD)(xText+1), (WORD)yText);
   dispGraphic->putString(buf);
 
-  // --- mmm debajo ---
+  // --- mmm below ---
   char msBuf[8];
   msBuf[0] = char('0' + (msVal / 100U));
   msBuf[1] = char('0' + ((msVal / 10U) % 10U));
@@ -295,10 +302,11 @@ void StopwatchViewRings::update()
   msBuf[3] = '\0';
 
   const int zoomMs = (zoom > 1) ? (zoom - 1) : 1;
-  const int charWms = 16 * zoomMs;
+  const int charWms = 8 * zoomMs;
   const int totalWms = 3 * charWms;
 
-  //dispGraphic->setFont(fontFont_16x24, zoomMs);
+  // Font-independent
+  dispGraphic->setZoom(zoomMs);
   dispGraphic->setTextColor((WORD)colorText);
 
   int xMs = cx - totalWms / 2;
@@ -311,6 +319,9 @@ void StopwatchViewRings::update()
   dispGraphic->putString(msBuf);
   dispGraphic->gotoPixelPos((WORD)(xMs+1), (WORD)yMs);
   dispGraphic->putString(msBuf);
+
+  // Restore default zoom to not affect other watchfaces
+  dispGraphic->setZoom(1);
 
   lcd->refresh();
 }

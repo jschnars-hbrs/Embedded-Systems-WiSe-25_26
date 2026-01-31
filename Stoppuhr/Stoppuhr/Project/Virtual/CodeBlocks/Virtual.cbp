@@ -6,6 +6,7 @@
 		<Option makefile="makefile" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
+		<Option virtualFolders="Src/;Src/Resource/Font/" />
 		<Build>
 			<Target title="default">
 				<Option output="main" prefix_auto="1" extension_auto="1" />
@@ -60,11 +61,35 @@
 			<Add option="-lws2_32" />
 			<Add library="${EMBSYSLIB}/Src/Hardware/MCU/Virtual/Sys/libusb-1.0.a" />
 		</Linker>
+		<Unit filename="../../../Src/BasicWatchface.cpp" />
+		<Unit filename="../../../Src/BasicWatchface.h" />
+		<Unit filename="../../../Src/BinaryWatchFace.cpp" />
+		<Unit filename="../../../Src/BinaryWatchFace.h" />
 		<Unit filename="../../../Src/Board/Virtual/ReportHandler.h" />
+		<Unit filename="../../../Src/BouncingWatchFace.cpp" />
+		<Unit filename="../../../Src/BouncingWatchFace.h" />
+		<Unit filename="../../../Src/Resource/Font/Font_10x20.bin" />
+		<Unit filename="../../../Src/Resource/Font/Font_10x20.bmp" />
+		<Unit filename="../../../Src/Resource/Font/Font_10x20.h" />
+		<Unit filename="../../../Src/Resource/Font/Font_16x24.bin" />
+		<Unit filename="../../../Src/Resource/Font/Font_16x24.bmp" />
+		<Unit filename="../../../Src/Resource/Font/Font_16x24.h">
+			<Option virtualFolder="Src/Resource/Font/" />
+		</Unit>
+		<Unit filename="../../../Src/Resource/Font/Font_8x12.bin" />
+		<Unit filename="../../../Src/Resource/Font/Font_8x12.bmp" />
+		<Unit filename="../../../Src/Resource/Font/Font_8x12.h" />
+		<Unit filename="../../../Src/Resource/Font/Font_8x8.bin" />
+		<Unit filename="../../../Src/Resource/Font/Font_8x8.bmp" />
+		<Unit filename="../../../Src/Resource/Font/Font_8x8.h" />
+		<Unit filename="../../../Src/ScreenManager.cpp" />
+		<Unit filename="../../../Src/ScreenManager.h" />
 		<Unit filename="../../../Src/StopUhr.cpp" />
 		<Unit filename="../../../Src/StopUhr.h" />
 		<Unit filename="../../../Src/StopUhrTimer.cpp" />
 		<Unit filename="../../../Src/StopUhrTimer.h" />
+		<Unit filename="../../../Src/StopwatchViewRings.cpp" />
+		<Unit filename="../../../Src/StopwatchViewRings.h" />
 		<Unit filename="../../../Src/lib.cpp" />
 		<Unit filename="../../../Src/main.cpp" />
 		<Extensions>
