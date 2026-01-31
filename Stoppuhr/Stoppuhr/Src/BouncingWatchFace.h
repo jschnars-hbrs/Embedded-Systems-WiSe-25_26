@@ -12,7 +12,7 @@ using namespace EmbSysLib::Hw;
 using namespace EmbSysLib::Dev;
 using namespace EmbSysLib::Ctrl;
 
-#define RGB2COLOR(red, green, blue ) \
+#define RGB2COLOR(red, green, blue ) \ //Aus der Color.h von Herrn Breuer kopiert, da über #include "Color.h" nicht gefunden wurde
     ( (((blue )& 0xF8) >> 3)  /* 5 bit,  0.. 4 */\
      |(((green)& 0xFC) << 3)  /* 6 bit,  5..10 */\
      |(((red  )& 0xF8) << 8)) /* 5 bit, 11..15 */
@@ -48,23 +48,23 @@ class BouncingWatchFace : public Watchface {
         int zoomFactor = 6;
 
         char displaytime[10] = "00:00:000";
-        int symbolCount = 9;    // 7*"0" + 2*":"
-        int lineCount = 1;
-        int symbolHeight = 9;   //in pixel
-        int symbolWidth = 8;    //in pixel
+        int symbolCount = 9;    // Das Char-Array displaytime ist 9 Zeichen lang.(7*"0" + 2*":")
+        int lineCount = 1;      //Anzahl der Zeilen
+        int symbolHeight = 9;   //Höhe eines Zeichens in Pixel
+        int symbolWidth = 8;    //Breite eines Zeichens in Pixel
 
         //Animation
         int bounceObjectWidth = symbolWidth*zoomFactor*symbolCount;
         int bounceObjectHeight = symbolHeight*zoomFactor*lineCount;
 
-        int posX;    //Centering the bounceObjekt in X
-        int posY;  //Centering the bounceObjekt in Y
+        int posX;       
+        int posY;       
         int posXOld;
         int posYOld;
-        float speedX = 4;
-        float speedY = 2;
+        float speedX = 4;   //4 Pixel pro 1/framesPerSecond in X-Richtung
+        float speedY = 2;   //2 Pixel pro 1/framesPerSecond in Y-Richtung
 
-        int framesPerSecond = 24;
+        int framesPerSecond = 24;   //Bei klassische Animation werden 24 Bilder pro Sekunde gezeigt
         float lastFrameUpdate;
         int currentColor = 0;
 

@@ -10,8 +10,8 @@ BouncingWatchFace::BouncingWatchFace(Timer_Mcu  *timer,DisplayGraphic * dispGrap
     this->lcd = lcd;
     boundingBoxWidth = dispGraphic->getWidth();
     boundingBoxHeight = dispGraphic->getHeight();
-    posX = boundingBoxWidth/2 - bounceObjectWidth/2;    //Centering the bounceObjekt in X
-    posY = boundingBoxHeight/2 - bounceObjectHeight/2;  //Centering the bounceObjekt in Y
+    posX = boundingBoxWidth/2 - bounceObjectWidth/2;    //Das bounceObjekt (Uhrzeit) wird in X-Richtung zentriert
+    posY = boundingBoxHeight/2 - bounceObjectHeight/2;  //Das bounceObjekt (Uhrzeit) wird in Y-Richtung zentriert
 
 }
 
@@ -19,12 +19,12 @@ void BouncingWatchFace::changed_to(){
 
     dispGraphic->setZoom(this->zoomFactor);
     dispGraphic->setBackColor( this->colorBlack);
-    this->currentColor -= 1;
-    changeColor();
-}
+    this->currentColor -= 1;        //Die aktuelle Textfarbe muss auf die davor gesetzt werden,
+    changeColor();                  //damit changeColor() nicht die nächste, sondern die Farbe auswählt, 
+}                                   //die aktiv war, als das Face verlassen wurde
 
 
-void BouncingWatchFace::setUp()
+void BouncingWatchFace::setUp()    //Wird einmalig beim ersten Aufruf von BouncingWatchFace aufgerufen
 {
     dispGraphic->setZoom(this->zoomFactor);
     dispGraphic->setTextColor( this->colorWhite);
@@ -42,7 +42,6 @@ void BouncingWatchFace::update()
         this->setUp();
     }
 
-
     if (this->getIfRunning())
     {
         this->upDateCurrentTime();
@@ -54,15 +53,15 @@ void BouncingWatchFace::update()
 }
 
 //Graphics
-void BouncingWatchFace::upDateDisplay()
-{
+void BouncingWatchFace::upDateDisplay() //Gibt unabhängig davon, ob die Stoppuhr angehalten ist oder nicht, 
+{                                       //die aktuelle Zeit auf der aktuellen Position auf
     dispGraphic->gotoPixelPos(this->posX, this->posY);
     dispGraphic->putString(this->displaytime);
     lcd->refresh();
 }
 
-void BouncingWatchFace::upDateDisplayTime()
-{
+void BouncingWatchFace::upDateDisplayTime() //Berechnet die aktuellen Minuten, Sekunden und Millisekunden 
+{                                           //und formartiert sie zusammen zu einem String
 
     this->minuts=int(this->currenttime/60000);
     this->sec=int(this->currenttime/1000)%60;
@@ -77,8 +76,8 @@ void BouncingWatchFace::upDateDisplayTime()
 
 }
 
-void BouncingWatchFace::changeColor()
-{
+void BouncingWatchFace::changeColor() //Wechsel die Textfarbe von weiß auf magenta, von magenta auf cyan,
+{                                     //von cyan auf gelb und von gelb wieder auf weiß
     this-> currentColor +=1;
     if (this->currentColor >= 4)
     {
@@ -104,9 +103,9 @@ void BouncingWatchFace::changeColor()
 }
 
 //Animation
-void BouncingWatchFace::upDateAnimation()
-{
-    if ((this->currenttime-this->lastFrameUpdate)>=1/this->framesPerSecond)
+void BouncingWatchFace::upDateAnimation() //Animiert die Bewegung der Uhrzeit, wenn die Stoppuhr läuft.
+{                                         //Wie oft die Animation aktulisiert wird ist abhängig von framesPerSecond,
+    if ((this->currenttime-this->lastFrameUpdate)>=1/this->framesPerSecond) //die wie bei den klassischen Animationen 24 Bilder pro Sekunde betragen.
     {
         this->upDatePos();
         this->checkForBounce();
@@ -114,8 +113,8 @@ void BouncingWatchFace::upDateAnimation()
     }
 }
 
-void BouncingWatchFace::upDatePos()
-{
+void BouncingWatchFace::upDatePos() //Aktualisiert die Position der Animation, abhängig von der eingestellten Geschwindigkeit
+{                                   //und merkt sich den Zeitpunkt der Aktualisierung und die 
     this->lastFrameUpdate = this->currenttime;
     this->posXOld = this->posX;
     this->posYOld = this->posY;
@@ -127,43 +126,43 @@ void BouncingWatchFace::checkForBounce()
 {
     if ((this->posX+this->bounceObjectWidth+this->zoomFactor>= this->boundingBoxWidth)||(this->posX-this->zoomFactor<=0))
     {
-        this->speedX *= -1; //reverse direction
+        this->speedX *= -1; //Richtungswechsel in X-Richtung
         this->changeColor();
     }
     if ((this->posY+this->bounceObjectHeight+this->zoomFactor>=this->boundingBoxHeight)||(this->posY-this->zoomFactor<=0))
     {
-        this->speedY *= -1; //reverse direction
+        this->speedY *= -1; //Richtungswechsel in Y-Richtung
         this->changeColor();
     }
 }
 
-void BouncingWatchFace::delFrameTraces()
-{
-    if(this->speedX > 0)
-    {
+void BouncingWatchFace::delFrameTraces()    //Überschreibt die Spuren des vorherigen Frames mit einem Leerzeichen. 
+{                                           //Das geht deutlich schneller, als jedesmal den kompletten Bildschirm zu refreshen.
+    if(this->speedX > 0)                
+    {                                       //Bewegt sich die Uhrzeit nach rechts, wird vor der Uhrzeit ein Leerzeichen geschrieben.
         dispGraphic->gotoPixelPos(this->posXOld-this->zoomFactor, this->posY);
     }
     else
-    {
+    {                                       //Bewegt sich die Uhrzeit nach links, wird hinter der Uhrzeit ein Leerzeichen geschrieben.
         dispGraphic->gotoPixelPos(this->posX + this->bounceObjectWidth-1, this->posY);
     }
     dispGraphic->putString(" ");
 }
 
 //time management
-float BouncingWatchFace::getTime()
+float BouncingWatchFace::getTime()          //Holt sich die aktuelle Zeit von der StopUhrTimer-Klasse
 {
     return this->myStoppWatch.getPassedTime();
 }
 
-void BouncingWatchFace::upDateCurrentTime()
-{
-    this->currenttime=this->getTime();
-}
+void BouncingWatchFace::upDateCurrentTime() //Holt sich die aktuelle Zeit von der Methode getTime()
+{                                           //Überrest aus einer vorherigen Version dieser Klasse, bei dem 
+    this->currenttime=this->getTime();      //hier noch der Zeitunterschied von der angehaltenen Zeit und der des Timers
+}                                           //rausgerechnet wurde. Diese Aufgabe wird jetzt von der StopUhrTimer-Klasse übernommen.
 
 //controls
-bool BouncingWatchFace::getIfRunning()
-{
+bool BouncingWatchFace::getIfRunning()  //Getter-Methode für die Variabel "run".
+{                                       //Gibt an ob die Stoppuhr läuft oder angehalten wurde.
     if(this->run == true)
     {
         return true;
@@ -174,7 +173,7 @@ bool BouncingWatchFace::getIfRunning()
     }
 }
 
-void BouncingWatchFace::resetCurrentTime()
+void BouncingWatchFace::resetCurrentTime() //Setzt die ausgegebene Zeit zurück auf 0.
 {
     if(this->allowReset==true)
     {
