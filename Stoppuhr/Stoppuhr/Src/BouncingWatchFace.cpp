@@ -21,7 +21,7 @@ void BouncingWatchFace::changed_to(){
     dispGraphic->setBackColor( this->colorBlack);
     this->currentColor -= 1;        //Die aktuelle Textfarbe muss auf die davor gesetzt werden,
     changeColor();                  //damit changeColor() nicht die nächste, sondern die Farbe auswählt, 
-}                                   //die aktiv war, als das Face verlassen wurde
+}                                   //die aktiv war, als das Face verlassen wurde.
 
 
 void BouncingWatchFace::setUp()    //Wird einmalig beim ersten Aufruf von BouncingWatchFace aufgerufen
@@ -54,14 +54,14 @@ void BouncingWatchFace::update()
 
 //Graphics
 void BouncingWatchFace::upDateDisplay() //Gibt unabhängig davon, ob die Stoppuhr angehalten ist oder nicht, 
-{                                       //die aktuelle Zeit auf der aktuellen Position auf
+{                                       //die aktuelle Zeit auf der aktuellen Position aus.
     dispGraphic->gotoPixelPos(this->posX, this->posY);
     dispGraphic->putString(this->displaytime);
     lcd->refresh();
 }
 
 void BouncingWatchFace::upDateDisplayTime() //Berechnet die aktuellen Minuten, Sekunden und Millisekunden 
-{                                           //und formartiert sie zusammen zu einem String
+{                                           //und formartiert sie zusammen zu einem String im Format MM:SS:mSmSmS.
 
     this->minuts=int(this->currenttime/60000);
     this->sec=int(this->currenttime/1000)%60;
@@ -78,7 +78,7 @@ void BouncingWatchFace::upDateDisplayTime() //Berechnet die aktuellen Minuten, S
 
 void BouncingWatchFace::changeColor() //Wechsel die Textfarbe von weiß auf magenta, von magenta auf cyan,
 {                                     //von cyan auf gelb und von gelb wieder auf weiß
-    this-> currentColor +=1;
+    this-> currentColor +=1;          //Speichert die gleich eingestellt Textfarbe in der Variabel currentColor.
     if (this->currentColor >= 4)
     {
         this->currentColor = 0;
@@ -156,7 +156,7 @@ float BouncingWatchFace::getTime()          //Holt sich die aktuelle Zeit von de
 }
 
 void BouncingWatchFace::upDateCurrentTime() //Holt sich die aktuelle Zeit von der Methode getTime()
-{                                           //Überrest aus einer vorherigen Version dieser Klasse, bei dem 
+{                                           //Überrest aus der vorherigen Version dieser Klasse, bei dem 
     this->currenttime=this->getTime();      //hier noch der Zeitunterschied von der angehaltenen Zeit und der des Timers
 }                                           //rausgerechnet wurde. Diese Aufgabe wird jetzt von der StopUhrTimer-Klasse übernommen.
 
